@@ -230,6 +230,11 @@ UCABoardGame >> savePermanentCard: aCard [
 ]
 
 { #category : #playing }
+UCABoardGame >> skipTurn [
+	sequenceOfPlayers nextPlayer.
+]
+
+{ #category : #playing }
 UCABoardGame >> winner [
 
 	self assertTheGameHasFinished.

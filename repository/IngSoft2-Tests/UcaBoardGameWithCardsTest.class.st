@@ -463,6 +463,28 @@ game player: juan throw: (Repeat card: NullObject new target: juan).
 ]
 
 { #category : #tests }
+UcaBoardGameWithCardsTest >> testSkipCard [
+
+	| game cards|
+	cards:= OrderedCollection new.
+	cards add: Skip new.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette andDeterministic: cards.
+	
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 7.		
+	game player: juan throw: (Skip card: NullObject new target: NullObject new ).
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 16;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 0.
+	
+]
+
+{ #category : #tests }
 UcaBoardGameWithCardsTest >> testSpeedCard [
 
 	| game cards|

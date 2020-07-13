@@ -26,12 +26,6 @@ Card >> initializeCard: aCard target: aPlayer [
 ]
 
 { #category : #playing }
-Card >> prueba [
-	^self
-	
-]
-
-{ #category : #playing }
 Card >> target [
 	^target.
 ]
