@@ -29,6 +29,11 @@ SequentialPlayersProvider class >> providing: aSequence [
 	^ self new initializeProviding: aSequence
 ]
 
+{ #category : #playing }
+SequentialPlayersProvider >> changeCourse [
+	sequence changeCourse.
+]
+
 { #category : #initialization }
 SequentialPlayersProvider >> initializeProviding: aSequence [
 
