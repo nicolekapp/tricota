@@ -33,7 +33,7 @@ CircularIterator >> changeCourse [
 { #category : #accessing }
 CircularIterator >> current [
 
-	^options at: currentIndex + course.
+	^options at: currentIndex.
 ]
 
 { #category : #testing }
@@ -53,13 +53,21 @@ CircularIterator >> initializeCyclingOver: anArray [
 { #category : #iterating }
 CircularIterator >> next [
 
-	currentIndex := (currentIndex + course) \\ options size.
-	(currentIndex = -1) ifTrue: [ currentIndex := options size -1].
+	currentIndex := (currentIndex + course) \\ (options size + 1).
+	self outOfBounds.
 	^self current 
+]
+
+{ #category : #'as yet unclassified' }
+CircularIterator >> outOfBounds [
+	( currentIndex = 0 )
+	ifTrue: [ (course = 1) 
+		ifTrue: [ currentIndex := 1 ] 
+		ifFalse: [ currentIndex := options size ] ]
 ]
 
 { #category : #iterating }
 CircularIterator >> reset [
 
-	currentIndex := 0
+	currentIndex := 1
 ]

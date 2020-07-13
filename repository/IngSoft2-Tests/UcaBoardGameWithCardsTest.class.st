@@ -225,6 +225,13 @@ UcaBoardGameWithCardsTest >> testDoubleCard [
 			assert: (game lockerNumberOf: juan) equals: 7;
 			assert: (game lapNumberOf: nico) equals: 0;
 			assert: (game lockerNumberOf: nico) equals: 12.
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 14;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 12.
+
 	
 ]
 
@@ -524,16 +531,45 @@ UcaBoardGameWithCardsTest >> testReverseCard [
 			assert: (game lockerNumberOf: pablo) equals: 0.
 	game player: juan throw: (Reverse card: NullObject new target: NullObject new ).
 	game nextTurn.
-		self
+	self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
 			assert: (game lapNumberOf: nico) equals: 0;
 			assert: (game lockerNumberOf: nico) equals: 9;
 			assert: (game lapNumberOf: sofi) equals: 0;
-			assert: (game lockerNumberOf: sofi) equals: 0;
+			assert: (game lockerNumberOf: sofi) equals: 3;
 			assert: (game lapNumberOf: pablo) equals: 0;
 			assert: (game lockerNumberOf: pablo) equals: 0.
-	
+	game nextTurn.
+	self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 16;
+			assert: (game lapNumberOf: sofi) equals: 0;
+			assert: (game lockerNumberOf: sofi) equals: 3;
+			assert: (game lapNumberOf: pablo) equals: 0;
+			assert: (game lockerNumberOf: pablo) equals: 0.
+	game nextTurn.
+	self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 16;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 16;
+			assert: (game lapNumberOf: sofi) equals: 0;
+			assert: (game lockerNumberOf: sofi) equals: 3;
+			assert: (game lapNumberOf: pablo) equals: 0;
+			assert: (game lockerNumberOf: pablo) equals: 0.
+	game nextTurn .
+	self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 16;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 16;
+			assert: (game lapNumberOf: sofi) equals: 0;
+			assert: (game lockerNumberOf: sofi) equals: 3;
+			assert: (game lapNumberOf: pablo) equals: 0;
+			assert: (game lockerNumberOf: pablo) equals: 3.
 ]
 
 { #category : #tests }
@@ -586,6 +622,86 @@ UcaBoardGameWithCardsTest >> testSpeedCard [
 
 	
 	
+]
+
+{ #category : #tests }
+UcaBoardGameWithCardsTest >> testThrowDoubleCardPlayTurnAndThrowAgainDoubleCard [
+
+	| game cards|
+	cards:= OrderedCollection new.
+	cards add: Double new.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette andDeterministic: cards.
+	
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 7.		
+	game player: juan throw: (Double card: NullObject new target: NullObject new ).
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 9.
+	game player: nico throw: (Double card: NullObject new target: NullObject new ).
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 12.
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 19.
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 16;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 19.
+]
+
+{ #category : #tests }
+UcaBoardGameWithCardsTest >> testThrowMoreThanOneDoubleCardInTheSameTurn [
+
+	| game cards|
+	cards:= OrderedCollection new.
+	cards add: Double new.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette andDeterministic: cards.
+	
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 7.		
+	game player: juan throw: (Double card: NullObject new target: NullObject new ).
+	game player: nico throw: (Double card: NullObject new target: NullObject new ).
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 9.
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 12.
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 19.
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 16;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 19.
 ]
 
 { #category : #tests }

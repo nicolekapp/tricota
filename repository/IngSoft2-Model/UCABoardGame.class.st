@@ -119,6 +119,11 @@ UCABoardGame >> deterministicDeal: deck and: aGroupOfPlayers [
 ]
 
 { #category : #playing }
+UCABoardGame >> doubleNextPlayer [
+	sequenceOfPlayers double: sequenceOfPlayers nextPlayer .
+]
+
+{ #category : #playing }
 UCABoardGame >> following: index lowerThan: sizeOfCards [.
 
 	(index = sizeOfCards ) ifTrue:[^1] ifFalse:[^(index +1)].

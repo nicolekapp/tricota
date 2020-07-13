@@ -6,5 +6,5 @@ Class {
 
 { #category : #playing }
 Double >> applyWithin: playersWithPositions knowing: activeCards  the: lastEffect and: finishLine of: game [
-	
+	game doubleNextPlayer.
 ]
