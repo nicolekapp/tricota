@@ -74,6 +74,8 @@ UCABoardGame >> assertTheWinnerIs: aPlayer [
 { #category : #playing }
 UCABoardGame >> changeCourse [
 	sequenceOfPlayers changeCourse.
+	sequenceOfPlayers nextPlayer .
+	sequenceOfPlayers nextPlayer .
 ]
 
 { #category : #position }

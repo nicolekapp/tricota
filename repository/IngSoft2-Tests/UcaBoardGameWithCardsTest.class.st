@@ -533,43 +533,43 @@ UcaBoardGameWithCardsTest >> testReverseCard [
 	game nextTurn.
 	self
 			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lockerNumberOf: juan) equals: 10;
 			assert: (game lapNumberOf: nico) equals: 0;
 			assert: (game lockerNumberOf: nico) equals: 9;
 			assert: (game lapNumberOf: sofi) equals: 0;
-			assert: (game lockerNumberOf: sofi) equals: 3;
+			assert: (game lockerNumberOf: sofi) equals: 0;
 			assert: (game lapNumberOf: pablo) equals: 0;
 			assert: (game lockerNumberOf: pablo) equals: 0.
 	game nextTurn.
 	self
 			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lockerNumberOf: juan) equals: 10;
 			assert: (game lapNumberOf: nico) equals: 0;
-			assert: (game lockerNumberOf: nico) equals: 16;
+			assert: (game lockerNumberOf: nico) equals: 9;
 			assert: (game lapNumberOf: sofi) equals: 0;
-			assert: (game lockerNumberOf: sofi) equals: 3;
+			assert: (game lockerNumberOf: sofi) equals: 0;
 			assert: (game lapNumberOf: pablo) equals: 0;
-			assert: (game lockerNumberOf: pablo) equals: 0.
+			assert: (game lockerNumberOf: pablo) equals: 7.
 	game nextTurn.
 	self
 			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 16;
+			assert: (game lockerNumberOf: juan) equals: 10;
 			assert: (game lapNumberOf: nico) equals: 0;
-			assert: (game lockerNumberOf: nico) equals: 16;
+			assert: (game lockerNumberOf: nico) equals: 9;
 			assert: (game lapNumberOf: sofi) equals: 0;
-			assert: (game lockerNumberOf: sofi) equals: 3;
+			assert: (game lockerNumberOf: sofi) equals: 9;
 			assert: (game lapNumberOf: pablo) equals: 0;
-			assert: (game lockerNumberOf: pablo) equals: 0.
+			assert: (game lockerNumberOf: pablo) equals: 7.
 	game nextTurn .
 	self
 			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 16;
+			assert: (game lockerNumberOf: juan) equals: 10;
 			assert: (game lapNumberOf: nico) equals: 0;
-			assert: (game lockerNumberOf: nico) equals: 16;
+			assert: (game lockerNumberOf: nico) equals: 12;
 			assert: (game lapNumberOf: sofi) equals: 0;
-			assert: (game lockerNumberOf: sofi) equals: 3;
+			assert: (game lockerNumberOf: sofi) equals: 9;
 			assert: (game lapNumberOf: pablo) equals: 0;
-			assert: (game lockerNumberOf: pablo) equals: 3.
+			assert: (game lockerNumberOf: pablo) equals: 7.
 ]
 
 { #category : #tests }
