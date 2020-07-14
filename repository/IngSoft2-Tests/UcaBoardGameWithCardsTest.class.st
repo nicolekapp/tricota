@@ -734,21 +734,3 @@ UcaBoardGameWithCardsTest >> testTryToThrowRedoCardBeforeNobodyThrewAnyCard [
 		
 	
 ]
-
-{ #category : #tests }
-UcaBoardGameWithCardsTest >> testTryToThrowRepeatCardBeforeNobodyRolledDice [
-
-	| game cards |
-	
-	cards:= OrderedCollection new.
-	cards 
-	add: Repeat new.
-	
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: cards.
-	self 
-	should: [ game player: juan throw: (Repeat card: NullObject new target: juan) ]
-		raise: InvalideRequest
-		withMessageText: 'Nobody rolled the dice yet'.
-		
-	
-]
