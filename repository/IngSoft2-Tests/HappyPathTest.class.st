@@ -290,16 +290,57 @@ HappyPathTest >> testHappyPath [
 		assert: (game lockerNumberOf: juan) equals: 4;
 		assert: (game lockerNumberOf: nico) equals: 14;
 		assert: (game lockerNumberOf: sofi) equals: 4.
-"	self 
+		
+	game nextTurn. "In this Turn Sofi rolled 8 and the effect was No Effect. Sofi moves 8 lockers forward"
+	self 
+		assert: (game lapNumberOf: juan) equals:2;
+		assert: (game lapNumberOf: nico) equals:1;
+		assert: (game lapNumberOf: sofi) equals:2;
+		assert: (game lockerNumberOf: juan) equals: 4;
+		assert: (game lockerNumberOf: nico) equals: 14;
+		assert: (game lockerNumberOf: sofi) equals: 12.
+		
+	game player: nico throw: (Double card: NullObject new target: NullObject new).
+	game nextTurn. "In this Turn Nico rolled 5 and the effect was No Effect. Nico moves 5 lockers forward and changes lap"
+	self 
+		assert: (game lapNumberOf: juan) equals:2;
+		assert: (game lapNumberOf: nico) equals:2;
+		assert: (game lapNumberOf: sofi) equals:2;
+		assert: (game lockerNumberOf: juan) equals: 4;
+		assert: (game lockerNumberOf: nico) equals: 4;
+		assert: (game lockerNumberOf: sofi) equals: 12.
+		
+	game nextTurn. "In this Turn Nico rolled 10 and the effect was No Effect. Nico moves 10 lockers forward"
+	self 
+		assert: (game lapNumberOf: juan) equals:2;
+		assert: (game lapNumberOf: nico) equals:2;
+		assert: (game lapNumberOf: sofi) equals:2;
+		assert: (game lockerNumberOf: juan) equals: 4;
+		assert: (game lockerNumberOf: nico) equals: 14;
+		assert: (game lockerNumberOf: sofi) equals: 12.
+		
+	game nextTurn. "In this Turn Juan rolled 9 and the effect was No Effect. Nico moves 7 lockers forward because of Overload Card" 
+	self 
+		assert: (game lapNumberOf: juan) equals:2;
+		assert: (game lapNumberOf: nico) equals:2;
+		assert: (game lapNumberOf: sofi) equals:2;
+		assert: (game lockerNumberOf: juan) equals: 11;
+		assert: (game lockerNumberOf: nico) equals: 14;
+		assert: (game lockerNumberOf: sofi) equals: 12.
+		
+	game nextTurn. "In this Turn Sofi rolled 7 and the effect was No Effect. Nico moves 7 lockers forward, reaches lap 3 and WON the game!" 
+	self 
+		assert: (game lapNumberOf: juan) equals:2;
+		assert: (game lapNumberOf: nico) equals:2;
+		assert: (game lapNumberOf: sofi) equals:3;
+		assert: (game lockerNumberOf: juan) equals: 11;
+		assert: (game lockerNumberOf: nico) equals: 14;
+		assert: (game lockerNumberOf: sofi) equals: 4.
+
+	self 
 		assert: game winner equals: sofi.
 		tableOfFinalPositions:= game playersPositions.
 		self assert:(tableOfFinalPositions atPosition: 1 ) equals: sofi.
 		self assert:(tableOfFinalPositions  atPosition: 2 ) equals: nico.
-		self assert:(tableOfFinalPositions  atPosition: 3 ) equals: juan."
-		
-		
-		
-
-		
-
+		self assert:(tableOfFinalPositions  atPosition: 3 ) equals: juan.
 ]
