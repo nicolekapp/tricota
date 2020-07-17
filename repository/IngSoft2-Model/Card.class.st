@@ -3,29 +3,39 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'card',
-		'target'
+		'target',
+		'type'
 	],
 	#category : #'IngSoft2-Model-Card'
 }
 
 { #category : #'instance creation' }
-Card class >> card: aCard target: aPlayer [
-	^ self new initializeCard: aCard target: aPlayer
+Card class >> type: aType [  
+	^ self type: aType target: Target none.
 ]
 
-{ #category : #comparing }
-Card >> = anObject [ 
-
-	self class = anObject class ifTrue: [ ^true ] ifFalse: [ ^false ].	
-]
-
-{ #category : #initialization }
-Card >> initializeCard: aCard target: aPlayer [ 
-	card:= aCard.
-	target:= aPlayer 
+{ #category : #'instance creation' }
+Card class >> type: aType target: aTarget [ 
+	^ self new initializeType: aType target: aTarget
 ]
 
 { #category : #playing }
-Card >> target [
-	^target.
+Card >> applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect and: finishLine of: game [
+	^ type applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect and: finishLine of: game
+]
+
+{ #category : #inicialization }
+Card >> initializeType: aType target: aTarget [ 
+	type := aType .
+	target := aTarget.
+]
+
+{ #category : #'as yet unclassified' }
+Card >> isSameType: aCard [ 
+	^ type = aCard type .
+]
+
+{ #category : #'as yet unclassified' }
+Card >> type [
+	^ type
 ]

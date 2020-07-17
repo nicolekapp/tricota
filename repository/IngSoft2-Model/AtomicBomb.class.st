@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #playing }
-AtomicBomb >> applyEffectTo: aPosition knowing: players the: currentPlayer and: finishline [ 
+AtomicBomb >> applyEffectTo: aPosition knowing: players the: currentPlayer and: finishline aaaaaaaaaaaaaaaaaaaaaa: deck [
 
 	(aPosition >= finishline) ifTrue: [ (players at: currentPlayer) increaseLap].
 	players do: [:player | player moveBackwards: 0] .

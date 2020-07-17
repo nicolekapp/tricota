@@ -1,6 +1,6 @@
 Class {
 	#name : #Skip,
-	#superclass : #Card,
+	#superclass : #TypeOfCard,
 	#category : #'IngSoft2-Model-Card'
 }
 

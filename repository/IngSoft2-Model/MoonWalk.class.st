@@ -46,7 +46,7 @@ MoonWalk class >> maxBackwards: aNumberOfLockers source: aNumberProvider [
 ]
 
 { #category : #playing }
-MoonWalk >> applyEffectTo: aPosition  knowing: players the: currentPlayer and: finishline [
+MoonWalk >> applyEffectTo: aPosition knowing: players the: currentPlayer and: finishline aaaaaaaaaaaaaaaaaaaaaa: deck [
 	
 	self moveAll: players except: currentPlayer knowing: finishline.
 	^ aPosition.

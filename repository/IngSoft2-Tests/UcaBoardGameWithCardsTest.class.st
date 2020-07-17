@@ -63,46 +63,10 @@ UcaBoardGameWithCardsTest >> setUp [
 ]
 
 { #category : #tests }
-UcaBoardGameWithCardsTest >> testAccelerationCard [
-
-	| game cards|
-	cards:= OrderedCollection new.
-	cards add: Acceleration new.
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette andDeterministic: cards.
-	
-	game nextTurn.
-		self
-			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 7.		
-	game player: nico throw: (Acceleration card: NullObject new target: NullObject new ).
-	game nextTurn.
-		self
-			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 7;
-			assert: (game lapNumberOf: nico) equals: 0;
-			assert: (game lockerNumberOf: nico) equals: 10.
-	game player: juan throw: (Acceleration card: NullObject new target: NullObject new ).
-	game nextTurn.
-		self
-			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 12;
-			assert: (game lapNumberOf: nico) equals: 0;
-			assert: (game lockerNumberOf: nico) equals: 10.
-	game nextTurn.
-		self
-			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 12;
-			assert: (game lapNumberOf: nico) equals: 0;
-			assert: (game lockerNumberOf: nico) equals: 19.
-	
-	
-]
-
-{ #category : #tests }
 UcaBoardGameWithCardsTest >> testAccelerationCardInvalidArgumentsInInicializationMessage [
 
 	| game cards|
-	cards:= OrderedCollection new.
+"	cards:= OrderedCollection new.
 	cards add: Acceleration new.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette andDeterministic: cards.
 	
@@ -120,7 +84,7 @@ UcaBoardGameWithCardsTest >> testAccelerationCardInvalidArgumentsInInicializatio
 	should: [ game player: juan throw: (Acceleration card: Speed new target: nico ) ]
 		raise: InstanceCreationFailed 
 		withMessageText: 'Invalid Arguments in message'.
-	
+	"
 ]
 
 { #category : #tests }

@@ -1,6 +1,6 @@
 Class {
 	#name : #Cancellation,
-	#superclass : #Card,
+	#superclass : #TypeOfCard,
 	#instVars : [
 		'selectedCard'
 	],
@@ -16,10 +16,15 @@ Cancellation >> applyWithin: aPlayersWithPositions knowing: activeCards the: las
 ]
 
 { #category : #playing }
+Cancellation >> assertTheCardToRemoveIs: currentCard [
+	^ currentCard = card and: currentCard target = target
+]
+
+{ #category : #playing }
 Cancellation >> removeCardFrom: activeCards [
 	activeCards
 		doWithIndex: [ :currentCard :i | 
-			(currentCard = card and: currentCard target = target)
+			(self assertTheCardToRemoveIs: currentCard)
 				ifTrue: [ activeCards removeAt: i.
 					^ true ] ]
 ]

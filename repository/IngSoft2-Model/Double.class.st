@@ -1,6 +1,6 @@
 Class {
 	#name : #Double,
-	#superclass : #Card,
+	#superclass : #TypeOfCard,
 	#category : #'IngSoft2-Model-Card'
 }
 

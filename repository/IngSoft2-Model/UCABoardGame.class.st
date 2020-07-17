@@ -16,7 +16,8 @@ Class {
 		'lastEffect',
 		'finishLine',
 		'activeCards',
-		'lastCardPlayed'
+		'lastCardPlayed',
+		'deck'
 	],
 	#category : #'IngSoft2-Model-Game'
 }
@@ -46,7 +47,7 @@ UCABoardGame >> applyEffectTo: positionAfterRollingDice of: currentPlayer [
 
 	lastEffect := effectRoulette spin.
 	
-	^lastEffect applyEffectTo: positionAfterRollingDice	knowing: playersWithPositions the: currentPlayer and: finishLine.
+	^lastEffect applyEffectTo: positionAfterRollingDice	knowing: playersWithPositions the: currentPlayer and: finishLine aaaaaaaaaaaaaaaaaaaaaa: deck
 ]
 
 { #category : #assertions }
@@ -85,41 +86,6 @@ UCABoardGame >> currentPositionOf: aPlayer [
 
 ]
 
-{ #category : #cards }
-UCABoardGame >> deal: deck [
-	self dealTwoCardsToEachPlayerFrom: deck.
-]
-
-{ #category : #cards }
-UCABoardGame >> dealTwoCardsInOrderToEachPlayerIn: aGroupOfPlayers from: cards [
-	| index sizeOfCards |
-	index := 1.
-	sizeOfCards := cards size.
-	aGroupOfPlayers
-		do: [ :player | 
-			player addCard: (cards at: index).
-			index := self following: index lowerThan: sizeOfCards.
-			player addCard: (cards at: index).
-			index := self following: index lowerThan: sizeOfCards ]
-]
-
-{ #category : #cards }
-UCABoardGame >> dealTwoCardsToEachPlayerFrom: cards [
-	| random index |
-	random := Random new.
-	playersWithPositions
-		keysDo: [ :player | 
-			index := random nextInt: cards size.
-			player addCard: (cards at: index).
-			index := random nextInt: cards size.
-			player addCard: (cards at: index) ]
-]
-
-{ #category : #cards }
-UCABoardGame >> deterministicDeal: deck and: aGroupOfPlayers [
-	self dealTwoCardsInOrderToEachPlayerIn: aGroupOfPlayers from: deck.
-]
-
 { #category : #playing }
 UCABoardGame >> doubleNextPlayer [
 	sequenceOfPlayers double: sequenceOfPlayers nextPlayer .
@@ -152,7 +118,7 @@ UCABoardGame >> initializeDictionaryOfPositions: aGroupOfPlayers [
 ]
 
 { #category : #initialization }
-UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: anEffectRoulette and: cards [
+UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: anEffectRoulette and: aDeck [
 	dice:= aDice.
 	playersWithPositions:= self initializeDictionaryOfPositions: aGroupOfPlayers.
 	sequenceOfPlayers:= (SequentialPlayersProvider providing: aGroupOfPlayers).
@@ -163,22 +129,8 @@ UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberO
 	winner := 'No Winner'.
 	lastEffect := 'No effect yet'.
 	lastCardPlayed:= 'No card has been played yet'.
-	self deal: cards.
-]
-
-{ #category : #initialization }
-UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberOfLockers  laps: aNumberOfLaps  effects: anEffectRoulette andDeterministic: sequenceOfCards [
-	
-	dice:= aDice.
-	playersWithPositions:= self initializeDictionaryOfPositions: aGroupOfPlayers.
-	sequenceOfPlayers:= (SequentialPlayersProvider providing: aGroupOfPlayers).
-	finishLine:= aNumberOfLockers.
-	laps:= aNumberOfLaps.
-	effectRoulette:= anEffectRoulette.
-	activeCards := OrderedCollection new.
-	winner := 'No Winner'.
-	lastEffect := 'No effect yet'.
-	self deterministicDeal: sequenceOfCards and: aGroupOfPlayers.
+	deck := aDeck.
+	deck dealTwoCardsToEachPlayerFrom: aGroupOfPlayers  
 ]
 
 { #category : #position }
@@ -221,7 +173,9 @@ UCABoardGame >> player: aPlayer throw: card [
 	self assertTheGameHasNotFinished.
 	aPlayer assertHasCard: card.
 	card applyWithin: playersWithPositions knowing: activeCards the: lastEffect and: finishLine of: self.
+	"card applyToaaaa: self."
 	aPlayer cardPlayed: card.
+	
 ]
 
 { #category : #playing }

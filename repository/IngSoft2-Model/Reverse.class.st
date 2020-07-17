@@ -1,6 +1,6 @@
 Class {
 	#name : #Reverse,
-	#superclass : #Card,
+	#superclass : #TypeOfCard,
 	#category : #'IngSoft2-Model-Card'
 }
 

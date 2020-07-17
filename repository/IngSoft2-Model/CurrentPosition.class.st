@@ -47,17 +47,6 @@ CurrentPosition >> decreaseLap [
 	laps:= laps-1.
 ]
 
-{ #category : #'move forward' }
-CurrentPosition >> forwardTo: nextPosition changingLapIfCrossing: finishline [
-	
-	self moveForwardTo: nextPosition ifDoesNotCross: finishline.
-	self moveForwardTo: nextPosition ifCrosses: finishline.
-
-	
-
-	
-]
-
 { #category : #comparing }
 CurrentPosition >> hash [
 	
@@ -145,6 +134,17 @@ CurrentPosition >> moveForward: moveTo [
 ]
 
 { #category : #'move forward' }
+CurrentPosition >> moveForwardTo: nextPosition changingLapIfCrossing: finishline [
+	
+	self moveForwardTo: nextPosition ifDoesNotCross: finishline.
+	self moveForwardTo: nextPosition ifCrosses: finishline.
+
+	
+
+	
+]
+
+{ #category : #'move forward' }
 CurrentPosition >> moveForwardTo: nextPosition ifCrosses: finishLine [
 
 	(nextPosition >= finishLine)
@@ -182,6 +182,6 @@ CurrentPosition >> whenIsGoingForwardMoveTo: nextPosition knowing: finishline [
 	(locker < nextPosition)
 	ifTrue: [
 		self
-			forwardTo: nextPosition
+			moveForwardTo: nextPosition
 			changingLapIfCrossing: finishline]
 ]

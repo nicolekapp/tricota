@@ -9,7 +9,7 @@ Class {
 		'effectRoulette',
 		'effects',
 		'noEffect',
-		'cards'
+		'deck'
 	],
 	#category : #'IngSoft2-Tests-Game-Tests'
 }
@@ -42,10 +42,11 @@ UcaBoardGameNoEffectsTest >> playerNamed: aName [
 
 { #category : #running }
 UcaBoardGameNoEffectsTest >> setUp [
-	|effectRouletteBuilder|
-	cards:= OrderedCollection new.
-	cards 
-	add: Repeat new.
+	|effectRouletteBuilder deckBuilder|
+	deckBuilder:= DeckBuilder startBuilding.
+	deckBuilder add: NoEffect new.
+	deck:= deckBuilder buildDeterministic .
+	
 	effectRouletteBuilder := EffectRouletteBuilder buildingDeterministicRoulette.
 	effectRouletteBuilder add: NoEffect new.
 	effectRoulette:= effectRouletteBuilder buildDeterministic.
@@ -64,7 +65,7 @@ UcaBoardGameNoEffectsTest >> testAskForWinnerBeforeFinishing [
 
 	| game |
 		
-	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: deck.
 	
 	self
 		should: [ game winner   ]
@@ -82,7 +83,7 @@ UcaBoardGameNoEffectsTest >> testAskForWinnerBeforeFinishing [
 { #category : #tests }
 UcaBoardGameNoEffectsTest >> testGameHasFinished [
 	| game |
-	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: deck.
 	self finish:game.
 	self assert: game hasFinished
 ]
@@ -91,7 +92,7 @@ UcaBoardGameNoEffectsTest >> testGameHasFinished [
 UcaBoardGameNoEffectsTest >> testLapNumberOfPlayer [
 
 	| game |
-	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: deck.
 	self play: game amountOfTurns:3.
 	self 
 		assert: (game lapNumberOf: juan) equals:1;
@@ -105,7 +106,7 @@ UcaBoardGameNoEffectsTest >> testLockerNumberOfPlayer [
 
 	| game |
 		
-	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: deck.
 	self assert: (game lockerNumberOf: juan) equals: 0.
 	game nextTurn.
 	self assert: (game lockerNumberOf: juan) equals: 3.
@@ -119,7 +120,7 @@ UcaBoardGameNoEffectsTest >> testPlayerFinishedOneLap [
 	| game |
 		
 	die := Die of: 4 rolling: #(3 4 4).
-	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: deck.
 	self assert: (game lapNumberOf: juan) equals: 0.
 	self play: game amountOfTurns:3.
 	self assert: (game lapNumberOf: juan) equals: 1.
@@ -132,7 +133,7 @@ UcaBoardGameNoEffectsTest >> testPlayersPositions [
 		
 	| game |
 		
-	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: deck.
 	self play:game amountOfTurns:2.
 	self assert:(game playersPositions atPosition: 1 ) equals: nico.
 	
@@ -143,7 +144,7 @@ UcaBoardGameNoEffectsTest >> testPlayersPositions [
 UcaBoardGameNoEffectsTest >> testTryToKeepPlayingAfterGameEnded [
 
 	| game |
-	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: deck.
 	self finish: game.
 	
 	self
@@ -155,7 +156,7 @@ UcaBoardGameNoEffectsTest >> testTryToKeepPlayingAfterGameEnded [
 { #category : #tests }
 UcaBoardGameNoEffectsTest >> testWinnersName [
 	| game |
-	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: deck.
 	self finish: game.
 	self assert: game winner equals: juan
 ]

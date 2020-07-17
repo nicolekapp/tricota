@@ -1,6 +1,6 @@
 Class {
 	#name : #Redo,
-	#superclass : #Card,
+	#superclass : #TypeOfCard,
 	#category : #'IngSoft2-Model-Card'
 }
 
@@ -14,7 +14,7 @@ Redo >> applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect 
 ]
 
 { #category : #playing }
-Redo >> assertSomeoneThrewCard: lastEffect [ 
-	(lastEffect = 'No card has been played yet')
+Redo >> assertSomeoneThrewCard: lastCardPlayed [  
+	(lastCardPlayed = 'No card has been played yet')
 		ifTrue: [ InvalideRequest signal: 'Nobody threw a card yet' ]
 ]
