@@ -68,6 +68,11 @@ Player >> initializeWithName: aString [
 	
 ]
 
+{ #category : #'as yet unclassified' }
+Player >> is: aPlayer [ 
+	^self = aPlayer 
+]
+
 { #category : #name }
 Player >> name [
 	^name.

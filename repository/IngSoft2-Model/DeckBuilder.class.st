@@ -14,7 +14,7 @@ DeckBuilder class >> startBuilding [
 
 { #category : #'as yet unclassified' }
 DeckBuilder >> add: aTypeCard [  
-	sequenceOfCards add: (Card type: aTypeCard) .
+	sequenceOfCards add: (aTypeCard initialiceCard) .
 ]
 
 { #category : #'as yet unclassified' }

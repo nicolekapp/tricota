@@ -1,83 +1,48 @@
 Class {
-	#name : #CardRepeatTest,
-	#superclass : #TestCase,
+	#name : #RepeatTest,
+	#superclass : #CardTest,
 	#instVars : [
-		'die',
-		'juan',
-		'nico',
-		'players',
-		'cards'
+		'deck'
 	],
 	#category : #'IngSoft2-Tests-Card-Test'
 }
 
-{ #category : #tests }
-CardRepeatTest >> aEffectRouletteWith100ProbabilityOf: effect [
-
-	|  effectRouletteBuilder |
-	effectRouletteBuilder:= EffectRouletteBuilder buildingDeterministicRoulette.
-	effectRouletteBuilder add: effect.
-	^effectRouletteBuilder buildDeterministic. 
-]
-
 { #category : #playing }
-CardRepeatTest >> buildEffectRouletteWhereSecondEffectIs: anEffect [
+RepeatTest >> buildEffectRouletteWhereSecondEffectIs: anEffect [
 | effectRouletteBuilder|
 	effectRouletteBuilder:= EffectRouletteBuilder buildingDeterministicRoulette.
 	effectRouletteBuilder 
-				add: (PickUpCard withRandom: cards);
+				add: PickUpCard new;
 				add: anEffect;
 				add: NoEffect new.
 	^effectRouletteBuilder buildDeterministic. 
 ]
 
 { #category : #accessing }
-CardRepeatTest >> finish: game [
+RepeatTest >> finish: game [
 	self play: game amountOfTurns: 4
 ]
 
-{ #category : #accessing }
-CardRepeatTest >> juan [
-	^ self playerNamed: 'Juan'.
-]
-
-{ #category : #accessing }
-CardRepeatTest >> nico [
-	^ self playerNamed: 'Nico'.
-]
-
 { #category : #tests }
-CardRepeatTest >> play: anUCABoardGame amountOfTurns: anInteger [ 
+RepeatTest >> play: anUCABoardGame amountOfTurns: anInteger [ 
 	1 to: anInteger do: [ :number | anUCABoardGame nextTurn ].
 ]
 
 { #category : #running }
-CardRepeatTest >> playerNamed: aName [
-
-	^Player named: aName.
-]
-
-{ #category : #running }
-CardRepeatTest >> setUp [
-		die := Die of: 10 rolling: #(7 9 3).
-	juan := self juan.
-	nico := self nico.
-	players := OrderedCollection new.
-	players
-		add: juan;
-		add: nico.
-	cards:= OrderedCollection new.
-	cards 
-	add: Repeat new.
-
+RepeatTest >> setUp [
+	| deckBuilder |
+	self setUpCard.
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder add: Repeat new.
+	deck := deckBuilder buildDeterministic
 ]
 
 { #category : #tests }
-CardRepeatTest >> testRepeatAtomicBomb [
+RepeatTest >> testRepeatAtomicBomb [
 
-	| game effectRoulette |
+	| game repeatThrownByJuan|
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: AtomicBomb new.
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	game nextTurn.
 	game nextTurn.
@@ -86,7 +51,10 @@ CardRepeatTest >> testRepeatAtomicBomb [
 		assert: (game lockerNumberOf: juan) equals: 0;
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 0.
-	game player: juan throw: (Repeat card: NullObject new target: juan).
+		
+	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+	game player: juan throw: repeatThrownByJuan .
+
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 0;
@@ -98,11 +66,11 @@ CardRepeatTest >> testRepeatAtomicBomb [
 ]
 
 { #category : #tests }
-CardRepeatTest >> testRepeatMoonWalk [
+RepeatTest >> testRepeatMoonWalk [
 
-	| game effectRoulette |
+	| game repeatThrownByJuan|
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs:(MoonWalk maxBackwards: 5 aNumberOfLockersSequence: #(2)).
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	game nextTurn.
 	game nextTurn.
@@ -111,7 +79,9 @@ CardRepeatTest >> testRepeatMoonWalk [
 		assert: (game lockerNumberOf: juan) equals: 5;
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 9.
-	game player: juan throw: (Repeat card: NullObject new target: juan).
+
+	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+	game player: juan throw: repeatThrownByJuan .
 	
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
@@ -124,11 +94,11 @@ CardRepeatTest >> testRepeatMoonWalk [
 ]
 
 { #category : #tests }
-CardRepeatTest >> testRepeatNoEffect [
+RepeatTest >> testRepeatNoEffect [
 
-	| game effectRoulette|
+	| game repeatThrownByJuan|
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: NoEffect  new.
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	game nextTurn.
 	game nextTurn.
@@ -137,7 +107,9 @@ CardRepeatTest >> testRepeatNoEffect [
 		assert: (game lockerNumberOf: juan) equals: 7;
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 9.
-	game player: juan throw: (Repeat card: NullObject new target: nico).
+
+	repeatThrownByJuan := InstantCard type: Repeat new target: nico.
+	game player: juan throw: repeatThrownByJuan .
 	
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
@@ -150,19 +122,21 @@ CardRepeatTest >> testRepeatNoEffect [
 ]
 
 { #category : #tests }
-CardRepeatTest >> testRepeatPickUpCard [
+RepeatTest >> testRepeatPickUpCard [
 
-	| game effectRoulette  |
+	| game repeatThrownByJuan  |
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: NoEffect  new.
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	game nextTurn.
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 7;
 		assert: juan numberOfCards equals: 3.
-		
-	game player: juan throw: (Repeat card: NullObject target: juan).
+
+	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+	game player: juan throw: repeatThrownByJuan .
+	
 	self
 		assert: (game lockerNumberOf: juan) equals: 7;
 		assert: juan numberOfCards equals: 3.
@@ -173,11 +147,11 @@ CardRepeatTest >> testRepeatPickUpCard [
 ]
 
 { #category : #tests }
-CardRepeatTest >> testRepeatSpeedUp [
+RepeatTest >> testRepeatSpeedUp [
 
-	| game effectRoulette |
+	| game repeatThrownByJuan |
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: SpeedUp  new.
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	game nextTurn.
 	game nextTurn.
@@ -186,7 +160,9 @@ CardRepeatTest >> testRepeatSpeedUp [
 		assert: (game lockerNumberOf: juan) equals: 7;
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 13.
-	game player: juan throw: (Repeat card: NullObject new target: juan).
+
+	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+	game player: juan throw: repeatThrownByJuan .
 	
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
@@ -199,11 +175,11 @@ CardRepeatTest >> testRepeatSpeedUp [
 ]
 
 { #category : #tests }
-CardRepeatTest >> testRepeatWormHole [
+RepeatTest >> testRepeatWormHole [
 
-	| game effectRoulette|
+	| game repeatThrownByJuan|
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: WormHole new.
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: cards.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	game nextTurn.
 	game nextTurn.
@@ -213,7 +189,8 @@ CardRepeatTest >> testRepeatWormHole [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 5.
 		
-	game player: juan throw: (Repeat card: NullObject new target: nico).
+	repeatThrownByJuan := InstantCard type: Repeat new target: nico.
+	game player: juan throw: repeatThrownByJuan .
 	
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
@@ -226,14 +203,15 @@ CardRepeatTest >> testRepeatWormHole [
 ]
 
 { #category : #tests }
-CardRepeatTest >> testTryToThrowRepeatCardBeforeNobodyRolledDice [
+RepeatTest >> testTryToThrowRepeatCardBeforeNobodyRolledDice [
 
-	| game effectRoulette |
-	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: NoEffect new.
-	
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: cards.
+	| game repeatThrownByJuan |
+
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+
 	self 
-	should: [ game player: juan throw: (Repeat card: NullObject new target: juan) ]
+	should: [ game player: juan throw: repeatThrownByJuan ]
 		raise: InvalideRequest
 		withMessageText: 'Nobody rolled the dice yet'.
 		

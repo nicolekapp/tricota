@@ -1,5 +1,5 @@
 Class {
 	#name : #NoTarget,
 	#superclass : #Object,
-	#category : #'IngSoft2-Tests-Card-Test'
+	#category : #'IngSoft2-Model'
 }

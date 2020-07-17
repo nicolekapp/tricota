@@ -1,55 +1,16 @@
 Class {
-	#name : #CardAccelerationTest,
-	#superclass : #TestCase,
+	#name : #AccelerationTest,
+	#superclass : #CardTest,
 	#instVars : [
-		'die',
-		'juan',
-		'nico',
-		'players',
-		'effectRoulette',
 		'deck'
 	],
 	#category : #'IngSoft2-Tests-Card-Test'
 }
 
-{ #category : #tests }
-CardAccelerationTest >> aEffectRouletteWith100ProbabilityOf: effect [
-
-	|  effectRouletteBuilder |
-	effectRouletteBuilder:= EffectRouletteBuilder buildingDeterministicRoulette.
-	effectRouletteBuilder add: effect.
-	^effectRouletteBuilder buildDeterministic. 
-]
-
-{ #category : #accessing }
-CardAccelerationTest >> juan [
-	^ self playerNamed: 'Juan'.
-]
-
-{ #category : #accessing }
-CardAccelerationTest >> nico [
-	^ self playerNamed: 'Nico'.
-]
-
 { #category : #running }
-CardAccelerationTest >> playerNamed: aName [
-
-	^Player named: aName.
-]
-
-{ #category : #running }
-CardAccelerationTest >> setUp [
-|effectRouletteBuilder deckBuilder|
-	die := Die of: 10 rolling: #(7 9 3).
-	juan := self juan.
-	nico := self nico.
-	players := OrderedCollection new.
-	players
-		add: juan;
-		add: nico.
-	effectRouletteBuilder:= EffectRouletteBuilder buildingDeterministicRoulette.
-	effectRouletteBuilder add: NoEffect  new.
-	effectRoulette:= effectRouletteBuilder buildDeterministic. 
+AccelerationTest >> setUp [
+	|deckBuilder|
+	self setUpCard.
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder add: Acceleration new.
 	deck:= deckBuilder buildDeterministic .
@@ -57,13 +18,13 @@ CardAccelerationTest >> setUp [
 ]
 
 { #category : #tests }
-CardAccelerationTest >> testAccelerationCardApplysToEveryone [
+AccelerationTest >> testAccelerationCardApplysToEveryone [
 
 	| game accelerationThrownByJuan |
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	accelerationThrownByJuan := Card type: Acceleration new target: Target none.
+	accelerationThrownByJuan := PermanentCard type: Acceleration new target: Everyone new.
 	game player: juan throw: accelerationThrownByJuan .
 	
 	game nextTurn.
@@ -95,17 +56,17 @@ CardAccelerationTest >> testAccelerationCardApplysToEveryone [
 ]
 
 { #category : #tests }
-CardAccelerationTest >> testCantThrowAccelerationCardIfItsNotYourTurn [
+AccelerationTest >> testCantThrowAccelerationCardIfItsNotYourTurn [
 
 	| game accelerationThrownByJuan accelerationThrownByNico|
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	accelerationThrownByJuan := Card type: Acceleration new target: Target none.
-	accelerationThrownByNico := Card type: Acceleration new target: Target none.
+	accelerationThrownByJuan := PermanentCard type: Acceleration new target: Everyone new.
+	accelerationThrownByNico := PermanentCard type: Acceleration new target: Everyone new.
 	
 	self
-		should: [ game player: juan throw: accelerationThrownByNico ]
+		should: [ game player: nico throw: accelerationThrownByNico ]
 		raise: InvalideRequest 
 		withMessageText: 'It is not your turn'.
 	
@@ -118,20 +79,20 @@ CardAccelerationTest >> testCantThrowAccelerationCardIfItsNotYourTurn [
 ]
 
 { #category : #tests }
-CardAccelerationTest >> testThrowMoreThanOneAccelerationCard [
+AccelerationTest >> testThrowMoreThanOneAccelerationCard [
 
 	| game firstAccelerationThrownByJuan secondAccelerationThrownByJuan accelerationThrownByNico|
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	firstAccelerationThrownByJuan := Card type: Acceleration new target: Target none.
+	firstAccelerationThrownByJuan := PermanentCard type: Acceleration new target: Everyone new.
 	game player: juan throw: firstAccelerationThrownByJuan .
 	game nextTurn.
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 8.		
 					
-	accelerationThrownByNico := Card type: Acceleration new target: Target none.
+	accelerationThrownByNico := PermanentCard type: Acceleration new target: Everyone new.
 	game player: nico throw: accelerationThrownByNico.
 	game nextTurn.
 		self
@@ -140,7 +101,7 @@ CardAccelerationTest >> testThrowMoreThanOneAccelerationCard [
 			assert: (game lapNumberOf: nico) equals: 0;
 			assert: (game lockerNumberOf: nico) equals: 11.
 			
-	secondAccelerationThrownByJuan := Card type: Acceleration new target: Target none.
+	secondAccelerationThrownByJuan := PermanentCard type: Acceleration new target: Everyone new.
 	game player: juan throw: secondAccelerationThrownByJuan .
 	game nextTurn.
 		self

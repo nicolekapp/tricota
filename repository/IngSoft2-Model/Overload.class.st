@@ -5,11 +5,11 @@ Class {
 }
 
 { #category : #playing }
-Overload >> applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect and: finishLine of: game [
-	game savePermanentCard: self
+Overload >> effect: aPlayer [ 
+	^ -2.
 ]
 
-{ #category : #playing }
-Overload >> effect: aPlayer [ 
-	(target = aPlayer) ifTrue:[^-2] ifFalse:[^0].
+{ #category : #'as yet unclassified' }
+Overload >> initialiceCard [
+	^PermanentCard type: self
 ]

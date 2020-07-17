@@ -4,8 +4,13 @@ Class {
 	#category : #'IngSoft2-Model-Card'
 }
 
+{ #category : #'as yet unclassified' }
+Repeat >> applyIn: game to: aPlayer [ 
+	game applyRepeatCardTo: aPlayer.
+]
+
 { #category : #playing }
-Repeat >> applyWithin: playersWithPositions knowing: activeCards  the: lastEffect and: finishLine of: game [
+Repeat >> applyWithin: playersWithPositions playedBy: aPlayer knowing: activeCards the: lastEffect and: finishLine of: game [
 	
 	|actualPosition positionWithEffect|
 	self assertSomeoneRolledDice: lastEffect .
@@ -15,13 +20,12 @@ Repeat >> applyWithin: playersWithPositions knowing: activeCards  the: lastEffec
 	game lastCardPlayed: self.
 ]
 
-{ #category : #assertions }
-Repeat >> assertSomeoneRolledDice: lastEffect [ 
-	(lastEffect = 'No effect yet')
-		ifTrue: [ InvalideRequest signal: 'Nobody rolled the dice yet' ]
-]
-
 { #category : #playing }
 Repeat >> currentPositionOfTargetIn: playersWithPositions [
 	^ playersWithPositions at: target
+]
+
+{ #category : #'as yet unclassified' }
+Repeat >> initialiceCard [
+	^InstantCard type: self
 ]

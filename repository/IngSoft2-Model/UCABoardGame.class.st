@@ -50,6 +50,38 @@ UCABoardGame >> applyEffectTo: positionAfterRollingDice of: currentPlayer [
 	^lastEffect applyEffectTo: positionAfterRollingDice	knowing: playersWithPositions the: currentPlayer and: finishLine aaaaaaaaaaaaaaaaaaaaaa: deck
 ]
 
+{ #category : #'as yet unclassified' }
+UCABoardGame >> applyRepeatCardTo: target [ 
+	|actualPosition positionWithEffect|
+	self assertSomeoneRolledDice: lastEffect .
+	actualPosition:= (playersWithPositions at: target)lockerPosition.
+	positionWithEffect := lastEffect applyEffectTo: actualPosition knowing: playersWithPositions the: target and: finishLine aaaaaaaaaaaaaaaaaaaaaa: deck.
+	(playersWithPositions at: target) moveTo: positionWithEffect knowing: finishLine .
+
+]
+
+{ #category : #'as yet unclassified' }
+UCABoardGame >> applyReverseCard [
+	self changeCourse .
+]
+
+{ #category : #'as yet unclassified' }
+UCABoardGame >> applySkipCard [
+	self skipTurn.
+]
+
+{ #category : #'as yet unclassified' }
+UCABoardGame >> assertItsPlayersTurn: aPlayer [ 
+	(aPlayer = sequenceOfPlayers nextPlayerWithoutChangingCurrent )
+		ifFalse: [ InvalideRequest signal: 'It is not your turn' ]
+]
+
+{ #category : #assertions }
+UCABoardGame >> assertSomeoneRolledDice: lastEffect [ 
+	(lastEffect = 'No effect yet')
+		ifTrue: [ InvalideRequest signal: 'Nobody rolled the dice yet' ]
+]
+
 { #category : #assertions }
 UCABoardGame >> assertTheGameHasFinished [
 	(self hasFinished)
@@ -172,8 +204,9 @@ UCABoardGame >> player: aPlayer throw: card [
 
 	self assertTheGameHasNotFinished.
 	aPlayer assertHasCard: card.
-	card applyWithin: playersWithPositions knowing: activeCards the: lastEffect and: finishLine of: self.
-	"card applyToaaaa: self."
+	card thrownBy: aPlayer inTheTurnOf: sequenceOfPlayers nextPlayerWithoutChangingCurrent .
+	"card applyWithin: playersWithPositions playedBy: aPlayer knowing: activeCards the: lastEffect and: finishLine of: self."
+	card applyIn: self.
 	aPlayer cardPlayed: card.
 	
 ]

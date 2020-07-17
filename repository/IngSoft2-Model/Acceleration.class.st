@@ -10,13 +10,11 @@ Acceleration >> applyToaaaa: aGame [
 ]
 
 { #category : #playing }
-Acceleration >> applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect and: finishLine of: game [
-	game assertItsPlayersTurn.
-	game savePermanentCard: self.
-	game lastCardPlayed: self.
-]
-
-{ #category : #playing }
 Acceleration >> effect: aPlayer [ 
 	^1.
+]
+
+{ #category : #'as yet unclassified' }
+Acceleration >> initialiceCard [
+	^PermanentCard type: self.
 ]

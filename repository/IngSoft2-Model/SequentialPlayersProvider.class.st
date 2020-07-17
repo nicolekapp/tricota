@@ -65,14 +65,9 @@ SequentialPlayersProvider >> nextPlayer [
 ]
 
 { #category : #providing }
-SequentialPlayersProvider >> nextPlayerWithoutChanging [
-	| nextPlayer |
-"	self assertItsAReguarTurn
-		ifTrue: [ nextPlayer := self regularTurn ]
-		ifFalse: [ nextPlayer := self specialTurn ]."
-	nextPlayer := sequence current.
-	sequence next.
-	^ nextPlayer
+SequentialPlayersProvider >> nextPlayerWithoutChangingCurrent [
+
+	^ sequence current 
 ]
 
 { #category : #providing }

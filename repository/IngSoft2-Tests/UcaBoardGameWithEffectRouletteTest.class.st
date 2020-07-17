@@ -90,11 +90,11 @@ UcaBoardGameWithEffectRouletteTest >> testDeterministicPickUpCardEffect [
 	
 	game nextTurn.
 	self assert: juan numberOfCards equals: 3.
-	self assert: (juan assertHasCard: (Card type: Repeat new )).
+	self assert: (juan assertHasCard: (PermanentCard type: Repeat new )).
 
 	game nextTurn.
 	self assert: nico numberOfCards equals: 3.
-	self assert: (nico assertHasCard: (Card type: Overload new )).
+	self assert: (nico assertHasCard: (PermanentCard type: Overload new )).
 	
 ]
 
