@@ -21,6 +21,11 @@ CardTest >> aEffectRouletteWith100ProbabilityOf: effect [
 ]
 
 { #category : #accessing }
+CardTest >> finish: game [
+	self play: game amountOfTurns: 4
+]
+
+{ #category : #accessing }
 CardTest >> juan [
 	^ self playerNamed: 'Juan'.
 ]
@@ -28,6 +33,11 @@ CardTest >> juan [
 { #category : #accessing }
 CardTest >> nico [
 	^ self playerNamed: 'Nico'.
+]
+
+{ #category : #tests }
+CardTest >> play: anUCABoardGame amountOfTurns: anInteger [ 
+	1 to: anInteger do: [ :number | anUCABoardGame nextTurn ].
 ]
 
 { #category : #accessing }
@@ -50,4 +60,24 @@ CardTest >> setUpCard [
 		buildingDeterministicRoulette.
 	effectRouletteBuilder add: NoEffect new.
 	effectRoulette := effectRouletteBuilder buildDeterministic
+]
+
+{ #category : #tests }
+CardTest >> testPlayerCanNotThrowCardAfterTheGameHasFinished [
+
+	| game deck deckBuilder |
+	self setUpCard.
+	deckBuilder:= DeckBuilder startBuilding.
+	deckBuilder add: Acceleration new.
+	deck:= deckBuilder buildDeterministic .
+	
+	game:= UCABoardGame rolling: die with: players lockers: 8 laps: 2 effects: effectRoulette and: deck.
+	self finish: game.
+	
+	self 
+	should: [ game player: juan throw: (PermanentCard type: Acceleration new target: Everyone new) ]
+		raise: InvalideRequest
+		withMessageText: 'The game has finished'.
+	
+	
 ]

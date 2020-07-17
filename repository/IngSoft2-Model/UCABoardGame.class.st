@@ -42,6 +42,12 @@ UCABoardGame >> amountOfLockersThatActiveCardsMove: currentPlayer [
 	^amountOfLockers.
 ]
 
+{ #category : #'as yet unclassified' }
+UCABoardGame >> applyCancellationCardTo: aCard [ 
+	activeCards remove: aCard 
+	
+]
+
 { #category : #playing }
 UCABoardGame >> applyEffectTo: positionAfterRollingDice of: currentPlayer [
 

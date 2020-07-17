@@ -7,6 +7,11 @@ Class {
 	#category : #'IngSoft2-Model-Card'
 }
 
+{ #category : #'as yet unclassified' }
+Cancellation >> applyIn: game to: aCard [ 
+	game applyCancellationCardTo: aCard 
+]
+
 { #category : #playing }
 Cancellation >> applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect and: finishLine of: game [
 	
@@ -18,6 +23,11 @@ Cancellation >> applyWithin: aPlayersWithPositions knowing: activeCards the: las
 { #category : #playing }
 Cancellation >> assertTheCardToRemoveIs: currentCard [
 	^ currentCard = card and: currentCard target = target
+]
+
+{ #category : #'as yet unclassified' }
+Cancellation >> initialiceCard [
+	^ InstantCard type: self
 ]
 
 { #category : #playing }

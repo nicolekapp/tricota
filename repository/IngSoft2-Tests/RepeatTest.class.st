@@ -18,16 +18,6 @@ RepeatTest >> buildEffectRouletteWhereSecondEffectIs: anEffect [
 	^effectRouletteBuilder buildDeterministic. 
 ]
 
-{ #category : #accessing }
-RepeatTest >> finish: game [
-	self play: game amountOfTurns: 4
-]
-
-{ #category : #tests }
-RepeatTest >> play: anUCABoardGame amountOfTurns: anInteger [ 
-	1 to: anInteger do: [ :number | anUCABoardGame nextTurn ].
-]
-
 { #category : #running }
 RepeatTest >> setUp [
 	| deckBuilder |
