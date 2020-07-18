@@ -7,6 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 Skip >> applyIn: game to: aTarget [  
 	game applySkipCard.
+	^self initialiceCard 
 ]
 
 { #category : #playing }

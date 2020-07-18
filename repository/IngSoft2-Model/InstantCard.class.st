@@ -20,9 +20,11 @@ InstantCard class >> type: aType target: aPlayer [
 
 { #category : #'as yet unclassified' }
 InstantCard >> applyIn: game [
+	
+	| lastCardPlayed |
+	lastCardPlayed := type applyIn: game to: target.
+	game lastCardPlayed: lastCardPlayed.
 
-	type applyIn: game to: target.
-	game lastCardPlayed: self.
 ]
 
 { #category : #'as yet unclassified' }

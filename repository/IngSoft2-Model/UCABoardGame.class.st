@@ -68,7 +68,8 @@ UCABoardGame >> applyRedoCardTo: target [
 	| cardRedoed |
 	self assertSomeoneThrewCard.
 	cardRedoed := lastCardPlayed type initialiceCardWithTarget: target.
-	cardRedoed applyIn: self
+	cardRedoed applyIn: self.
+	^ cardRedoed.
 
 ]
 

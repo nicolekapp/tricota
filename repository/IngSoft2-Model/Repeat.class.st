@@ -7,6 +7,7 @@ Class {
 { #category : #'as yet unclassified' }
 Repeat >> applyIn: game to: aPlayer [ 
 	game applyRepeatCardTo: aPlayer.
+	^self initialiceCard .
 ]
 
 { #category : #playing }

@@ -6,7 +6,8 @@ Class {
 
 { #category : #'as yet unclassified' }
 Double >> applyIn: game to: noTarget [ 
-	game applyDoubleCard
+	game applyDoubleCard.
+	^self initialiceCard .
 ]
 
 { #category : #playing }

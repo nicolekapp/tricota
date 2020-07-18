@@ -6,7 +6,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 Redo >> applyIn: game to: aTarget [ 
-	game applyRedoCardTo: aTarget 
+	^ game applyRedoCardTo: aTarget 
 ]
 
 { #category : #playing }

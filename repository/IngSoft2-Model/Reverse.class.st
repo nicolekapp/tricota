@@ -6,7 +6,8 @@ Class {
 
 { #category : #'as yet unclassified' }
 Reverse >> applyIn: game to: aTarget [ 
-	game applyReverseCard
+	game applyReverseCard.
+	^self initialiceCard 
 ]
 
 { #category : #playing }

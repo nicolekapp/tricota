@@ -9,7 +9,8 @@ Class {
 
 { #category : #'as yet unclassified' }
 Cancellation >> applyIn: game to: aCard [ 
-	game applyCancellationCardTo: aCard 
+	game applyCancellationCardTo: aCard.
+	^ self initialiceCard 
 ]
 
 { #category : #playing }
