@@ -13,3 +13,8 @@ Double >> applyWithin: playersWithPositions knowing: activeCards  the: lastEffec
 Double >> initialiceCard [
 	^InstantCard type: self.
 ]
+
+{ #category : #'as yet unclassified' }
+Double >> initialiceCardWithTarget: aTarget [
+	^InstantCard type: self target: aTarget .
+]

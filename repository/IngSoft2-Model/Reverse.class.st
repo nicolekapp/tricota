@@ -18,3 +18,8 @@ Reverse >> applyWithin: aCollection knowing: aCollection2 the: aNoEffect and: an
 Reverse >> initialiceCard [
 	^InstantCard type: self.
 ]
+
+{ #category : #'as yet unclassified' }
+Reverse >> initialiceCardWithTarget: aTarget [
+	^InstantCard type: self target: aTarget .
+]

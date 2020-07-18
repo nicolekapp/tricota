@@ -22,7 +22,7 @@ CardTest >> aEffectRouletteWith100ProbabilityOf: effect [
 
 { #category : #accessing }
 CardTest >> finish: game [
-	self play: game amountOfTurns: 4
+	self play: game amountOfTurns: 5
 ]
 
 { #category : #accessing }
@@ -62,10 +62,10 @@ CardTest >> setUpCard [
 	effectRoulette := effectRouletteBuilder buildDeterministic
 ]
 
-{ #category : #tests }
-CardTest >> testPlayerCanNotThrowCardAfterTheGameHasFinished [
+{ #category : #running }
+CardTest >> testPlayerCanNotThrowAnyCardAfterTheGameHasFinished [
 
-	| game deck deckBuilder effectRouletteBuilder sofi cardToCancell|
+	| game deck deckBuilder effectRouletteBuilder cardToCancell|
 	self setUpCard.
 	effectRouletteBuilder := EffectRouletteBuilder buildingDeterministicRoulette.
 	effectRouletteBuilder add: PickUpCard new.
@@ -83,10 +83,7 @@ CardTest >> testPlayerCanNotThrowCardAfterTheGameHasFinished [
 					add: Speed new.
 	deck:= deckBuilder buildDeterministic .
 	
-	sofi := (self playerNamed: 'Sofi').
-	players add: sofi.
-	
-	game:= UCABoardGame rolling: die with: players lockers: 8 laps: 2 effects: effectRoulette and: deck.
+	game:= UCABoardGame rolling: die with: players lockers: 9 laps: 2 effects: effectRoulette and: deck.
 	self finish: game.
 	cardToCancell:= PermanentCard type: Acceleration new target: Everyone new.
 	
@@ -98,6 +95,33 @@ CardTest >> testPlayerCanNotThrowCardAfterTheGameHasFinished [
 	should: [ game player: nico throw: (InstantCard type: Cancellation new target: cardToCancell) ]
 		raise: InvalideRequest
 		withMessageText: 'The game has finished'.
-	
+	self 
+	should: [ game player: juan throw: (InstantCard type: Double new) ]
+		raise: InvalideRequest
+		withMessageText: 'The game has finished'.
+	self 
+	should: [ game player: nico throw: (PermanentCard type: Overload new target: juan) ]
+		raise: InvalideRequest
+		withMessageText: 'The game has finished'.
+	self 
+	should: [ game player: juan throw: (InstantCard type: Redo new target: nico) ]
+		raise: InvalideRequest
+		withMessageText: 'The game has finished'.
+	self 
+	should: [ game player: nico throw: (InstantCard type: Repeat new target: nico) ]
+		raise: InvalideRequest
+		withMessageText: 'The game has finished'.
+	self 
+	should: [ game player: juan throw: (InstantCard type: Reverse new) ]
+		raise: InvalideRequest
+		withMessageText: 'The game has finished'.
+	self 
+	should: [ game player: nico throw: (InstantCard type: Skip new) ]
+		raise: InvalideRequest
+		withMessageText: 'The game has finished'.
+	self 
+	should: [ game player: nico throw: (PermanentCard type: Speed new target: nico) ]
+		raise: InvalideRequest
+		withMessageText: 'The game has finished'.
 	
 ]

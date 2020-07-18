@@ -19,3 +19,8 @@ Skip >> applyWithin: playersWithPositions knowing: activeCards  the: lastEffect 
 Skip >> initialiceCard [
 	^InstantCard type: self
 ]
+
+{ #category : #'as yet unclassified' }
+Skip >> initialiceCardWithTarget: aTarget [
+	^InstantCard type: self target: aTarget .
+]

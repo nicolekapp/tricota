@@ -13,3 +13,8 @@ Speed >> effect: aPlayer [
 Speed >> initialiceCard [
 	^PermanentCard type: self
 ]
+
+{ #category : #'as yet unclassified' }
+Speed >> initialiceCardWithTarget: aTarget [
+	^PermanentCard type: self target: aTarget .
+]

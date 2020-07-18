@@ -29,3 +29,8 @@ Repeat >> currentPositionOfTargetIn: playersWithPositions [
 Repeat >> initialiceCard [
 	^InstantCard type: self
 ]
+
+{ #category : #'as yet unclassified' }
+Repeat >> initialiceCardWithTarget: aTarget [
+	^InstantCard type: self target: aTarget .
+]

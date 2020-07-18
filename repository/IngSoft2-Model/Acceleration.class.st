@@ -18,3 +18,8 @@ Acceleration >> effect: aPlayer [
 Acceleration >> initialiceCard [
 	^PermanentCard type: self.
 ]
+
+{ #category : #'as yet unclassified' }
+Acceleration >> initialiceCardWithTarget: aTarget [
+	^PermanentCard type: self target: aTarget .
+]

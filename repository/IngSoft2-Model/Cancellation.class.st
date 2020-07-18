@@ -30,6 +30,11 @@ Cancellation >> initialiceCard [
 	^ InstantCard type: self
 ]
 
+{ #category : #'as yet unclassified' }
+Cancellation >> initialiceCardWithTarget: aTarget [
+	^InstantCard type: self target: aTarget .
+]
+
 { #category : #playing }
 Cancellation >> removeCardFrom: activeCards [
 	activeCards

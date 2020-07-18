@@ -57,6 +57,16 @@ UCABoardGame >> applyEffectTo: positionAfterRollingDice of: currentPlayer [
 ]
 
 { #category : #'as yet unclassified' }
+UCABoardGame >> applyRedoCardTo: target [ 
+
+	| cardRedoed |
+	self assertSomeoneThrewCard.
+	cardRedoed := lastCardPlayed type initialiceCardWithTarget: target.
+	cardRedoed applyIn: self
+
+]
+
+{ #category : #'as yet unclassified' }
 UCABoardGame >> applyRepeatCardTo: target [ 
 	|actualPosition positionWithEffect|
 	self assertSomeoneRolledDice: lastEffect .
@@ -86,6 +96,18 @@ UCABoardGame >> assertItsPlayersTurn: aPlayer [
 UCABoardGame >> assertSomeoneRolledDice: lastEffect [ 
 	(lastEffect = 'No effect yet')
 		ifTrue: [ InvalideRequest signal: 'Nobody rolled the dice yet' ]
+]
+
+{ #category : #playing }
+UCABoardGame >> assertSomeoneThrewCard [
+	(lastCardPlayed = 'No card has been played yet')
+		ifTrue: [ InvalideRequest signal: 'Nobody threw a card yet' ]
+]
+
+{ #category : #playing }
+UCABoardGame >> assertSomeoneThrewCard: lastCardPlayed [  
+	(lastCardPlayed = 'No card has been played yet')
+		ifTrue: [ InvalideRequest signal: 'Nobody threw a card yet' ]
 ]
 
 { #category : #assertions }

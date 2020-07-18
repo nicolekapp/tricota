@@ -4,6 +4,11 @@ Class {
 	#category : #'IngSoft2-Model-Card'
 }
 
+{ #category : #'as yet unclassified' }
+Redo >> applyIn: game to: aTarget [ 
+	game applyRedoCardTo: aTarget 
+]
+
 { #category : #playing }
 Redo >> applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect and: finishLine of: game [
 	
@@ -13,13 +18,12 @@ Redo >> applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect 
 	lastCard applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect and: finishLine of: game
 ]
 
-{ #category : #playing }
-Redo >> assertSomeoneThrewCard: lastCardPlayed [  
-	(lastCardPlayed = 'No card has been played yet')
-		ifTrue: [ InvalideRequest signal: 'Nobody threw a card yet' ]
-]
-
 { #category : #'as yet unclassified' }
 Redo >> initialiceCard [
 	^InstantCard type: self.
+]
+
+{ #category : #'as yet unclassified' }
+Redo >> initialiceCardWithTarget: aTarget [
+	^InstantCard type: self target: aTarget .
 ]

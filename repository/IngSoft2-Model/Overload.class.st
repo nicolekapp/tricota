@@ -13,3 +13,8 @@ Overload >> effect: aPlayer [
 Overload >> initialiceCard [
 	^PermanentCard type: self
 ]
+
+{ #category : #'as yet unclassified' }
+Overload >> initialiceCardWithTarget: aTarget [
+	^PermanentCard type: self target: aTarget .
+]
