@@ -8,3 +8,8 @@ Class {
 Double >> applyWithin: playersWithPositions knowing: activeCards  the: lastEffect and: finishLine of: game [
 	game doubleNextPlayer.
 ]
+
+{ #category : #'as yet unclassified' }
+Double >> initialiceCard [
+	^InstantCard type: self.
+]

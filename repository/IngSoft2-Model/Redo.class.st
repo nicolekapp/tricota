@@ -18,3 +18,8 @@ Redo >> assertSomeoneThrewCard: lastCardPlayed [
 	(lastCardPlayed = 'No card has been played yet')
 		ifTrue: [ InvalideRequest signal: 'Nobody threw a card yet' ]
 ]
+
+{ #category : #'as yet unclassified' }
+Redo >> initialiceCard [
+	^InstantCard type: self.
+]
