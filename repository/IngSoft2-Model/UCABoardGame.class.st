@@ -17,7 +17,8 @@ Class {
 		'finishLine',
 		'activeCards',
 		'lastCardPlayed',
-		'deck'
+		'deck',
+		'timesToRoll'
 	],
 	#category : #'IngSoft2-Model-Game'
 }
@@ -46,6 +47,11 @@ UCABoardGame >> amountOfLockersThatActiveCardsMove: currentPlayer [
 UCABoardGame >> applyCancellationCardTo: aCard [ 
 	activeCards remove: aCard 
 	
+]
+
+{ #category : #'as yet unclassified' }
+UCABoardGame >> applyDoubleCard [
+	timesToRoll := timesToRoll + 1.
 ]
 
 { #category : #playing }
@@ -180,6 +186,7 @@ UCABoardGame >> initializeDictionaryOfPositions: aGroupOfPlayers [
 { #category : #initialization }
 UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: anEffectRoulette and: aDeck [
 	dice:= aDice.
+	timesToRoll := 1.
 	playersWithPositions:= self initializeDictionaryOfPositions: aGroupOfPlayers.
 	sequenceOfPlayers:= (SequentialPlayersProvider providing: aGroupOfPlayers).
 	finishLine:= aNumberOfLockers.
@@ -215,13 +222,12 @@ UCABoardGame >> lockerNumberOf: aPlayer [
 
 { #category : #playing }
 UCABoardGame >> nextTurn [
-
 	| currentPlayer positionAfterRollingDice positionAfterCards positionAfterEffectAndCards currentPlayerPosition |
 	self assertTheGameHasNotFinished.
 	currentPlayer := sequenceOfPlayers nextPlayer.
-	currentPlayerPosition:= playersWithPositions at: currentPlayer.
-	positionAfterRollingDice := (self currentPositionOf: currentPlayer)lockerPosition + dice roll.
-	positionAfterCards := (self amountOfLockersThatActiveCardsMove: currentPlayer)+ positionAfterRollingDice .
+	currentPlayerPosition := playersWithPositions at: currentPlayer.
+	positionAfterRollingDice := (self currentPositionOf: currentPlayer) lockerPosition + self rollDiceApropiateAmountOfTimes.
+	positionAfterCards := (self amountOfLockersThatActiveCardsMove: currentPlayer) + positionAfterRollingDice.
 	positionAfterEffectAndCards := self applyEffectTo: positionAfterCards of: currentPlayer.
 	currentPlayerPosition moveTo: positionAfterEffectAndCards knowing: finishLine.
 	self assertTheWinnerIs: currentPlayer
@@ -248,6 +254,15 @@ UCABoardGame >> players [
 UCABoardGame >> playersPositions [
 	
 	^ PositionTable filledWith: playersWithPositions.
+]
+
+{ #category : #playing }
+UCABoardGame >> rollDiceApropiateAmountOfTimes [
+	|rolledNumber|
+	rolledNumber := 0.
+	timesToRoll timesRepeat: [rolledNumber := rolledNumber + dice roll].
+	timesToRoll := 1.
+	^ rolledNumber 
 ]
 
 { #category : #cards }
