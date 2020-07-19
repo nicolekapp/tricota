@@ -16,7 +16,7 @@ Class {
 		'lastEffect',
 		'finishLine',
 		'activeCards',
-		'lastCardPlayed',
+		'typeLastCardPlayed',
 		'deck',
 		'timesToRoll'
 	],
@@ -27,11 +27,6 @@ Class {
 UCABoardGame class >> rolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: cards [
 
 	^self new initializeRolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: cards.
-]
-
-{ #category : #'as yet unclassified' }
-UCABoardGame class >> rolling: aDie with: players lockers: numberOfLockers laps: numberOfLaps effects: anEffectRoulette andDeterministic: sequenceOfCards [ 
-	^self new initializeRolling: aDie with: players lockers: numberOfLockers  laps: numberOfLaps  effects: anEffectRoulette andDeterministic: sequenceOfCards.
 ]
 
 { #category : #playing }
@@ -67,9 +62,10 @@ UCABoardGame >> applyRedoCardTo: target [
 
 	| cardRedoed |
 	self assertSomeoneThrewCard.
-	cardRedoed := lastCardPlayed type initialiceCardWithTarget: target.
+	cardRedoed := typeLastCardPlayed class initializeCardWithTarget: target.
 	cardRedoed applyIn: self.
-	^ cardRedoed.
+	^ typeLastCardPlayed
+
 
 ]
 
@@ -107,7 +103,7 @@ UCABoardGame >> assertSomeoneRolledDice: lastEffect [
 
 { #category : #playing }
 UCABoardGame >> assertSomeoneThrewCard [
-	(lastCardPlayed = 'No card has been played yet')
+	(typeLastCardPlayed = 'No card has been played yet')
 		ifTrue: [ InvalideRequest signal: 'Nobody threw a card yet' ]
 ]
 
@@ -196,7 +192,7 @@ UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberO
 	activeCards := OrderedCollection new.
 	winner := 'No Winner'.
 	lastEffect := 'No effect yet'.
-	lastCardPlayed:= 'No card has been played yet'.
+	typeLastCardPlayed:= 'No card has been played yet'.
 	deck := aDeck.
 	deck dealTwoCardsToEachPlayerFrom: aGroupOfPlayers  
 ]
@@ -204,16 +200,6 @@ UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberO
 { #category : #position }
 UCABoardGame >> lapNumberOf: aPlayer [ 
 	^ (self currentPositionOf: aPlayer) lapNumber.
-]
-
-{ #category : #cards }
-UCABoardGame >> lastCardPlayed [
-	^ lastCardPlayed
-]
-
-{ #category : #cards }
-UCABoardGame >> lastCardPlayed: aCard [
-	lastCardPlayed := aCard
 ]
 
 { #category : #position }
@@ -275,6 +261,16 @@ UCABoardGame >> savePermanentCard: aCard [
 { #category : #playing }
 UCABoardGame >> skipTurn [
 	sequenceOfPlayers nextPlayer.
+]
+
+{ #category : #cards }
+UCABoardGame >> typeLastCardPlayed [
+	^ typeLastCardPlayed
+]
+
+{ #category : #cards }
+UCABoardGame >> typeLastCardPlayed: aCard [
+	typeLastCardPlayed := aCard
 ]
 
 { #category : #playing }

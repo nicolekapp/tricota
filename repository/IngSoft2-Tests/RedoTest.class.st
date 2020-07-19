@@ -20,13 +20,13 @@ RedoTest >> testRedoAccelerationCard [
 
 	| game  deckBuilder accelerationThrownByJuan redoThrownByJuan|
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Acceleration new;
-					add: Redo new.
+	deckBuilder add: Acceleration ;
+					add: Redo .
 	deck := deckBuilder buildDeterministic.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	accelerationThrownByJuan := PermanentCard type: Acceleration new target: Everyone new.
+	accelerationThrownByJuan := Acceleration initializeCard .
 	game player: juan throw: accelerationThrownByJuan.
 	game nextTurn.
 	self
@@ -40,7 +40,7 @@ RedoTest >> testRedoAccelerationCard [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 10.
 		
-	redoThrownByJuan := InstantCard type: Redo new target: Everyone new.
+	redoThrownByJuan := Redo initializeCardWithTarget: Everyone new.
 	game player: juan throw: redoThrownByJuan .
 	game nextTurn.
 	self
@@ -58,20 +58,20 @@ RedoTest >> testRedoCancellationCard [
 
 	| game  deckBuilder accelerationThrownByJuan accelerationThrownByNico cancellationThrownByJuan redoThrownByNico|
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Acceleration new;
-					add: Cancellation new;
-					add: Redo new.
+	deckBuilder add: Acceleration ;
+					add: Cancellation ;
+					add: Redo .
 	deck := deckBuilder buildDeterministic.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	accelerationThrownByJuan := PermanentCard type: Acceleration new target: Everyone new.
+	accelerationThrownByJuan := Acceleration initializeCard .
 	game player: juan throw: accelerationThrownByJuan .
 	game nextTurn.
 		self
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 8.
 		
-	accelerationThrownByNico := PermanentCard type: Acceleration new target: Everyone new.
+	accelerationThrownByNico := Acceleration initializeCard .
 	game player: nico throw: accelerationThrownByNico .
 	game nextTurn.
 	self
@@ -80,7 +80,7 @@ RedoTest >> testRedoCancellationCard [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 11.
 		
-	cancellationThrownByJuan := InstantCard type: Cancellation new target: accelerationThrownByJuan.
+	cancellationThrownByJuan := Cancellation initializeCardWithTarget: accelerationThrownByJuan.
 	game player: juan throw: cancellationThrownByJuan .
 	game nextTurn.
 	self
@@ -89,7 +89,7 @@ RedoTest >> testRedoCancellationCard [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 11.
 		
-	redoThrownByNico := InstantCard type: Redo new target: accelerationThrownByNico.
+	redoThrownByNico := Redo initializeCardWithTarget: accelerationThrownByNico.
 	game player: nico throw: redoThrownByNico .
 	game nextTurn.
 	self
@@ -102,17 +102,90 @@ RedoTest >> testRedoCancellationCard [
 ]
 
 { #category : #tests }
-RedoTest >> testRedoRedoCard [
+RedoTest >> testRedoDoubleCard [
 
-	| game  deckBuilder accelerationThrownByJuan redoThrownByJuan redoThrownByNico|
+	| game deckBuilder doubleThrownByJuan redoThrownByNico|
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Acceleration new;
-					add: Redo new.
+	deckBuilder add: Double ;
+					add: Redo .
+	deck := deckBuilder buildDeterministic.
+
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	
+	doubleThrownByJuan := Double initializeCard .
+	game player: juan throw: doubleThrownByJuan.
+
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 16;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0.
+	
+	redoThrownByNico := Redo initializeCard .
+	game player: nico throw: redoThrownByNico .
+	
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 16;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 10.
+	
+]
+
+{ #category : #tests }
+RedoTest >> testRedoOverloadCard [
+
+	| game  deckBuilder overloadThrownByJuan redoThrownByNico|
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder add: Overload ;
+					add: Redo .
 	deck := deckBuilder buildDeterministic.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	accelerationThrownByJuan := PermanentCard type: Acceleration new target: Everyone new.
+	overloadThrownByJuan := Overload initializeCardWithTarget: nico.
+	game player: juan throw: overloadThrownByJuan.
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0.
+
+	redoThrownByNico := Redo initializeCardWithTarget: juan.
+	game player: nico throw: redoThrownByNico .
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 7.
+		
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 8;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 7.
+	
+
+	
+]
+
+{ #category : #tests }
+RedoTest >> testRedoRedoCard [
+
+	| game  deckBuilder accelerationThrownByJuan redoThrownByJuan redoThrownByNico|
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder add: Acceleration ;
+					add: Redo .
+	deck := deckBuilder buildDeterministic.
+	
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	
+	accelerationThrownByJuan := Acceleration initializeCardWithTarget: Everyone new.
 	game player: juan throw: accelerationThrownByJuan.
 	game nextTurn.
 		self
@@ -126,7 +199,7 @@ RedoTest >> testRedoRedoCard [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 10.
 		
-	redoThrownByJuan := InstantCard type: Redo new target: Everyone new.
+	redoThrownByJuan := Redo initializeCardWithTarget: Everyone new.
 	game player: juan throw: redoThrownByJuan .
 	game nextTurn.
 	self
@@ -135,7 +208,7 @@ RedoTest >> testRedoRedoCard [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 10.
 		
-	redoThrownByNico := InstantCard type: Redo new target: Everyone new.
+	redoThrownByNico := Redo initializeCardWithTarget: Everyone new.
 	game player: nico throw: redoThrownByNico .
 	game nextTurn.
 	self
@@ -153,9 +226,9 @@ RedoTest >> testRedoRepeatCard [
 
 	|game deckBuilder effectRouletteBuilder repeatThrownByJuan redoThrownByNico |
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Acceleration new;
-					add: Repeat new;
-					add: Redo new.
+	deckBuilder add: Acceleration ;
+					add: Repeat ;
+					add: Redo .
 	deck := deckBuilder buildDeterministic.
 
 	effectRouletteBuilder:= EffectRouletteBuilder buildingDeterministicRoulette.
@@ -170,7 +243,7 @@ RedoTest >> testRedoRepeatCard [
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 7.
 		
-	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
 	game player: juan throw: repeatThrownByJuan .
 	game nextTurn.
 	self
@@ -186,7 +259,7 @@ RedoTest >> testRedoRepeatCard [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 9.
 		
-	redoThrownByNico := InstantCard type: Redo new target: nico.
+	redoThrownByNico := Redo initializeCardWithTarget: nico.
 	game player: juan throw: redoThrownByNico .
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
@@ -198,11 +271,103 @@ RedoTest >> testRedoRepeatCard [
 ]
 
 { #category : #tests }
+RedoTest >> testRedoSkipCard [
+
+	| game sofi deckBuilder reverseThrownBySofi redoThrownByNico|
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder add: Reverse ;
+					add: Redo .
+	deck := deckBuilder buildDeterministic.
+	sofi := self playerNamed: 'Sofi'.
+	players add: sofi.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0;
+		assert: (game lapNumberOf: sofi) equals: 0;
+		assert: (game lockerNumberOf: sofi) equals: 0.
+	
+	reverseThrownBySofi := Reverse initializeCard .
+	game player: sofi throw: reverseThrownBySofi.
+	
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0;
+		assert: (game lapNumberOf: sofi) equals: 0;
+		assert: (game lockerNumberOf: sofi) equals: 9.
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 3;
+		assert: (game lapNumberOf: sofi) equals: 0;
+		assert: (game lockerNumberOf: sofi) equals: 9.
+	redoThrownByNico := Redo initializeCard .
+	game player: nico throw: redoThrownByNico .
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 3;
+		assert: (game lapNumberOf: sofi) equals: 0;
+		assert: (game lockerNumberOf: sofi) equals: 16.
+]
+
+{ #category : #tests }
+RedoTest >> testRedoSpeedCard [
+
+	| game  deckBuilder speedThrownByJuan redoThrownByNico|
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder add: Speed ;
+					add: Redo .
+	deck := deckBuilder buildDeterministic.
+	
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	
+	speedThrownByJuan := Speed initializeCardWithTarget: juan.
+	game player: juan throw: speedThrownByJuan.
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 8;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0.
+
+	redoThrownByNico := Redo initializeCardWithTarget: nico.
+	game player: nico throw: redoThrownByNico .
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 8;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 10.
+		
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 12;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 10.
+	
+
+	
+]
+
+{ #category : #tests }
 RedoTest >> testTryToThrowRedoCardBeforeNobodyThrewAnyCard [
 
 	| game deckBuilder|
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Redo new.
+	deckBuilder add: Redo .
 	deck := deckBuilder buildDeterministic.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
@@ -220,7 +385,7 @@ RedoTest >> testTryToThrowRedoCardBeforeNobodyThrewAnyCard [
 		assert: (game lockerNumberOf: nico) equals: 9.
 
 	self 
-	should: [ game player: juan throw: (InstantCard type: Redo new) ]
+	should: [ game player: juan throw: Redo initializeCard ]
 		raise: InvalideRequest
 		withMessageText: 'Nobody threw a card yet'.
 		

@@ -42,12 +42,12 @@ UcaBoardGameWithEffectRouletteTest >> setUp [
 	|deckBuilder|
 
 	deckBuilder:= DeckBuilder startBuilding.
-	deckBuilder add: Acceleration new;
-					add: Acceleration new;
-					add: Acceleration new;
-					add: Acceleration new;
-					add: Repeat new;
-					add: Overload new.
+	deckBuilder add: Acceleration ;
+					add: Acceleration ;
+					add: Acceleration ;
+					add: Acceleration ;
+					add: Repeat ;
+					add: Overload .
 	deck:= deckBuilder buildDeterministic .
 	
 	die := Die of: 10 rolling: #(7 9 3).

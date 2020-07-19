@@ -68,7 +68,7 @@ Player >> initializeWithName: aString [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #comparing }
 Player >> is: aPlayer [ 
 	^self = aPlayer 
 ]

@@ -4,16 +4,16 @@ Class {
 	#instVars : [
 		'cardProvider'
 	],
-	#category : #'IngSoft2-Model'
+	#category : #'IngSoft2-Model-Card'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 Deck class >> source: aCardProvider [
 
 	^ self new initializeSource: aCardProvider.
 ]
 
-{ #category : #cards }
+{ #category : #deal }
 Deck >> dealTwoCardsToEachPlayerFrom: aGruopOfPLayers [
 
 	aGruopOfPLayers do: [ :player | 
@@ -21,7 +21,7 @@ Deck >> dealTwoCardsToEachPlayerFrom: aGruopOfPLayers [
 			player addCard: self handCard ]
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #deal }
 Deck >> handCard [
 	^ cardProvider nextCard.
 ]

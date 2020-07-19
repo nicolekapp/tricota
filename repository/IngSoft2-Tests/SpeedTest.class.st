@@ -12,7 +12,7 @@ SpeedTest >> setUp [
 	| deckBuilder |
 	self setUpCard.
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Speed new.
+	deckBuilder add: Speed .
 	deck := deckBuilder buildDeterministic
 
 ]
@@ -24,8 +24,8 @@ SpeedTest >> testCantThrowSpeedCardIfItsNotYourTurn [
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	speedThrownByJuan := PermanentCard type: Speed new target: juan.
-	speedThrownByNico := PermanentCard type: Speed new target: nico.
+	speedThrownByJuan := Speed initializeCardWithTarget: juan.
+	speedThrownByNico := Speed initializeCardWithTarget: nico.
 	
 	self
 		should: [ game player: nico throw: speedThrownByNico ]

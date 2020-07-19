@@ -58,7 +58,7 @@ CircularIterator >> next [
 	^self current 
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #iterating }
 CircularIterator >> outOfBounds [
 	( currentIndex = 0 )
 	ifTrue: [ (course = 1) 

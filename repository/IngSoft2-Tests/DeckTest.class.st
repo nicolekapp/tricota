@@ -48,10 +48,10 @@ DeckTest >> setUp [
 DeckTest >> testInitializeGameDeterministicDealingCards [
 	|deck deckBuilder game |
 	deckBuilder:= DeckBuilder startBuilding.
-	deckBuilder 	add: Skip new;
-					add: Overload new;
-					add: Acceleration new;
-					add: Speed new.
+	deckBuilder 	add: Skip ;
+					add: Overload ;
+					add: Acceleration ;
+					add: Speed .
 	deck:= deckBuilder buildDeterministic .
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
@@ -71,8 +71,8 @@ DeckTest >> testInitializeGameRandomDealingCards [
 
 	|deck deckBuilder game |
 	deckBuilder:= DeckBuilder startBuilding.
-	deckBuilder 	add: Skip new;
-					add: Speed new.
+	deckBuilder 	add: Skip ;
+					add: Speed .
 	deck:= deckBuilder buildRandom .
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 

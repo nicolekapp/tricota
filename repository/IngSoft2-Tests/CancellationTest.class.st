@@ -20,12 +20,12 @@ CancellationTest >> testCancellationAfterTwoSpeedCardSelectingOne [
 
 	| game deckBuilder speedThrownByJuan speedThrownByNico cancellationThrownByJuan|
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Speed new;
-					add: Cancellation new.
+	deckBuilder add: Speed ;
+					add: Cancellation .
 	deck := deckBuilder buildDeterministic.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	speedThrownByJuan := PermanentCard type: Speed new target: nico.
+	speedThrownByJuan := Speed initializeCardWithTarget: nico.
 	game player: juan throw: speedThrownByJuan .
 	
 	game nextTurn.
@@ -33,7 +33,7 @@ CancellationTest >> testCancellationAfterTwoSpeedCardSelectingOne [
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 7.
 	
-	speedThrownByNico := PermanentCard type: Speed new target: nico.
+	speedThrownByNico := Speed initializeCardWithTarget: nico.
 	game player: nico throw: speedThrownByNico .
 	game nextTurn.
 	self
@@ -42,7 +42,7 @@ CancellationTest >> testCancellationAfterTwoSpeedCardSelectingOne [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 11.
 		
-	cancellationThrownByJuan := InstantCard type: Cancellation new target: speedThrownByNico.
+	cancellationThrownByJuan := Cancellation initializeCardWithTarget: speedThrownByNico.
 	game player: juan throw: cancellationThrownByJuan .
 	game nextTurn.
 	self
@@ -66,12 +66,12 @@ CancellationTest >> testCancellationOfAccelerationCard [
 
 	| game deckBuilder accelerationThrownByJuan cancellationThrownByNico|
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Acceleration new;
-					add: Cancellation new.
+	deckBuilder add: Acceleration ;
+					add: Cancellation .
 	deck := deckBuilder buildDeterministic.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	accelerationThrownByJuan := PermanentCard type: Acceleration new target: Everyone new.
+	accelerationThrownByJuan := Acceleration initializeCard .
 	game player: juan throw: accelerationThrownByJuan .
 	game nextTurn.
 		self
@@ -85,7 +85,7 @@ CancellationTest >> testCancellationOfAccelerationCard [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 10.
 		
-	cancellationThrownByNico := InstantCard type: Cancellation new target: accelerationThrownByJuan.
+	cancellationThrownByNico := Cancellation initializeCardWithTarget: accelerationThrownByJuan.
 	game player: juan throw: cancellationThrownByNico .
 	
 	game nextTurn.

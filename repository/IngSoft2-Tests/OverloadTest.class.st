@@ -12,7 +12,7 @@ OverloadTest >> setUp [
 	| deckBuilder |
 	self setUpCard.
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Overload new.
+	deckBuilder add: Overload .
 	deck := deckBuilder buildDeterministic
 ]
 
@@ -23,8 +23,8 @@ OverloadTest >> testCantThrowOverloadCardIfItsNotYourTurn [
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	overloadThrownByJuan := PermanentCard type: Overload new target: nico.
-	overloadThrownByNico := PermanentCard type: Overload new target: juan.
+	overloadThrownByJuan := Overload initializeCardWithTarget: nico.
+	overloadThrownByNico := Overload initializeCardWithTarget: juan.
 	
 	self
 		should: [ game player: nico throw: overloadThrownByNico ]
@@ -54,7 +54,7 @@ OverloadTest >> testOverloadCardOnlyApllyToItsTarget [
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 7.
 		
-	overloadThrownByNico := PermanentCard type: Overload new target: juan.
+	overloadThrownByNico := Overload initializeCardWithTarget:  juan.
 	game player: nico throw: overloadThrownByNico .
 	
 	game nextTurn.

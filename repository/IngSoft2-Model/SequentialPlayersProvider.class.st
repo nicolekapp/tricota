@@ -14,7 +14,7 @@ Class {
 	#category : #'IngSoft2-Model-Game'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #'instance creation' }
 SequentialPlayersProvider class >> enoughPlayers: aSequence [
 
 	aSequence size < 2
@@ -40,7 +40,7 @@ SequentialPlayersProvider >> changeCourse [
 	sequence changeCourse.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #playing }
 SequentialPlayersProvider >> double: aPlayer [ 
 	specialTurns add: aPlayer;
 					add: aPlayer.

@@ -4,17 +4,17 @@ Class {
 	#category : #'IngSoft2-Model-Card'
 }
 
+{ #category : #initialization }
+Speed class >> initializeCard [
+	^PermanentCard type: self new.
+]
+
+{ #category : #initialization }
+Speed class >> initializeCardWithTarget: aTarget [
+	^PermanentCard type: self new target: aTarget .
+]
+
 { #category : #playing }
 Speed >> effect: aPlayer [ 
 	^1
-]
-
-{ #category : #'as yet unclassified' }
-Speed >> initialiceCard [
-	^PermanentCard type: self
-]
-
-{ #category : #'as yet unclassified' }
-Speed >> initialiceCardWithTarget: aTarget [
-	^PermanentCard type: self target: aTarget .
 ]

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'sequenceOfCards'
 	],
-	#category : #'IngSoft2-Model'
+	#category : #'IngSoft2-Model-Card'
 }
 
 { #category : #'instance creation' }
@@ -12,17 +12,17 @@ DeckBuilder class >> startBuilding [
 	^self new initializeStartBuilding.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 DeckBuilder >> add: aTypeCard [  
-	sequenceOfCards add: (aTypeCard initialiceCard) .
+	sequenceOfCards add: (aTypeCard initializeCard) .
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 DeckBuilder >> buildDeterministic [
-	^ Deck source:(SequencialCardProvider providing: sequenceOfCards).
+	^ Deck source:(SequentialCardProvider providing: sequenceOfCards).
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #building }
 DeckBuilder >> buildRandom [
 	^ Deck source:(RandomCardProvider providing: sequenceOfCards).
 ]

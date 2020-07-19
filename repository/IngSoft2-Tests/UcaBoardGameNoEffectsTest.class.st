@@ -44,7 +44,7 @@ UcaBoardGameNoEffectsTest >> playerNamed: aName [
 UcaBoardGameNoEffectsTest >> setUp [
 	|effectRouletteBuilder deckBuilder|
 	deckBuilder:= DeckBuilder startBuilding.
-	deckBuilder add: Acceleration new.
+	deckBuilder add: Acceleration .
 	deck:= deckBuilder buildDeterministic .
 	
 	effectRouletteBuilder := EffectRouletteBuilder buildingDeterministicRoulette.

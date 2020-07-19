@@ -4,23 +4,18 @@ Class {
 	#category : #'IngSoft2-Model-Card'
 }
 
-{ #category : #'as yet unclassified' }
-Double >> applyIn: game to: noTarget [ 
-	game applyDoubleCard.
-	^self initialiceCard .
+{ #category : #initialization }
+Double class >> initializeCard [
+	^InstantCard type: self new.
+]
+
+{ #category : #initialization }
+Double class >> initializeCardWithTarget: aTarget [
+	^InstantCard type: self new target: aTarget .
 ]
 
 { #category : #playing }
-Double >> applyWithin: playersWithPositions knowing: activeCards  the: lastEffect and: finishLine of: game [
-	game doubleNextPlayer.
-]
-
-{ #category : #'as yet unclassified' }
-Double >> initialiceCard [
-	^InstantCard type: self.
-]
-
-{ #category : #'as yet unclassified' }
-Double >> initialiceCardWithTarget: aTarget [
-	^InstantCard type: self target: aTarget .
+Double >> applyIn: game to: noTarget [ 
+	game applyDoubleCard.
+	^self.
 ]

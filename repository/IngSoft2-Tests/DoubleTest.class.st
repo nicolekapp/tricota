@@ -12,7 +12,7 @@ DoubleTest >> setUp [
 	| deckBuilder |
 	self setUpCard.
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Double new.
+	deckBuilder add: Double .
 	deck := deckBuilder buildDeterministic
 
 ]
@@ -28,7 +28,7 @@ DoubleTest >> testDoubleCard [
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7.		
-	game player: juan throw: (InstantCard type: Double new).
+	game player: juan throw: Double initializeCard .
 	game nextTurn.
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
@@ -57,8 +57,8 @@ DoubleTest >> testThrowDoubleCardPlayTurnAndThrowAgainDoubleCard [
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7.	
 					
-	game player: juan throw: (InstantCard type: Double new).
-	game player: juan throw: (InstantCard type: Double new).
+	game player: juan throw: Double initializeCard .
+	game player: juan throw: Double initializeCard.
 	
 	game nextTurn.
 		self
@@ -85,8 +85,8 @@ DoubleTest >> testThrowMoreThanOneDoubleCardInTheSameTurn [
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7.		
-	game player: juan throw: (InstantCard type: Double new).
-	game player: nico throw: (InstantCard type: Double new).
+	game player: juan throw: Double initializeCard.
+	game player: nico throw: Double initializeCard.
 
 	game nextTurn.
 		self

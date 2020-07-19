@@ -12,7 +12,7 @@ SkipTest >> setUp [
 	| deckBuilder |
 	self setUpCard.
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Skip new.
+	deckBuilder add: Skip .
 	deck := deckBuilder buildDeterministic
 
 ]
@@ -29,7 +29,7 @@ SkipTest >> testSkipCard [
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7.		
 					
-	skipThrownByJuan := InstantCard type: Skip new.
+	skipThrownByJuan := Skip initializeCard .
 	game player: juan throw: skipThrownByJuan .
 
 	game nextTurn.

@@ -1,16 +1,17 @@
 Class {
 	#name : #TypeOfCard,
 	#superclass : #Object,
-	#instVars : [
-		'card',
-		'target'
-	],
 	#category : #'IngSoft2-Model-Card'
 }
 
-{ #category : #'instance creation' }
-TypeOfCard class >> card: aCard target: aPlayer [
-	^ self new initializeCard: aCard target: aPlayer
+{ #category : #initialization }
+TypeOfCard class >> initializeCard [
+	Error signal: 'This message should be override'.
+]
+
+{ #category : #initialization }
+TypeOfCard class >> initializeCardWithTarget: aTarget [
+	Error signal: 'This message should be override'.
 ]
 
 { #category : #comparing }
@@ -23,15 +24,4 @@ TypeOfCard >> = anObject [
 TypeOfCard >> hash [
 	
 	^self class hash
-]
-
-{ #category : #initialization }
-TypeOfCard >> initializeCard: aCard target: aPlayer [ 
-	card:= aCard.
-	target:= aPlayer 
-]
-
-{ #category : #playing }
-TypeOfCard >> target [
-	^target.
 ]

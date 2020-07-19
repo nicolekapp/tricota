@@ -23,7 +23,7 @@ RepeatTest >> setUp [
 	| deckBuilder |
 	self setUpCard.
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Repeat new.
+	deckBuilder add: Repeat.
 	deck := deckBuilder buildDeterministic
 ]
 
@@ -42,7 +42,7 @@ RepeatTest >> testRepeatAtomicBomb [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 0.
 		
-	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
 	game player: juan throw: repeatThrownByJuan .
 
 	self
@@ -70,7 +70,7 @@ RepeatTest >> testRepeatMoonWalk [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 9.
 
-	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
 	game player: juan throw: repeatThrownByJuan .
 	
 	self
@@ -98,7 +98,7 @@ RepeatTest >> testRepeatNoEffect [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 9.
 
-	repeatThrownByJuan := InstantCard type: Repeat new target: nico.
+	repeatThrownByJuan := Repeat initializeCardWithTarget: nico.
 	game player: juan throw: repeatThrownByJuan .
 	
 	self
@@ -124,7 +124,7 @@ RepeatTest >> testRepeatPickUpCard [
 		assert: (game lockerNumberOf: juan) equals: 7;
 		assert: juan numberOfCards equals: 3.
 
-	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
 	game player: juan throw: repeatThrownByJuan .
 	
 	self
@@ -151,7 +151,7 @@ RepeatTest >> testRepeatSpeedUp [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 13.
 
-	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
 	game player: juan throw: repeatThrownByJuan .
 	
 	self
@@ -179,7 +179,7 @@ RepeatTest >> testRepeatWormHole [
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 5.
 		
-	repeatThrownByJuan := InstantCard type: Repeat new target: nico.
+	repeatThrownByJuan := Repeat initializeCardWithTarget: nico.
 	game player: juan throw: repeatThrownByJuan .
 	
 	self
@@ -198,7 +198,7 @@ RepeatTest >> testTryToThrowRepeatCardBeforeNobodyRolledDice [
 	| game repeatThrownByJuan |
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
-	repeatThrownByJuan := InstantCard type: Repeat new target: juan.
+	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
 
 	self 
 	should: [ game player: juan throw: repeatThrownByJuan ]

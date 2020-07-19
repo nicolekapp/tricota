@@ -18,7 +18,7 @@ ReverseTest >> setUp [
 	players add: sofi;
 			add: pablo.
 	deckBuilder := DeckBuilder startBuilding.
-	deckBuilder add: Reverse new.
+	deckBuilder add: Reverse .
 	deck := deckBuilder buildDeterministic
 ]
 
@@ -50,7 +50,7 @@ ReverseTest >> testReverseCard [
 			assert: (game lapNumberOf: pablo) equals: 0;
 			assert: (game lockerNumberOf: pablo) equals: 0.
 			
-	reverseThrownByJuan := InstantCard type: Reverse new.
+	reverseThrownByJuan := Reverse initializeCard .
 	game player: juan throw: reverseThrownByJuan .
 	
 	game nextTurn.

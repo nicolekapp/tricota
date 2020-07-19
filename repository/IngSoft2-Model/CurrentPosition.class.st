@@ -11,7 +11,7 @@ Class {
 	#category : #'IngSoft2-Model-Player'
 }
 
-{ #category : #accessing }
+{ #category : #'instance creation' }
 CurrentPosition class >> atLocker: aLocker atLap: aLap [
 
 	^self new initializeAtLocker: 0 atLap: 0.
@@ -75,7 +75,7 @@ CurrentPosition >> lockerPosition [
 	^locker
 ]
 
-{ #category : #playerPosition }
+{ #category : #'move backwards' }
 CurrentPosition >> moveBackwards: moveTo [
 	
 	locker:= moveTo.
@@ -126,7 +126,7 @@ CurrentPosition >> moveBackwardsTo: nextPosition ifDoesNotCross: finishLine [
 		ifTrue: [ self moveBackwards: nextPosition ]
 ]
 
-{ #category : #playerPosition }
+{ #category : #'move forward' }
 CurrentPosition >> moveForward: moveTo [
 	
 	locker:= moveTo.

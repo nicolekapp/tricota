@@ -4,24 +4,18 @@ Class {
 	#category : #'IngSoft2-Model-Card'
 }
 
-{ #category : #'as yet unclassified' }
-Skip >> applyIn: game to: aTarget [  
-	game applySkipCard.
-	^self initialiceCard 
+{ #category : #initialization }
+Skip class >> initializeCard [
+	^InstantCard type: self new
+]
+
+{ #category : #initialization }
+Skip class >> initializeCardWithTarget: aTarget [
+	^InstantCard type: self new target: aTarget .
 ]
 
 { #category : #playing }
-Skip >> applyWithin: playersWithPositions knowing: activeCards  the: lastEffect and: finishLine of: game [
-	game skipTurn.
-	
-]
-
-{ #category : #'as yet unclassified' }
-Skip >> initialiceCard [
-	^InstantCard type: self
-]
-
-{ #category : #'as yet unclassified' }
-Skip >> initialiceCardWithTarget: aTarget [
-	^InstantCard type: self target: aTarget .
+Skip >> applyIn: game to: aTarget [  
+	game applySkipCard.
+	^self
 ]

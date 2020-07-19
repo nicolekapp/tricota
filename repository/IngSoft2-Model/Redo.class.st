@@ -4,26 +4,18 @@ Class {
 	#category : #'IngSoft2-Model-Card'
 }
 
-{ #category : #'as yet unclassified' }
-Redo >> applyIn: game to: aTarget [ 
-	^ game applyRedoCardTo: aTarget 
+{ #category : #initialization }
+Redo class >> initializeCard [
+	^InstantCard type: self new
+]
+
+{ #category : #initialization }
+Redo class >> initializeCardWithTarget: aTarget [
+	^InstantCard type: self new target: aTarget .
 ]
 
 { #category : #playing }
-Redo >> applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect and: finishLine of: game [
+Redo >> applyIn: game to: aTarget [ 
+	^game applyRedoCardTo: aTarget 
 	
-	|lastCard|
-	self assertSomeoneThrewCard: game lastCardPlayed .
-	lastCard := (game lastCardPlayed) class card: card target: target .
-	lastCard applyWithin: aPlayersWithPositions knowing: activeCards the: lastEffect and: finishLine of: game
-]
-
-{ #category : #'as yet unclassified' }
-Redo >> initialiceCard [
-	^InstantCard type: self.
-]
-
-{ #category : #'as yet unclassified' }
-Redo >> initialiceCardWithTarget: aTarget [
-	^InstantCard type: self target: aTarget .
 ]
