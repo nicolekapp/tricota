@@ -69,14 +69,14 @@ UcaBoardGameNoEffectsTest >> testAskForWinnerBeforeFinishing [
 	
 	self
 		should: [ game winner   ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has not finished yet'.
 		
 	self play: game amountOfTurns:2.
 
 	self
 		should: [ game winner   ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has not finished yet'
 ]
 
@@ -149,7 +149,7 @@ UcaBoardGameNoEffectsTest >> testTryToKeepPlayingAfterGameEnded [
 	
 	self
 		should: [ game nextTurn ]
-		raise: InvalideRequest 
+		raise: InvalidRequest 
 		withMessageText: 'The game has finished'
 ]
 

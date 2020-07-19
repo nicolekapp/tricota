@@ -46,7 +46,7 @@ DoubleTest >> testDoubleCard [
 ]
 
 { #category : #tests }
-DoubleTest >> testThrowDoubleCardPlayTurnAndThrowAgainDoubleCard [
+DoubleTest >> testThrowMoreThanOneDoubleCardInTheSameTurn [
 
 	| game |
 
@@ -57,34 +57,6 @@ DoubleTest >> testThrowDoubleCardPlayTurnAndThrowAgainDoubleCard [
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7.	
 					
-	game player: juan throw: Double initializeCard .
-	game player: juan throw: Double initializeCard.
-	
-	game nextTurn.
-		self
-			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 7;
-			assert: (game lapNumberOf: nico) equals: 0;
-			assert: (game lockerNumberOf: nico) equals: 19.
-	game nextTurn.
-		self
-			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 16;
-			assert: (game lapNumberOf: nico) equals: 0;
-			assert: (game lockerNumberOf: nico) equals: 19.
-]
-
-{ #category : #tests }
-DoubleTest >> testThrowMoreThanOneDoubleCardInTheSameTurn [
-
-	| game |
-
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
-	
-	game nextTurn.
-		self
-			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 7.		
 	game player: juan throw: Double initializeCard.
 	game player: nico throw: Double initializeCard.
 

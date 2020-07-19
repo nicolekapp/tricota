@@ -97,9 +97,10 @@ CurrentPosition >> moveBackwardsAmountOf: aNumberOflockers knowing: finishline [
 
 { #category : #'move backwards' }
 CurrentPosition >> moveBackwardsTo: nextPosition changingLapIfCrossing: finishline [ 
-		
-	self moveBackwardsTo: nextPosition ifDoesNotCross: finishline.
-	self moveBackwardsTo: nextPosition ifCrosses: finishline.
+	
+	(nextPosition < 0)
+		ifTrue: [self moveBackwardsTo: nextPosition ifCrosses: finishline]
+		ifFalse: [ self moveBackwardsTo: nextPosition ifDoesNotCross: finishline]
 
 ]
 
@@ -108,13 +109,12 @@ CurrentPosition >> moveBackwardsTo: nextPosition ifCrosses: finishLine [
 
 	| followingPosition|
 
-	(nextPosition < 0 and: laps > 0 )
+	(laps > 0 )
 		ifTrue: [ 
 			followingPosition := finishLine + nextPosition.
 			self moveBackwards: followingPosition.
-			self decreaseLap].
-	(nextPosition < 0 and: (laps == 0 ))
-		ifTrue: [ 
+			self decreaseLap]
+		ifFalse: [ 
 			self moveBackwards: 0.
 			 ].
 ]

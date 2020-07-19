@@ -180,3 +180,60 @@ CancellationTest >> testCancellationOfSpeedCard [
 
 	
 ]
+
+{ #category : #tests }
+CancellationTest >> testCantThrowCancellationCardWhenItsTargetIsntActive [
+
+	| game deckBuilder  accelerationCard cancellationCard doubleCard overloadCard redoCard repeatCard reverseCard skipCard speedCard |
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder 	add: Cancellation .
+	deck := deckBuilder buildDeterministic.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	
+	accelerationCard := Acceleration initializeCard .
+	cancellationCard := Cancellation initializeCardWithTarget: accelerationCard.
+	doubleCard := Double initializeCard .
+	overloadCard := Overload initializeCardWithTarget: juan.
+	redoCard := Redo initializeCard.
+	repeatCard := Repeat initializeCardWithTarget: juan.
+	reverseCard := Reverse initializeCard .
+	skipCard := Skip initializeCard .
+	speedCard := Speed initializeCardWithTarget: juan.
+	
+	self
+		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: accelerationCard )]
+		raise: InvalidRequest 
+		withMessageText: 'Target isnt an active permanent card'.
+	self
+		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: cancellationCard )]
+		raise: InvalidRequest 
+		withMessageText: 'Target isnt an active permanent card'.
+	self
+		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: doubleCard )]
+		raise: InvalidRequest 
+		withMessageText: 'Target isnt an active permanent card'.
+	self
+		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: overloadCard )]
+		raise: InvalidRequest 
+		withMessageText: 'Target isnt an active permanent card'.
+	self
+		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: redoCard )]
+		raise: InvalidRequest 
+		withMessageText: 'Target isnt an active permanent card'.			
+	self
+		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: repeatCard  )]
+		raise: InvalidRequest 
+		withMessageText: 'Target isnt an active permanent card'.
+	self
+		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: reverseCard  )]
+		raise: InvalidRequest 
+		withMessageText: 'Target isnt an active permanent card'.
+	self
+		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: skipCard  )]
+		raise: InvalidRequest 
+		withMessageText: 'Target isnt an active permanent card'.
+	self
+		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: speedCard )]
+		raise: InvalidRequest 
+		withMessageText: 'Target isnt an active permanent card'.
+]

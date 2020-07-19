@@ -202,7 +202,7 @@ RepeatTest >> testTryToThrowRepeatCardBeforeNobodyRolledDice [
 
 	self 
 	should: [ game player: juan throw: repeatThrownByJuan ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'Nobody rolled the dice yet'.
 		
 	

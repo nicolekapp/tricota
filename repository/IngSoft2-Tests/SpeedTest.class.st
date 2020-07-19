@@ -29,14 +29,14 @@ SpeedTest >> testCantThrowSpeedCardIfItsNotYourTurn [
 	
 	self
 		should: [ game player: nico throw: speedThrownByNico ]
-		raise: InvalideRequest 
+		raise: InvalidRequest 
 		withMessageText: 'It is not your turn'.
 	
 	game nextTurn.
 
 	self
 		should: [ game player: juan throw: speedThrownByJuan ]
-		raise: InvalideRequest 
+		raise: InvalidRequest 
 		withMessageText: 'It is not your turn'.
 		
 

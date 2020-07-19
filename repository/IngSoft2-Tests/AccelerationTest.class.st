@@ -67,14 +67,14 @@ AccelerationTest >> testCantThrowAccelerationCardIfItsNotYourTurn [
 	
 	self
 		should: [ game player: nico throw: accelerationThrownByNico ]
-		raise: InvalideRequest 
+		raise: InvalidRequest 
 		withMessageText: 'It is not your turn'.
 	
 	game nextTurn.
 
 	self
 		should: [ game player: juan throw: accelerationThrownByJuan ]
-		raise: InvalideRequest 
+		raise: InvalidRequest 
 		withMessageText: 'It is not your turn'.
 ]
 

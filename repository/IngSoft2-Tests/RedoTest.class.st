@@ -386,7 +386,7 @@ RedoTest >> testTryToThrowRedoCardBeforeNobodyThrewAnyCard [
 
 	self 
 	should: [ game player: juan throw: Redo initializeCard ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'Nobody threw a card yet'.
 		
 	

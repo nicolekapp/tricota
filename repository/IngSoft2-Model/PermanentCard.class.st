@@ -24,5 +24,5 @@ PermanentCard >> effect: aPlayer [
 { #category : #playing }
 PermanentCard >> thrownBy: aPlayer inTheTurnOf: playerTurn [ 
 	aPlayer = playerTurn 
-		ifFalse: [ InvalideRequest signal: 'It is not your turn' ]
+		ifFalse: [ InvalidRequest signal: 'It is not your turn' ]
 ]

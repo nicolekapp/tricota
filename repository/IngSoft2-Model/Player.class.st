@@ -42,7 +42,7 @@ Player >> addCard: aCard [
 Player >> assertHasCard: aCard [ 
 	cards detect: [ :card | card isSameType: aCard] 
 			ifFound: [ ^true]
-			ifNone: [ InvalideRequest signal: 'Player doesnt have that card']  .
+			ifNone: [ InvalidRequest signal: 'Player doesnt have that card']  .
 		
 ]
 

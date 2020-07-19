@@ -40,7 +40,9 @@ UCABoardGame >> amountOfLockersThatActiveCardsMove: currentPlayer [
 
 { #category : #cards }
 UCABoardGame >> applyCancellationCardTo: aCard [ 
-	activeCards remove: aCard 
+	activeCards detect: [ :card | card = card ] 
+					ifFound: [ activeCards remove: aCard ] 
+					ifNone:  [ InvalidRequest signal: 'Target isnt an active permanent card' ] 
 	
 ]
 
@@ -89,37 +91,37 @@ UCABoardGame >> applySkipCard [
 { #category : #assertions }
 UCABoardGame >> assertItsPlayersTurn: aPlayer [ 
 	(aPlayer = sequenceOfPlayers nextPlayerWithoutChangingCurrent )
-		ifFalse: [ InvalideRequest signal: 'It is not your turn' ]
+		ifFalse: [ InvalidRequest signal: 'It is not your turn' ]
 ]
 
 { #category : #assertions }
 UCABoardGame >> assertSomeoneRolledDice: lastEffect [ 
 	(lastEffect = 'No effect yet')
-		ifTrue: [ InvalideRequest signal: 'Nobody rolled the dice yet' ]
+		ifTrue: [ InvalidRequest signal: 'Nobody rolled the dice yet' ]
 ]
 
 { #category : #assertions }
 UCABoardGame >> assertSomeoneThrewCard [
 	(typeLastCardPlayed = 'No card has been played yet')
-		ifTrue: [ InvalideRequest signal: 'Nobody threw a card yet' ]
+		ifTrue: [ InvalidRequest signal: 'Nobody threw a card yet' ]
 ]
 
 { #category : #assertions }
 UCABoardGame >> assertSomeoneThrewCard: lastCardPlayed [  
 	(lastCardPlayed = 'No card has been played yet')
-		ifTrue: [ InvalideRequest signal: 'Nobody threw a card yet' ]
+		ifTrue: [ InvalidRequest signal: 'Nobody threw a card yet' ]
 ]
 
 { #category : #assertions }
 UCABoardGame >> assertTheGameHasFinished [
 	(self hasFinished)
-		ifFalse: [ InvalideRequest signal: 'The game has not finished yet' ]
+		ifFalse: [ InvalidRequest signal: 'The game has not finished yet' ]
 ]
 
 { #category : #assertions }
 UCABoardGame >> assertTheGameHasNotFinished [
 	(self hasFinished)
-		ifTrue: [ InvalideRequest signal: 'The game has finished' ]
+		ifTrue: [ InvalidRequest signal: 'The game has finished' ]
 ]
 
 { #category : #assertions }

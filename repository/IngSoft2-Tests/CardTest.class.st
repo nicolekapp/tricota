@@ -89,39 +89,39 @@ CardTest >> testPlayerCanNotThrowAnyCardAfterTheGameHasFinished [
 	
 	self 
 	should: [ game player: juan throw: Acceleration initializeCard ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	self 
 	should: [ game player: nico throw: (Cancellation initializeCardWithTarget: cardToCancell) ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	self 
 	should: [ game player: juan throw: Double initializeCard  ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	self 
 	should: [ game player: nico throw: (Overload initializeCardWithTarget: juan) ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	self 
 	should: [ game player: juan throw: (Redo initializeCardWithTarget: nico) ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	self 
 	should: [ game player: nico throw: (Repeat initializeCardWithTarget: nico) ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	self 
 	should: [ game player: juan throw: Reverse initializeCard ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	self 
 	should: [ game player: nico throw: Skip initializeCard  ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	self 
 	should: [ game player: nico throw: (Speed initializeCardWithTarget: nico) ]
-		raise: InvalideRequest
+		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	
 ]
