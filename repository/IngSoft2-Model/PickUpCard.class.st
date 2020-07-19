@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #playing }
-PickUpCard >> applyEffectTo: aPosition knowing: players the: currentPlayer and: finishline aaaaaaaaaaaaaaaaaaaaaa: deck [
+PickUpCard >> applyEffectTo: aPosition of: currentPlayer knowing: players the: deck and: finishline [
 	currentPlayer addCard: deck handCard.
 	^aPosition.
 ]

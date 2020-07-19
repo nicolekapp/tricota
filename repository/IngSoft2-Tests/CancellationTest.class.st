@@ -86,7 +86,7 @@ CancellationTest >> testCancellationOfAccelerationCard [
 		assert: (game lockerNumberOf: nico) equals: 10.
 		
 	cancellationThrownByNico := Cancellation initializeCardWithTarget: accelerationThrownByJuan.
-	game player: juan throw: cancellationThrownByNico .
+	game player: nico throw: cancellationThrownByNico .
 	
 	game nextTurn.
 	self
@@ -94,6 +94,88 @@ CancellationTest >> testCancellationOfAccelerationCard [
 		assert: (game lockerNumberOf: juan) equals: 11;
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 10.
+	
+
+	
+]
+
+{ #category : #tests }
+CancellationTest >> testCancellationOfOverloadCard [
+
+	| game deckBuilder overloadThrownByJuan cancellationThrownByNico|
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder add: Overload ;
+					add: Cancellation .
+	deck := deckBuilder buildDeterministic.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	
+	overloadThrownByJuan := Overload initializeCardWithTarget: nico .
+	game player: juan throw: overloadThrownByJuan .
+	game nextTurn.
+		self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7.
+
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 7.
+		
+	cancellationThrownByNico := Cancellation initializeCardWithTarget: overloadThrownByJuan.
+	game player: nico throw: cancellationThrownByNico .
+	
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 10;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 7.
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 10;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 14.
+	
+
+	
+]
+
+{ #category : #tests }
+CancellationTest >> testCancellationOfSpeedCard [
+
+	| game deckBuilder speedThrownByJuan cancellationThrownByNico|
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder add: Speed ;
+					add: Cancellation .
+	deck := deckBuilder buildDeterministic.
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	
+	speedThrownByJuan := Speed initializeCardWithTarget: juan .
+	game player: juan throw: speedThrownByJuan .
+	game nextTurn.
+		self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 8.
+
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 8;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 9.
+		
+	cancellationThrownByNico := Cancellation initializeCardWithTarget: speedThrownByJuan.
+	game player: nico throw: cancellationThrownByNico .
+	
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 11;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 9.
 	
 
 	
