@@ -92,12 +92,6 @@ UCABoardGame >> applySkipCard [
 ]
 
 { #category : #assertions }
-UCABoardGame >> assertItsPlayersTurn: aPlayer [ 
-	(aPlayer = sequenceOfPlayers nextPlayerWithoutChangingCurrent )
-		ifFalse: [ InvalidRequest signal: 'It is not your turn' ]
-]
-
-{ #category : #assertions }
 UCABoardGame >> assertSomeoneRolledDice: lastEffect [ 
 	(lastEffect = 'No effect yet')
 		ifTrue: [ InvalidRequest signal: 'Nobody rolled the dice yet' ]
@@ -106,12 +100,6 @@ UCABoardGame >> assertSomeoneRolledDice: lastEffect [
 { #category : #assertions }
 UCABoardGame >> assertSomeoneThrewCard [
 	(typeLastCardPlayed = 'No card has been played yet')
-		ifTrue: [ InvalidRequest signal: 'Nobody threw a card yet' ]
-]
-
-{ #category : #assertions }
-UCABoardGame >> assertSomeoneThrewCard: lastCardPlayed [  
-	(lastCardPlayed = 'No card has been played yet')
 		ifTrue: [ InvalidRequest signal: 'Nobody threw a card yet' ]
 ]
 
@@ -154,11 +142,6 @@ UCABoardGame >> currentPositionOf: aPlayer [
 { #category : #playing }
 UCABoardGame >> curretPlayerTurn [
 	^ sequenceOfPlayers nextPlayerWithoutChangingCurrent
-]
-
-{ #category : #cards }
-UCABoardGame >> doubleNextPlayer [
-	sequenceOfPlayers double: sequenceOfPlayers nextPlayer .
 ]
 
 { #category : #assertions }
@@ -227,11 +210,6 @@ UCABoardGame >> player: aPlayer throw: card [
 	aPlayer cardPlayed: card
 ]
 
-{ #category : #playing }
-UCABoardGame >> players [
-	^ playersWithPositions keys
-]
-
 { #category : #position }
 UCABoardGame >> playersPositions [
 	
@@ -265,11 +243,6 @@ UCABoardGame >> savePermanentCard: aCard [
 { #category : #cards }
 UCABoardGame >> skipTurn [
 	sequenceOfPlayers nextPlayer.
-]
-
-{ #category : #cards }
-UCABoardGame >> typeLastCardPlayed [
-	^ typeLastCardPlayed
 ]
 
 { #category : #cards }
