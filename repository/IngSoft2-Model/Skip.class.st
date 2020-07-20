@@ -19,3 +19,8 @@ Skip >> applyIn: game to: aTarget [
 	game applySkipCard.
 	^self
 ]
+
+{ #category : #playing }
+Skip >> thrownBy: aPlayer inTheTurnOf: playerTurn [
+	"This card can be played in any moment"
+]

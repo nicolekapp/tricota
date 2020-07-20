@@ -22,3 +22,8 @@ Cancellation >> applyIn: game to: aCard [
 	game applyCancellationCardTo: aCard.
 	^self 
 ]
+
+{ #category : #playing }
+Cancellation >> thrownBy: aPlayer inTheTurnOf: playerTurn [
+	"This card can be played in any moment"
+]

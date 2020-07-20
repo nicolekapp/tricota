@@ -135,6 +135,42 @@ UcaBoardGameWithEffectRouletteTest >> testMoonWalkMovesEveryoneExceptCurrentPlay
 ]
 
 { #category : #tests }
+UcaBoardGameWithEffectRouletteTest >> testMoonWalkMovesEveryoneExceptCurrentPlayerChangingLapIfPlayerIsInLapOneOrMore [
+
+	| game effectRoulette sofi effectRouletteBuilder |
+
+	effectRouletteBuilder:= EffectRouletteBuilder buildingDeterministicRoulette.
+	effectRouletteBuilder 
+				add: NoEffect new;
+				add: NoEffect new;
+				add: (MoonWalk maxBackwards: 5 aNumberOfLockersSequence: #(2 4)).
+	effectRoulette:= effectRouletteBuilder buildDeterministic. 
+	
+	sofi := Player named: 'Sofi'.
+	players add: sofi.
+	game:= UCABoardGame rolling: die with: players lockers: 8 laps: 2 effects: effectRoulette and: deck.
+	game nextTurn.
+	game nextTurn.
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:1;
+		assert: (game lapNumberOf: sofi) equals:0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lockerNumberOf: nico) equals: 1;
+		assert: (game lockerNumberOf: sofi) equals: 0.
+	game nextTurn.
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:0;
+		assert: (game lapNumberOf: sofi) equals:0;
+		assert: (game lockerNumberOf: juan) equals: 5;
+		assert: (game lockerNumberOf: nico) equals: 7;
+		assert: (game lockerNumberOf: sofi) equals: 3.
+		
+	
+]
+
+{ #category : #tests }
 UcaBoardGameWithEffectRouletteTest >> testMoonWalkNoNegativeLap [
 
 	| game effectRoulette |
@@ -195,7 +231,22 @@ UcaBoardGameWithEffectRouletteTest >> testWormHole [
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	game nextTurn.
 	
-	self assert: (game lockerNumberOf: juan) equals: 3.
+	self assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 3.
+	
+]
+
+{ #category : #tests }
+UcaBoardGameWithEffectRouletteTest >> testWormHoleChangingLapIfPlayerIsInLapOneOrMore [
+
+	| game effectRoulette |
+
+	effectRoulette := self aEffectRouletteWith100ProbabilityOf: WormHole new.
+	game:= UCABoardGame rolling: die with: players lockers: 5 laps: 2 effects: effectRoulette and: deck.
+	game nextTurn.
+	
+	self assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 3.
 	
 ]
 

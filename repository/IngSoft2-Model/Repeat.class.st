@@ -19,3 +19,8 @@ Repeat >> applyIn: game to: aPlayer [
 	game applyRepeatCardTo: aPlayer.
 	^self
 ]
+
+{ #category : #playing }
+Repeat >> thrownBy: aPlayer inTheTurnOf: playerTurn [
+	"This card can be played in any moment"
+]

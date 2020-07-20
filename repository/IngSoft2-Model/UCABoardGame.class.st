@@ -58,11 +58,12 @@ UCABoardGame >> applyEffectTo: positionAfterRollingDice of: currentPlayer [
 ]
 
 { #category : #cards }
-UCABoardGame >> applyRedoCardTo: target [ 
+UCABoardGame >> applyRedoCardTo: target thrownBy: throwedBy inTheTurnOf: playersTurn [ 
 
 	| cardRedoed |
 	self assertSomeoneThrewCard.
 	cardRedoed := typeLastCardPlayed class initializeCardWithTarget: target.
+	cardRedoed thrownBy: throwedBy  inTheTurnOf: playersTurn .
 	cardRedoed applyIn: self.
 	^ typeLastCardPlayed
 
@@ -81,11 +82,13 @@ UCABoardGame >> applyRepeatCardTo: target [
 { #category : #cards }
 UCABoardGame >> applyReverseCard [
 	self changeCourse .
+	timesToRoll := 1.
 ]
 
 { #category : #cards }
 UCABoardGame >> applySkipCard [
 	self skipTurn.
+	timesToRoll := 1.
 ]
 
 { #category : #assertions }

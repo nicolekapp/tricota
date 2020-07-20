@@ -46,7 +46,7 @@ DeckTest >> setUp [
 
 { #category : #tests }
 DeckTest >> testInitializeGameDeterministicDealingCards [
-	|deck deckBuilder game |
+	|game deck deckBuilder |
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder 	add: Skip ;
 					add: Overload ;

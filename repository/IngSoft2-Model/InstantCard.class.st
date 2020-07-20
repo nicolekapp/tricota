@@ -15,5 +15,5 @@ InstantCard >> applyIn: game [
 
 { #category : #playing }
 InstantCard >> thrownBy: aPlayer inTheTurnOf: playerTurn [
-	"This card can be played in any moment"
+	type thrownBy: aPlayer inTheTurnOf: playerTurn 
 ]

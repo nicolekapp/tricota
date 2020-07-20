@@ -16,6 +16,69 @@ RedoTest >> setUp [
 ]
 
 { #category : #tests }
+RedoTest >> testCantRedoASpeedCardIfIsNotYourTurn [
+
+	| game  deckBuilder speedThrownByJuan |
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder add: Speed ;
+					add: Redo .
+	deck := deckBuilder buildDeterministic.
+	
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	
+	speedThrownByJuan := Speed initializeCardWithTarget: juan .
+	game player: juan throw: speedThrownByJuan.
+	self 
+	should: [ game player: nico throw: (Redo initializeCardWithTarget: nico)]
+		raise: InvalidRequest
+		withMessageText: 'It is not your turn'.
+
+	
+]
+
+{ #category : #tests }
+RedoTest >> testCantRedoAnAccelerationCardIfIsNotYourTurn [
+
+	| game  deckBuilder accelerationThrownByJuan |
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder add: Acceleration ;
+					add: Redo .
+	deck := deckBuilder buildDeterministic.
+	
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	
+	accelerationThrownByJuan := Acceleration initializeCard .
+	game player: juan throw: accelerationThrownByJuan.
+	self 
+	should: [ game player: nico throw: (Redo initializeCardWithTarget: Everyone new)]
+		raise: InvalidRequest
+		withMessageText: 'It is not your turn'.
+
+	
+]
+
+{ #category : #tests }
+RedoTest >> testCantRedoAnOverloadCardIfIsNotYourTurn [
+
+	| game  deckBuilder overloadThrownByJuan |
+	deckBuilder := DeckBuilder startBuilding.
+	deckBuilder add: Overload ;
+					add: Redo .
+	deck := deckBuilder buildDeterministic.
+	
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	
+	overloadThrownByJuan := Overload initializeCardWithTarget: nico .
+	game player: juan throw: overloadThrownByJuan.
+	self 
+	should: [ game player: nico throw: (Redo initializeCardWithTarget: juan)]
+		raise: InvalidRequest
+		withMessageText: 'It is not your turn'.
+
+	
+]
+
+{ #category : #tests }
 RedoTest >> testRedoAccelerationCard [
 
 	| game  deckBuilder accelerationThrownByJuan redoThrownByJuan|

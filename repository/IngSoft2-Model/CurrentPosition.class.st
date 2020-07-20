@@ -89,8 +89,7 @@ CurrentPosition >> moveBackwardsAmountOf: aNumberOflockers knowing: finishline [
 	| nextPosition |
 
 	nextPosition := locker - aNumberOflockers.
-	self moveBackwardsTo: nextPosition ifDoesNotCross: finishline.
-	self moveBackwardsTo: nextPosition ifCrosses: finishline.
+	self moveBackwardsTo: nextPosition changingLapIfCrossing: finishline 
 
 	
 ]

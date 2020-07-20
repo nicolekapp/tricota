@@ -46,7 +46,34 @@ SpeedTest >> testCantThrowSpeedCardIfItsNotYourTurn [
 ]
 
 { #category : #tests }
-SpeedTest >> testSpeedCard [
+SpeedTest >> testPlayerChangesLapBecauseOfTheExtraLockersOfSpeedCard [
+
+	| game speedThrownByNico speedThrownByJuan  |
+	
+	game:= UCABoardGame rolling: die with: players lockers: 10 laps: 2 effects: effectRoulette and: deck.
+	
+	speedThrownByJuan := PermanentCard type: Speed new target: nico.
+	game player: juan throw: speedThrownByJuan .
+	game nextTurn.
+		self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0.
+
+	speedThrownByNico := PermanentCard type: Speed new target: nico.
+	game player: nico throw: speedThrownByNico .
+	
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 1;
+		assert: (game lockerNumberOf: nico) equals: 1.
+]
+
+{ #category : #tests }
+SpeedTest >> testSpeedCardOnlyApllyToItsTarget [
 
 	| game speedThrownByNico |
 	
@@ -66,7 +93,59 @@ SpeedTest >> testSpeedCard [
 		assert: (game lockerNumberOf: juan) equals: 7;
 		assert: (game lapNumberOf: nico) equals: 0;
 		assert: (game lockerNumberOf: nico) equals: 10.
-		
+	
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 10;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 10.
+
+
+	
+	
+]
+
+{ #category : #tests }
+SpeedTest >> testThrowMoreThanOneSpeedCard [ 
+
+	| game speedThrownByNico firstSpeedThrownByJuan secondSpeedThrownByJuan |
+	
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+	
+	firstSpeedThrownByJuan := PermanentCard type: Speed new target: juan.
+	game player: juan throw: firstSpeedThrownByJuan .
+	game nextTurn.
+		self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 8;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0.
+
+	speedThrownByNico := PermanentCard type: Speed new target: nico.
+	game player: nico throw: speedThrownByNico .
+	
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 8;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 10.
+	
+	secondSpeedThrownByJuan := PermanentCard type: Speed new target: juan.
+	game player: juan throw: secondSpeedThrownByJuan .
+	game nextTurn.
+		self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 13;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 10.
+	game nextTurn.
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 13;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 18.
 
 
 	

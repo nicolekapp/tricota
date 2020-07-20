@@ -19,3 +19,8 @@ Double >> applyIn: game to: noTarget [
 	game applyDoubleCard.
 	^self.
 ]
+
+{ #category : #playing }
+Double >> thrownBy: aPlayer inTheTurnOf: playerTurn [
+	"This card can be played in any moment"
+]
