@@ -43,8 +43,14 @@ CurrentPosition >> >= aCurrentPosition [
 ]
 
 { #category : #lap }
-CurrentPosition >> decreaseLap [
-	laps:= laps-1.
+CurrentPosition >> assertNoNegativeLap [
+	(laps < 0) ifTrue: [ laps:= 0 ]
+]
+
+{ #category : #lap }
+CurrentPosition >> decreaseLap: number [
+	laps:= laps+number.
+	self assertNoNegativeLap.
 ]
 
 { #category : #comparing }
@@ -55,8 +61,8 @@ CurrentPosition >> hash [
 ]
 
 { #category : #lap }
-CurrentPosition >> increaseLap [
-	laps:= laps+1.
+CurrentPosition >> increaseLap: numberToIncrease [
+	laps:= laps+numberToIncrease.
 ]
 
 { #category : #' initialization' }
@@ -104,15 +110,15 @@ CurrentPosition >> moveBackwardsTo: nextPosition changingLapIfCrossing: finishli
 ]
 
 { #category : #'move backwards' }
-CurrentPosition >> moveBackwardsTo: nextPosition ifCrosses: finishLine [
+CurrentPosition >> moveBackwardsTo: nextPosition ifCrosses: finishline [
 
 	| followingPosition|
 
 	(laps > 0 )
 		ifTrue: [ 
-			followingPosition := finishLine + nextPosition.
+			followingPosition := (nextPosition\\finishline).
 			self moveBackwards: followingPosition.
-			self decreaseLap]
+			self decreaseLap: nextPosition //finishline ]
 		ifFalse: [ 
 			self moveBackwards: 0.
 			 ].
@@ -146,10 +152,13 @@ CurrentPosition >> moveForwardTo: nextPosition changingLapIfCrossing: finishline
 { #category : #'move forward' }
 CurrentPosition >> moveForwardTo: nextPosition ifCrosses: finishLine [
 
+	|lapsToIncrease|
 	(nextPosition >= finishLine)
 	
-		ifTrue: [ self moveForward: (nextPosition - finishLine).
-			self increaseLap ].
+		ifTrue: [ 
+			lapsToIncrease:= nextPosition //finishLine .
+			self moveForward: (nextPosition \\ finishLine).
+			self increaseLap: lapsToIncrease  ].
 ]
 
 { #category : #'move forward' }

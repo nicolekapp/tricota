@@ -320,7 +320,7 @@ HappyPathTest >> testHappyPath [
 
 	self 
 		assert: game winner equals: sofi.
-		tableOfFinalPositions:= game playersPositions.
+		tableOfFinalPositions:= game playersPositionsTable.
 		self assert:(tableOfFinalPositions atPosition: 1 ) equals: sofi.
 		self assert:(tableOfFinalPositions  atPosition: 2 ) equals: nico.
 		self assert:(tableOfFinalPositions  atPosition: 3 ) equals: juan.

@@ -73,7 +73,7 @@ UCABoardGame >> applyRedoCardTo: target thrownBy: throwedBy inTheTurnOf: players
 { #category : #cards }
 UCABoardGame >> applyRepeatCardTo: target [
 	| actualPosition positionWithEffect |
-	self assertSomeoneRolledDice: lastEffect.
+	self assertSomeoneRolledDice.
 	actualPosition := (playersWithPositions at: target) lockerPosition.
 	positionWithEffect := lastEffect applyEffectTo: actualPosition of: target knowing: playersWithPositions the: deck and: finishLine.
 	(playersWithPositions at: target) moveTo: positionWithEffect knowing: finishLine
@@ -92,7 +92,7 @@ UCABoardGame >> applySkipCard [
 ]
 
 { #category : #assertions }
-UCABoardGame >> assertSomeoneRolledDice: lastEffect [ 
+UCABoardGame >> assertSomeoneRolledDice [
 	(lastEffect = 'No effect yet')
 		ifTrue: [ InvalidRequest signal: 'Nobody rolled the dice yet' ]
 ]
@@ -118,8 +118,8 @@ UCABoardGame >> assertTheGameHasNotFinished [
 { #category : #assertions }
 UCABoardGame >> assertTheWinnerIs: aPlayer [
 	
-	((self currentPositionOf: aPlayer) lapNumber == laps)
-	ifTrue:[winner:= aPlayer ].
+	self hasFinished
+			ifTrue:[winner:= aPlayer ].
 	
 	
 	
@@ -147,7 +147,7 @@ UCABoardGame >> curretPlayerTurn [
 { #category : #assertions }
 UCABoardGame >> hasFinished [
 	
-	^ (playersWithPositions values) detect: [ :position | position lapNumber = laps]  				
+	^ (playersWithPositions values) detect: [ :position | position lapNumber >= laps]  				
 		ifFound: [true] 				
 		ifNone: [false].
 	
@@ -211,7 +211,7 @@ UCABoardGame >> player: aPlayer throw: card [
 ]
 
 { #category : #position }
-UCABoardGame >> playersPositions [
+UCABoardGame >> playersPositionsTable [
 	
 	^ PositionTable filledWith: playersWithPositions.
 ]

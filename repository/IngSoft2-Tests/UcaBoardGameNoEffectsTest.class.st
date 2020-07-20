@@ -89,6 +89,26 @@ UcaBoardGameNoEffectsTest >> testGameHasFinished [
 ]
 
 { #category : #tests }
+UcaBoardGameNoEffectsTest >> testIncreaseTwoLapsInOneTurn [
+
+	| game |
+	game:= UCABoardGame rolling: die with: players lockers: 2 laps: 5 effects: effectRoulette and: deck.
+	game nextTurn.
+	self 
+		assert: (game lapNumberOf: juan) equals:1;
+		assert: (game lockerNumberOf: juan) equals:1;
+		assert: (game lapNumberOf: nico) equals:0;
+		assert: (game lockerNumberOf: nico) equals:0.
+	game nextTurn.
+	self 
+		assert: (game lapNumberOf: juan) equals:1;
+		assert: (game lockerNumberOf: juan) equals:1;
+		assert: (game lapNumberOf: nico) equals:2;
+		assert: (game lockerNumberOf: nico) equals:0.
+	
+]
+
+{ #category : #tests }
 UcaBoardGameNoEffectsTest >> testLapNumberOfPlayer [
 
 	| game |
@@ -129,13 +149,14 @@ UcaBoardGameNoEffectsTest >> testPlayerFinishedOneLap [
 ]
 
 { #category : #tests }
-UcaBoardGameNoEffectsTest >> testPlayersPositions [
+UcaBoardGameNoEffectsTest >> testPlayersPositionsTable [
 		
 	| game |
 		
 	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 2 effects: effectRoulette and: deck.
 	self play:game amountOfTurns:2.
-	self assert:(game playersPositions atPosition: 1 ) equals: nico.
+	self assert:(game playersPositionsTable atPosition: 1 ) equals: nico;
+		assert:(game playersPositionsTable atPosition: 2 ) equals: juan.
 	
 	
 ]
