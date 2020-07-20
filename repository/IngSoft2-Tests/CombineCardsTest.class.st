@@ -68,7 +68,7 @@ CombineCardsTest >> testCombineAccelerationOverloadAndSpeedCards [
 	overloadThrownByJuan := Overload initializeCardWithTarget: nico.
 	game player: juan throw: overloadThrownByJuan .
 	
-	game nextTurn.
+	game nextTurn."Juan rolled 7 plus 1 of acrive acceleration card"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 8;
@@ -82,7 +82,7 @@ CombineCardsTest >> testCombineAccelerationOverloadAndSpeedCards [
 	speedThrownByNico := Speed initializeCardWithTarget: nico.
 	game player: nico throw: speedThrownByNico .
 	
-	game nextTurn.
+	game nextTurn."Nico rolled 9 minus 2 for being target of one active overload card, plus 3 for 2 active acceleration cards and being target of one speed card"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 8;
@@ -95,7 +95,7 @@ CombineCardsTest >> testCombineAccelerationOverloadAndSpeedCards [
 	game player: sofi throw: speedThrownBySofi .
 	
 	game nextTurn.
-		self
+		self"Sofi rolled 3 plus 3 for 2 active acceleration cards and being target of one speed card"
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 8;
 			assert: (game lapNumberOf: nico) equals: 0;
@@ -110,7 +110,7 @@ CombineCardsTest >> testCombineDoubleWithAccelerationAndSpeedCards [
 	| deckBuilder game doubleThrownByNico accelerationThrownByJuan speedThrownByJuan |
 	
 	deckBuilder:= DeckBuilder startBuilding.
-	deckBuilder add: Speed ; 	"Juan has Speed & Acceleration"
+	deckBuilder add: Speed ; 			"Juan has Speed & Acceleration"
 					add: Acceleration ;	"Nico has Double & Speed"
 					add: Double.				"Sofi has Acceleration & Double"
 	deck:= deckBuilder buildDeterministic .
@@ -119,7 +119,7 @@ CombineCardsTest >> testCombineDoubleWithAccelerationAndSpeedCards [
 	accelerationThrownByJuan := Acceleration initializeCard.
 	game player: juan throw: accelerationThrownByJuan .
 
-	game nextTurn.
+	game nextTurn."Juan rolled 7 plus one for one active acceleration card"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 8;
@@ -155,7 +155,7 @@ CombineCardsTest >> testThrowDoubleAndReverseConsecutive [
 	deck:= deckBuilder buildDeterministic .
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
@@ -165,12 +165,12 @@ CombineCardsTest >> testThrowDoubleAndReverseConsecutive [
 			assert: (game lockerNumberOf: sofi) equals: 0.
 
 	doubleThrownByNico := Double initializeCard.
-	game player: nico throw: doubleThrownByNico .
+	game player: nico throw: doubleThrownByNico ."Nico will throw 2 times the dice"
 	reverseThrownByJuan := Reverse initializeCard.
-	game player: juan throw: reverseThrownByJuan .
+	game player: juan throw: reverseThrownByJuan ."Nico lost his turn because of reverse card"
 	
 	game nextTurn.
-	self
+	self"Sofi rolled 9"
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
 			assert: (game lapNumberOf: nico) equals: 0;
@@ -191,11 +191,11 @@ CombineCardsTest >> testThrowDoubleAndSkipConsecutive [
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 
 	doubleThrownByJuan := Double initializeCard.
-	game player: juan throw: doubleThrownByJuan .
+	game player: juan throw: doubleThrownByJuan ."Juan will roll two times the dice"
 	skipThrownByNico := Skip initializeCard.
-	game player: nico throw: skipThrownByNico .
+	game player: nico throw: skipThrownByNico ."Juan lost his turn"
 	
-	game nextTurn.
+	game nextTurn."Nico rolled 7"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 0;

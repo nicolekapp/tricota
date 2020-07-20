@@ -34,8 +34,13 @@ RepeatTest >> testRepeatAtomicBomb [
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: AtomicBomb new.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0.
+	game nextTurn."Nico rolled 9 but the effect was atomic bomb, everyone goes to locker 0"
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 0;
@@ -45,7 +50,7 @@ RepeatTest >> testRepeatAtomicBomb [
 	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
 	game player: juan throw: repeatThrownByJuan .
 
-	self
+	self"Juan throwd repeat of atomic bomb, everyone stays in locker 0"
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 0;
 		assert: (game lapNumberOf: nico) equals: 0;
@@ -61,9 +66,14 @@ RepeatTest >> testRepeatMoonWalk [
 	| game repeatThrownByJuan|
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs:(MoonWalk maxBackwards: 5 aNumberOfLockersSequence: #(2)).
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
-	
-	game nextTurn.
-	game nextTurn.
+
+	game nextTurn."Juan rolled 7"
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0.
+	game nextTurn."Nico rolled 9 and the effect was moonwalk, juan moves 2 lockers backwards"
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 5;
@@ -73,7 +83,7 @@ RepeatTest >> testRepeatMoonWalk [
 	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
 	game player: juan throw: repeatThrownByJuan .
 	
-	self
+	self"Juan threw repeat of moonwalk, nico moves 2 lockers backwards"
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 5;
 		assert: (game lapNumberOf: nico) equals: 0;
@@ -90,8 +100,13 @@ RepeatTest >> testRepeatNoEffect [
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: NoEffect  new.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0.
+	game nextTurn."Nico rolled 9 and there was no effect"
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 7;
@@ -101,7 +116,7 @@ RepeatTest >> testRepeatNoEffect [
 	repeatThrownByJuan := Repeat initializeCardWithTarget: nico.
 	game player: juan throw: repeatThrownByJuan .
 	
-	self
+	self"Juan threw repeat of no effect, nothing hapens"
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 7;
 		assert: (game lapNumberOf: nico) equals: 0;
@@ -118,17 +133,18 @@ RepeatTest >> testRepeatPickUpCard [
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: NoEffect  new.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
+	game nextTurn."Juan rolled 7 and pick up a card"
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0;
 		assert: juan numberOfCards equals: 3.
 
 	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
 	game player: juan throw: repeatThrownByJuan .
 	
-	self
-		assert: (game lockerNumberOf: juan) equals: 7;
+	self"Juan threw repeat and pick up another card"
 		assert: juan numberOfCards equals: 3.
 	
 
@@ -143,8 +159,13 @@ RepeatTest >> testRepeatSpeedUp [
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: SpeedUp  new.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0.
+	game nextTurn."Nico rolled 9 plus 4 for speed up effect"
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 7;
@@ -154,7 +175,7 @@ RepeatTest >> testRepeatSpeedUp [
 	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
 	game player: juan throw: repeatThrownByJuan .
 	
-	self
+	self"Juan repeat speed up effect and moves 4 lockers forward"
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 11;
 		assert: (game lapNumberOf: nico) equals: 0;
@@ -171,8 +192,13 @@ RepeatTest >> testRepeatWormHole [
 	effectRoulette:= self buildEffectRouletteWhereSecondEffectIs: WormHole new.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
+	self
+		assert: (game lapNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: juan) equals: 7;
+		assert: (game lapNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0.
+	game nextTurn."Nico rolled 9 minus 4 for wormhole effect"
 	self
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 7;
@@ -182,7 +208,7 @@ RepeatTest >> testRepeatWormHole [
 	repeatThrownByJuan := Repeat initializeCardWithTarget: nico.
 	game player: juan throw: repeatThrownByJuan .
 	
-	self
+	self"Juan repeated wormhole with nico as target, nico moves 4 lockers backwards"
 		assert: (game lapNumberOf: juan) equals: 0;
 		assert: (game lockerNumberOf: juan) equals: 7;
 		assert: (game lapNumberOf: nico) equals: 0;
@@ -199,8 +225,8 @@ RepeatTest >> testTryToThrowRepeatCardBeforeNobodyRolledDice [
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	repeatThrownByJuan := Repeat initializeCardWithTarget: juan.
-
-	self 
+	
+	self "Repeat card cant be throwed if no one roll the dice yet" 
 	should: [ game player: juan throw: repeatThrownByJuan ]
 		raise: InvalidRequest
 		withMessageText: 'Nobody rolled the dice yet'.

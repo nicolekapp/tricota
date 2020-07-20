@@ -27,7 +27,7 @@ SkipTest >> testSkipCard [
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
+	game nextTurn."Nico rolled 7"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
@@ -39,7 +39,7 @@ SkipTest >> testSkipCard [
 	skipThrownBySofi := Skip initializeCard .
 	game player: sofi throw: skipThrownBySofi .
 
-	game nextTurn.
+	game nextTurn."Sofi threw skip card, its her turn and rolled 9"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
@@ -56,7 +56,7 @@ SkipTest >> testThrowTwoSkipCardConsecutive [
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
@@ -70,7 +70,7 @@ SkipTest >> testThrowTwoSkipCardConsecutive [
 	skipThrownByJuan := Skip initializeCard .
 	game player: juan throw: skipThrownByJuan .
 
-	game nextTurn.
+	game nextTurn."Two skip cards were throwed, its juans turn and rolled 9"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 16;

@@ -29,7 +29,7 @@ ReverseTest >> testReverseCard [
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
@@ -39,7 +39,7 @@ ReverseTest >> testReverseCard [
 			assert: (game lockerNumberOf: sofi) equals: 0;
 			assert: (game lapNumberOf: pablo) equals: 0;
 			assert: (game lockerNumberOf: pablo) equals: 0.		
-	game nextTurn.
+	game nextTurn."nico rolled 9"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
@@ -53,7 +53,7 @@ ReverseTest >> testReverseCard [
 	reverseThrownByJuan := Reverse initializeCard .
 	game player: juan throw: reverseThrownByJuan .
 	
-	game nextTurn.
+	game nextTurn."Its juans turn buecause of reverse card. Juan rolled 3"
 	self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 10;
@@ -63,7 +63,7 @@ ReverseTest >> testReverseCard [
 			assert: (game lockerNumberOf: sofi) equals: 0;
 			assert: (game lapNumberOf: pablo) equals: 0;
 			assert: (game lockerNumberOf: pablo) equals: 0.
-	game nextTurn.
+	game nextTurn."pablo rolled 7"
 	self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 10;
@@ -73,7 +73,7 @@ ReverseTest >> testReverseCard [
 			assert: (game lockerNumberOf: sofi) equals: 0;
 			assert: (game lapNumberOf: pablo) equals: 0;
 			assert: (game lockerNumberOf: pablo) equals: 7.
-	game nextTurn.
+	game nextTurn."Sofi rolled 9"
 	self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 10;
@@ -83,7 +83,7 @@ ReverseTest >> testReverseCard [
 			assert: (game lockerNumberOf: sofi) equals: 9;
 			assert: (game lapNumberOf: pablo) equals: 0;
 			assert: (game lockerNumberOf: pablo) equals: 7.
-	game nextTurn .
+	game nextTurn ."Nico rolled 3"
 	self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 10;
@@ -102,7 +102,7 @@ ReverseTest >> testThrowTwoReverseCardConsecutiveAndStayAllTheSame [
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
@@ -117,7 +117,7 @@ ReverseTest >> testThrowTwoReverseCardConsecutiveAndStayAllTheSame [
 	game player: sofi throw: reverseThrownBySofi .	
 	reverseThrownByJuan := Reverse initializeCard .
 	game player: juan throw: reverseThrownByJuan .
-	game nextTurn.
+	game nextTurn."Two cards of reverse were played consecutively, its nicos turn and he rolled 9"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
@@ -128,7 +128,7 @@ ReverseTest >> testThrowTwoReverseCardConsecutiveAndStayAllTheSame [
 			assert: (game lapNumberOf: pablo) equals: 0;
 			assert: (game lockerNumberOf: pablo) equals: 0.
 	
-	game nextTurn.
+	game nextTurn."Sofi rolled 3"
 	self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
@@ -138,7 +138,7 @@ ReverseTest >> testThrowTwoReverseCardConsecutiveAndStayAllTheSame [
 			assert: (game lockerNumberOf: sofi) equals: 3;
 			assert: (game lapNumberOf: pablo) equals: 0;
 			assert: (game lockerNumberOf: pablo) equals: 0.
-	game nextTurn.
+	game nextTurn."Pablo rolled 7"
 	self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
