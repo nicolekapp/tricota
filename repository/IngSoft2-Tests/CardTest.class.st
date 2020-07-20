@@ -84,9 +84,10 @@ CardTest >> testPlayerCanNotThrowAnyCardAfterTheGameHasFinished [
 	deck:= deckBuilder buildDeterministic .
 	
 	game:= UCABoardGame rolling: die with: players lockers: 9 laps: 2 effects: effectRoulette and: deck.
-	self finish: game.
+	self finish: game. 
 	cardToCancell:= Acceleration initializeCard.
 	
+	"The game has finished, nobody can throw any card"
 	self 
 	should: [ game player: juan throw: Acceleration initializeCard ]
 		raise: InvalidRequest

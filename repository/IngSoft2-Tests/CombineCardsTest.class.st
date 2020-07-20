@@ -105,6 +105,46 @@ CombineCardsTest >> testCombineAccelerationOverloadAndSpeedCards [
 ]
 
 { #category : #tests }
+CombineCardsTest >> testCombineDoubleWithAccelerationAndSpeedCards [
+	
+	| deckBuilder game doubleThrownByNico accelerationThrownByJuan speedThrownByJuan |
+	
+	deckBuilder:= DeckBuilder startBuilding.
+	deckBuilder add: Speed ; 	"Juan has Speed & Acceleration"
+					add: Acceleration ;	"Nico has Double & Speed"
+					add: Double.				"Sofi has Acceleration & Double"
+	deck:= deckBuilder buildDeterministic .
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+
+	accelerationThrownByJuan := Acceleration initializeCard.
+	game player: juan throw: accelerationThrownByJuan .
+
+	game nextTurn.
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 8;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 0;
+			assert: (game lapNumberOf: sofi) equals: 0;
+			assert: (game lockerNumberOf: sofi) equals: 0.
+	
+	speedThrownByJuan := Speed initializeCardWithTarget: nico.
+	game player: nico throw: speedThrownByJuan .
+	doubleThrownByNico := Double initializeCard.
+	game player: nico throw: doubleThrownByNico .
+
+	game nextTurn. "Nico rolled 9 and 3 (12) plus 2 (one locker for Aceleration and anotherone for Speed)"
+		self
+			assert: (game lapNumberOf: juan) equals: 0;
+			assert: (game lockerNumberOf: juan) equals: 8;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 14;
+			assert: (game lapNumberOf: sofi) equals: 0;
+			assert: (game lockerNumberOf: sofi) equals: 0.
+
+]
+
+{ #category : #tests }
 CombineCardsTest >> testThrowDoubleAndReverseConsecutive [
 	
 	| deckBuilder game doubleThrownByNico reverseThrownByJuan |

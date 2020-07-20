@@ -27,25 +27,27 @@ AccelerationTest >> testAccelerationCardApplysToEveryone [
 	accelerationThrownByJuan := Acceleration initializeCard .
 	game player: juan throw: accelerationThrownByJuan .
 	
-	game nextTurn.
+	game nextTurn. "Juan rolled 7 plus one for Acceleration card"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 8.		
+			assert: (game lockerNumberOf: juan) equals: 8;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 0.
 
-	game nextTurn.
+	game nextTurn. "Nico rolled 9 plus one for Acceleration card"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 8;
 			assert: (game lapNumberOf: nico) equals: 0;
 			assert: (game lockerNumberOf: nico) equals: 10.
 			
-	game nextTurn.
+	game nextTurn."Juan rolled 3 plus one for Acceleration card"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 12;
 			assert: (game lapNumberOf: nico) equals: 0;
 			assert: (game lockerNumberOf: nico) equals: 10.
-	game nextTurn.
+	game nextTurn. "Nico rolled 7 plus one for Acceleration card"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 12;
@@ -65,14 +67,14 @@ AccelerationTest >> testCantThrowAccelerationCardIfItsNotYourTurn [
 	accelerationThrownByJuan := Acceleration initializeCard .
 	accelerationThrownByNico := Acceleration initializeCard .
 	
-	self
+	self "Nico tried to throw an Acceleration card in Juans turn"
 		should: [ game player: nico throw: accelerationThrownByNico ]
 		raise: InvalidRequest 
 		withMessageText: 'It is not your turn'.
 	
 	game nextTurn.
 
-	self
+	self "Juan tried to throw an Acceleration card in Nicos turn"
 		should: [ game player: juan throw: accelerationThrownByJuan ]
 		raise: InvalidRequest 
 		withMessageText: 'It is not your turn'.
@@ -87,14 +89,16 @@ AccelerationTest >> testThrowMoreThanOneAccelerationCard [
 	
 	firstAccelerationThrownByJuan := Acceleration initializeCard .
 	game player: juan throw: firstAccelerationThrownByJuan .
-	game nextTurn.
+	game nextTurn. "Juan rolled 7 plus one for acceleration card"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 8.		
+			assert: (game lockerNumberOf: juan) equals: 8;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 0.	
 					
 	accelerationThrownByNico := Acceleration initializeCard .
 	game player: nico throw: accelerationThrownByNico.
-	game nextTurn.
+	game nextTurn. "Nico rolled 9 plus 2 for two active acceleration cards"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 8;
@@ -103,13 +107,13 @@ AccelerationTest >> testThrowMoreThanOneAccelerationCard [
 			
 	secondAccelerationThrownByJuan := PermanentCard type: Acceleration new target: Everyone new.
 	game player: juan throw: secondAccelerationThrownByJuan .
-	game nextTurn.
+	game nextTurn."Juan rolled 3 plus 3 for three active acceleration cards"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 14;
 			assert: (game lapNumberOf: nico) equals: 0;
 			assert: (game lockerNumberOf: nico) equals: 11.
-	game nextTurn.
+	game nextTurn. "Nico rolled 7 plus 3 for three active acceleration cards"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 14;

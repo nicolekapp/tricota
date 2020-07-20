@@ -24,18 +24,21 @@ DoubleTest >> testDoubleCard [
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 7.		
+			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 0.
+			
 	game player: juan throw: Double initializeCard .
-	game nextTurn.
+	game nextTurn."Nico rolled 9 + 3 bucause of double card"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
 			assert: (game lapNumberOf: nico) equals: 0;
 			assert: (game lockerNumberOf: nico) equals: 12.
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 14;
@@ -52,21 +55,23 @@ DoubleTest >> testThrowMoreThanOneDoubleCardInTheSameTurn [
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	game nextTurn.
+	game nextTurn."Juan rolled 7"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
-			assert: (game lockerNumberOf: juan) equals: 7.	
+			assert: (game lockerNumberOf: juan) equals: 7;
+			assert: (game lapNumberOf: nico) equals: 0;
+			assert: (game lockerNumberOf: nico) equals: 0.
 					
 	game player: juan throw: Double initializeCard.
 	game player: nico throw: Double initializeCard.
 
-	game nextTurn.
+	game nextTurn."Nico rolled 9 + 3 + 7 because of two dobule cards"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 7;
 			assert: (game lapNumberOf: nico) equals: 0;
 			assert: (game lockerNumberOf: nico) equals: 19.
-	game nextTurn.
+	game nextTurn."Juan rolled 9"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 16;
