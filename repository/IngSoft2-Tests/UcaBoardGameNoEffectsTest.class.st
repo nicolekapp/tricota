@@ -122,6 +122,16 @@ UcaBoardGameNoEffectsTest >> testLapNumberOfPlayer [
 ]
 
 { #category : #tests }
+UcaBoardGameNoEffectsTest >> testLapssMustBeGreaterOrEqualToOne [
+
+	-2 to: 0 do: [ :invalidLockers | 
+		self
+			should: [ UCABoardGame rolling: die with: players lockers: 5 laps: invalidLockers effects: effectRoulette and: deck  ]
+			raise: InstanceCreationFailed
+			withMessageText: 'Need at least one lap' ]
+]
+
+{ #category : #tests }
 UcaBoardGameNoEffectsTest >> testLockerNumberOfPlayer [
 
 	| game |
@@ -132,6 +142,16 @@ UcaBoardGameNoEffectsTest >> testLockerNumberOfPlayer [
 	self assert: (game lockerNumberOf: juan) equals: 3.
 	
 	
+]
+
+{ #category : #tests }
+UcaBoardGameNoEffectsTest >> testLockersMustBeGreaterOrEqualToOne [
+
+	-2 to: 0 do: [ :invalidLockers | 
+		self
+			should: [ UCABoardGame rolling: die with: players lockers: invalidLockers laps: 2 effects: effectRoulette and: deck  ]
+			raise: InstanceCreationFailed
+			withMessageText: 'Need at least one locker' ]
 ]
 
 { #category : #tests }

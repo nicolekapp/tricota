@@ -24,8 +24,23 @@ Class {
 }
 
 { #category : #'instance creation' }
-UCABoardGame class >> rolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: cards [
+UCABoardGame class >> assertLapsGreaterThanZero: aNumberOfLaps [
 
+	aNumberOfLaps > 0
+		ifFalse: [ InstanceCreationFailed signal: 'Need at least one lap' ]
+]
+
+{ #category : #'instance creation' }
+UCABoardGame class >> assertLockersGreaterThanZero: aNumberOfLockers [
+
+	aNumberOfLockers > 0
+		ifFalse: [ InstanceCreationFailed signal: 'Need at least one locker' ]
+]
+
+{ #category : #'instance creation' }
+UCABoardGame class >> rolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: cards [
+	self assertLockersGreaterThanZero: aNumberOfLockers .
+	self assertLapsGreaterThanZero: aNumberOfLaps .
 	^self new initializeRolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: cards.
 ]
 
