@@ -61,11 +61,6 @@ UCABoardGame >> applyCancellationCardTo: aCard [
 	
 ]
 
-{ #category : #cards }
-UCABoardGame >> applyDoubleCard [
-	timesToRoll := timesToRoll + 1.
-]
-
 { #category : #playing }
 UCABoardGame >> applyEffectTo: positionAfterRollingDice of: currentPlayer [
 	lastEffect := effectRoulette spin.
@@ -92,18 +87,6 @@ UCABoardGame >> applyRepeatCardTo: target [
 	actualPosition := (playersWithPositions at: target) lockerPosition.
 	positionWithEffect := lastEffect applyEffectTo: actualPosition of: target knowing: playersWithPositions the: deck and: finishLine.
 	(playersWithPositions at: target) moveTo: positionWithEffect knowing: finishLine
-]
-
-{ #category : #cards }
-UCABoardGame >> applyReverseCard [
-	self changeCourse .
-	timesToRoll := 1.
-]
-
-{ #category : #cards }
-UCABoardGame >> applySkipCard [
-	self skipTurn.
-	timesToRoll := 1.
 ]
 
 { #category : #assertions }
@@ -140,11 +123,10 @@ UCABoardGame >> assertTheWinnerIs: aPlayer [
 	
 ]
 
-{ #category : #cards }
-UCABoardGame >> changeCourse [
-	sequenceOfPlayers changeCourse.
-	sequenceOfPlayers nextPlayer .
-	sequenceOfPlayers nextPlayer .
+{ #category : #'as yet unclassified' }
+UCABoardGame >> currentPlayerTurn [ 
+
+	^ sequenceOfPlayers nextPlayerWithoutChangingCurrent 
 ]
 
 { #category : #position }
@@ -152,11 +134,6 @@ UCABoardGame >> currentPositionOf: aPlayer [
 
 	^playersWithPositions at: aPlayer.
 
-]
-
-{ #category : #playing }
-UCABoardGame >> curretPlayerTurn [
-	^ sequenceOfPlayers nextPlayerWithoutChangingCurrent
 ]
 
 { #category : #assertions }
@@ -211,7 +188,7 @@ UCABoardGame >> nextTurn [
 	self assertTheGameHasNotFinished.
 	currentPlayer := sequenceOfPlayers nextPlayer.
 	currentPlayerPosition := self currentPositionOf: currentPlayer.
-	positionAfterEffectAndCards := self rollDiceApllyEffectsAndCardsTo: currentPlayer thatsIn: currentPlayerPosition.
+	positionAfterEffectAndCards := self rollDiceApplyEffectsAndCardsTo: currentPlayer thatsIn: currentPlayerPosition.
 	currentPlayerPosition moveTo: positionAfterEffectAndCards knowing: finishLine.
 	self assertTheWinnerIs: currentPlayer
 ]
@@ -220,7 +197,7 @@ UCABoardGame >> nextTurn [
 UCABoardGame >> player: aPlayer throw: card [
 	self assertTheGameHasNotFinished.
 	aPlayer assertHasCard: card.
-	card thrownBy: aPlayer inTheTurnOf: self curretPlayerTurn.
+	card thrownBy: aPlayer inTheTurnOf: self currentPlayerTurn.
 	card applyIn: self.
 	aPlayer cardPlayed: card
 ]
@@ -232,32 +209,18 @@ UCABoardGame >> playersPositionsTable [
 ]
 
 { #category : #playing }
-UCABoardGame >> rollDiceApllyEffectsAndCardsTo: currentPlayer thatsIn: currentPlayerPosition [ 
+UCABoardGame >> rollDiceApplyEffectsAndCardsTo: currentPlayer thatsIn: currentPlayerPosition [ 
 	| positionAfterRollingDice positionAfterCards positionAfterEffectAndCards |
-	positionAfterRollingDice := currentPlayerPosition lockerPosition + self rollDiceApropiateAmountOfTimes.
+	positionAfterRollingDice := currentPlayerPosition lockerPosition + dice roll.
 	positionAfterCards := (self amountOfLockersThatActiveCardsMove: currentPlayer) + positionAfterRollingDice.
 	positionAfterEffectAndCards := self applyEffectTo: positionAfterCards of: currentPlayer.
 	^ positionAfterEffectAndCards
-]
-
-{ #category : #playing }
-UCABoardGame >> rollDiceApropiateAmountOfTimes [
-	|rolledNumber|
-	rolledNumber := 0.
-	timesToRoll timesRepeat: [rolledNumber := rolledNumber + dice roll].
-	timesToRoll := 1.
-	^ rolledNumber 
 ]
 
 { #category : #cards }
 UCABoardGame >> savePermanentCard: aCard [
 
 	activeCards add: aCard
-]
-
-{ #category : #cards }
-UCABoardGame >> skipTurn [
-	sequenceOfPlayers nextPlayer.
 ]
 
 { #category : #cards }

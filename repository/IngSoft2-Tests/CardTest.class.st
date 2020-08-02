@@ -74,12 +74,9 @@ CardTest >> testPlayerCanNotThrowAnyCardAfterTheGameHasFinished [
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder 	add: Acceleration;
 					add: Cancellation ;
-					add: Double ;
 					add: Overload ;
 					add: Redo ;
 					add: Repeat ;
-					add: Reverse ;
-					add: Skip ;
 					add: Speed .
 	deck:= deckBuilder buildDeterministic .
 	
@@ -97,10 +94,6 @@ CardTest >> testPlayerCanNotThrowAnyCardAfterTheGameHasFinished [
 		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	self 
-	should: [ game player: juan throw: Double initializeCard  ]
-		raise: InvalidRequest
-		withMessageText: 'The game has finished'.
-	self 
 	should: [ game player: nico throw: (Overload initializeCardWithTarget: juan) ]
 		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
@@ -110,14 +103,6 @@ CardTest >> testPlayerCanNotThrowAnyCardAfterTheGameHasFinished [
 		withMessageText: 'The game has finished'.
 	self 
 	should: [ game player: nico throw: (Repeat initializeCardWithTarget: nico) ]
-		raise: InvalidRequest
-		withMessageText: 'The game has finished'.
-	self 
-	should: [ game player: juan throw: Reverse initializeCard ]
-		raise: InvalidRequest
-		withMessageText: 'The game has finished'.
-	self 
-	should: [ game player: nico throw: Skip initializeCard  ]
 		raise: InvalidRequest
 		withMessageText: 'The game has finished'.
 	self 
@@ -138,9 +123,10 @@ CardTest >> testPlayerCanNotThrowAnyCardIfHeDoesntHaveIt [
 	
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder 	add: Repeat ; 		"Juan has two repeat cards"
-					add: Repeat ;		"Nico has two double cards"
-					add: Double;
-					add: Double.
+					add: Repeat ;
+					add: Acceleration; 		"Nico has two acceleration cards"
+					add: Acceleration.
+
 	deck:= deckBuilder buildDeterministic .
 	
 	game:= UCABoardGame rolling: die with: players lockers: 9 laps: 2 effects: effectRoulette and: deck.
@@ -156,10 +142,6 @@ CardTest >> testPlayerCanNotThrowAnyCardIfHeDoesntHaveIt [
 		raise: InvalidRequest
 		withMessageText: 'Player doesnt have that card'.
 	self 
-	should: [ game player: juan throw: Double initializeCard  ]
-		raise: InvalidRequest
-		withMessageText: 'Player doesnt have that card'.
-	self 
 	should: [ game player: nico throw: (Overload initializeCardWithTarget: juan) ]
 		raise: InvalidRequest
 		withMessageText: 'Player doesnt have that card'.
@@ -171,17 +153,7 @@ CardTest >> testPlayerCanNotThrowAnyCardIfHeDoesntHaveIt [
 	should: [ game player: nico throw: (Repeat initializeCardWithTarget: nico) ]
 		raise: InvalidRequest
 		withMessageText: 'Player doesnt have that card'.
-	self 
-	should: [ game player: juan throw: Reverse initializeCard ]
-		raise: InvalidRequest
-		withMessageText: 'Player doesnt have that card'.
-	self 
-	should: [ game player: nico throw: Skip initializeCard  ]
-		raise: InvalidRequest
-		withMessageText: 'Player doesnt have that card'.
-	self 
-	should: [ game player: nico throw: (Speed initializeCardWithTarget: nico) ]
-		raise: InvalidRequest
-		withMessageText: 'Player doesnt have that card'.
+
+
 	
 ]

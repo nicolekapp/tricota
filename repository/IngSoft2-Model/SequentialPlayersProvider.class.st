@@ -29,11 +29,6 @@ SequentialPlayersProvider class >> providing: aSequence [
 	^ self new initializeProviding: aSequence
 ]
 
-{ #category : #playing }
-SequentialPlayersProvider >> changeCourse [
-	sequence changeCourse.
-]
-
 { #category : #initialization }
 SequentialPlayersProvider >> initializeProviding: aSequence [
 
@@ -49,8 +44,8 @@ SequentialPlayersProvider >> nextPlayer [
 	^ nextPlayer
 ]
 
-{ #category : #providing }
+{ #category : #'as yet unclassified' }
 SequentialPlayersProvider >> nextPlayerWithoutChangingCurrent [
 
-	^ sequence current 
+	^sequence current
 ]

@@ -9,8 +9,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'options',
-		'currentIndex',
-		'course'
+		'currentIndex'
 	],
 	#category : #'IngSoft2-Model-Dice'
 }
@@ -25,15 +24,10 @@ CircularIterator class >> cyclingOver: aSequentiableCollection [
 	^ self new initializeCyclingOver: aSequentiableCollection asArray
 ]
 
-{ #category : #course }
-CircularIterator >> changeCourse [
-	course := course * -1.
-]
-
 { #category : #accessing }
 CircularIterator >> current [
 
-	^options at: currentIndex.
+	^options at: currentIndex + 1
 ]
 
 { #category : #testing }
@@ -46,28 +40,18 @@ CircularIterator >> includes: anObject [
 CircularIterator >> initializeCyclingOver: anArray [
 
 	options := anArray.
-	course := 1.
 	self reset
 ]
 
 { #category : #iterating }
 CircularIterator >> next [
 
-	currentIndex := (currentIndex + course) \\ (options size + 1).
-	self outOfBounds.
+	currentIndex := (currentIndex + 1) \\ options size.
 	^self current 
-]
-
-{ #category : #iterating }
-CircularIterator >> outOfBounds [
-	( currentIndex = 0 )
-	ifTrue: [ (course = 1) 
-		ifTrue: [ currentIndex := 1 ] 
-		ifFalse: [ currentIndex := options size ] ]
 ]
 
 { #category : #iterating }
 CircularIterator >> reset [
 
-	currentIndex := 1
+	currentIndex := 0
 ]

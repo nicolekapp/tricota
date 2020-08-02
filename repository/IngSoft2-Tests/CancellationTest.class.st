@@ -200,12 +200,9 @@ CancellationTest >> testCantThrowCancellationCardWhenItsTargetIsntActive [
 	
 	accelerationCard := Acceleration initializeCard .
 	cancellationCard := Cancellation initializeCardWithTarget: accelerationCard.
-	doubleCard := Double initializeCard .
 	overloadCard := Overload initializeCardWithTarget: juan.
 	redoCard := Redo initializeCard.
 	repeatCard := Repeat initializeCardWithTarget: juan.
-	reverseCard := Reverse initializeCard .
-	skipCard := Skip initializeCard .
 	speedCard := Speed initializeCardWithTarget: juan.
 	
 	"Cancellation card only can be thrown if its target is an active permanent card"
@@ -218,10 +215,6 @@ CancellationTest >> testCantThrowCancellationCardWhenItsTargetIsntActive [
 		raise: InvalidRequest 
 		withMessageText: 'Target isnt an active permanent card'.
 	self
-		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: doubleCard )]
-		raise: InvalidRequest 
-		withMessageText: 'Target isnt an active permanent card'.
-	self
 		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: overloadCard )]
 		raise: InvalidRequest 
 		withMessageText: 'Target isnt an active permanent card'.
@@ -231,14 +224,6 @@ CancellationTest >> testCantThrowCancellationCardWhenItsTargetIsntActive [
 		withMessageText: 'Target isnt an active permanent card'.			
 	self
 		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: repeatCard  )]
-		raise: InvalidRequest 
-		withMessageText: 'Target isnt an active permanent card'.
-	self
-		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: reverseCard  )]
-		raise: InvalidRequest 
-		withMessageText: 'Target isnt an active permanent card'.
-	self
-		should: [ game player: juan throw: (Cancellation initializeCardWithTarget: skipCard  )]
 		raise: InvalidRequest 
 		withMessageText: 'Target isnt an active permanent card'.
 	self
