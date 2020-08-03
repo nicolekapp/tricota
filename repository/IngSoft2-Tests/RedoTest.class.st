@@ -22,7 +22,7 @@ RedoTest >> testCantRedoASpeedCardIfIsNotYourTurn [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Speed ;
 					add: Redo .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
@@ -43,7 +43,7 @@ RedoTest >> testCantRedoAnAccelerationCardIfIsNotYourTurn [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Acceleration ;
 					add: Redo .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
@@ -64,7 +64,7 @@ RedoTest >> testCantRedoAnOverloadCardIfIsNotYourTurn [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Overload ;
 					add: Redo .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
@@ -85,7 +85,7 @@ RedoTest >> testRedoAccelerationCard [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Acceleration ;
 					add: Redo .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
@@ -126,7 +126,7 @@ RedoTest >> testRedoCancellationCard [
 	deckBuilder add: Acceleration ;
 					add: Cancellation ;
 					add: Redo .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	accelerationThrownByJuan := Acceleration initializeCard .
@@ -175,7 +175,7 @@ RedoTest >> testRedoOverloadCard [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Overload ;
 					add: Redo .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
@@ -215,7 +215,7 @@ RedoTest >> testRedoRedoCard [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Acceleration ;
 					add: Redo .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
@@ -264,7 +264,7 @@ RedoTest >> testRedoSpeedCard [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Speed ;
 					add: Redo .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
@@ -303,7 +303,7 @@ RedoTest >> testTryToThrowRedoCardBeforeNobodyThrewAnyCard [
 	| game deckBuilder|
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Redo .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	

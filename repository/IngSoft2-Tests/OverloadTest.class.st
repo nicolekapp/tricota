@@ -13,7 +13,7 @@ OverloadTest >> setUp [
 	self setUpCard.
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Overload .
-	deck := deckBuilder buildDeterministic
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 ]
 
 { #category : #tests }

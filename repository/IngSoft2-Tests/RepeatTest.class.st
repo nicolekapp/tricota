@@ -24,7 +24,7 @@ RepeatTest >> setUp [
 	self setUpCard.
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Repeat.
-	deck := deckBuilder buildDeterministic
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 ]
 
 { #category : #tests }

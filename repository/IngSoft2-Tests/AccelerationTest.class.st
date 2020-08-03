@@ -13,7 +13,7 @@ AccelerationTest >> setUp [
 	self setUpCard.
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder add: Acceleration.
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 
 ]
 

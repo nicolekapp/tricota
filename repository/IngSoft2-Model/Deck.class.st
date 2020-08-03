@@ -2,7 +2,8 @@ Class {
 	#name : #Deck,
 	#superclass : #Object,
 	#instVars : [
-		'cardProvider'
+		'cardProvider',
+		'cardsLeft'
 	],
 	#category : #'IngSoft2-Model-Card'
 }
@@ -11,6 +12,12 @@ Class {
 Deck class >> source: aCardProvider [
 
 	^ self new initializeSource: aCardProvider.
+]
+
+{ #category : #'instance creation' }
+Deck class >> source: aCardProvider withSize: anAmountOfCards [ 
+
+	^ self new initializeSource: aCardProvider withSize: anAmountOfCards.
 ]
 
 { #category : #deal }
@@ -23,11 +30,21 @@ Deck >> dealTwoCardsToEachPlayerFrom: aGruopOfPLayers [
 
 { #category : #deal }
 Deck >> handCard [
-	^ cardProvider nextCard.
+	cardsLeft > 0
+	ifTrue: [ cardsLeft - 1.
+				^ cardProvider nextCard ]
+	ifFalse:  [  ]
 ]
 
 { #category : #initialization }
 Deck >> initializeSource: aCardProvider [ 
 
 	cardProvider:= aCardProvider.
+]
+
+{ #category : #initialization }
+Deck >> initializeSource: aCardProvider withSize: anAmountOfCards [ 
+
+	cardProvider:= aCardProvider.
+	cardsLeft := anAmountOfCards.
 ]

@@ -52,7 +52,30 @@ DeckTest >> testInitializeGameDeterministicDealingCards [
 					add: Overload;
 					add: Acceleration ;
 					add: Speed .
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100.
+	
+	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
+
+	self assert: juan numberOfCards equals: 2.
+	self assert:( juan assertHasCard: (PermanentCard type: Overload new)).
+	self assert:( juan assertHasCard: (PermanentCard type: Overload new)).
+	self assert: nico numberOfCards equals:2.
+	self assert:( nico assertHasCard: (PermanentCard type: Acceleration new)).
+	self assert:( nico assertHasCard: (PermanentCard type: Speed new)).
+	
+	
+]
+
+{ #category : #tests }
+DeckTest >> testInitializeGameDeterministicDeckWithSize [
+	|game deck deckBuilder|
+	deckBuilder:= DeckBuilder startBuilding.
+	deckBuilder add: Overload;
+					add: Overload;
+					add: Acceleration;
+					add: Speed .
+
+	deck:= deckBuilder buildDeterministicWithSize: 10.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 
@@ -73,7 +96,7 @@ DeckTest >> testInitializeGameRandomDealingCards [
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder 	add: Overload ;
 					add: Speed .
-	deck:= deckBuilder buildRandom .
+	deck:= deckBuilder buildRandomWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 
 	self assert: juan numberOfCards equals: 2.

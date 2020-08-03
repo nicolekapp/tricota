@@ -22,7 +22,7 @@ CancellationTest >> testCancellationAfterTwoSpeedCardSelectingOne [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Speed ;
 					add: Cancellation .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	speedThrownByJuan := Speed initializeCardWithTarget: nico.
@@ -70,7 +70,7 @@ CancellationTest >> testCancellationOfAccelerationCard [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Acceleration ;
 					add: Cancellation .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	accelerationThrownByJuan := Acceleration initializeCard .
@@ -110,7 +110,7 @@ CancellationTest >> testCancellationOfOverloadCard [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Overload ;
 					add: Cancellation .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	overloadThrownByJuan := Overload initializeCardWithTarget: nico .
@@ -156,7 +156,7 @@ CancellationTest >> testCancellationOfSpeedCard [
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder add: Speed ;
 					add: Cancellation .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	speedThrownByJuan := Speed initializeCardWithTarget: juan .
@@ -192,10 +192,10 @@ CancellationTest >> testCancellationOfSpeedCard [
 { #category : #tests }
 CancellationTest >> testCantThrowCancellationCardWhenItsTargetIsntActive [
 
-	| game deckBuilder  accelerationCard cancellationCard doubleCard overloadCard redoCard repeatCard reverseCard skipCard speedCard |
+	| game deckBuilder  accelerationCard cancellationCard  overloadCard redoCard repeatCard  speedCard |
 	deckBuilder := DeckBuilder startBuilding.
 	deckBuilder 	add: Cancellation .
-	deck := deckBuilder buildDeterministic.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
 	accelerationCard := Acceleration initializeCard .

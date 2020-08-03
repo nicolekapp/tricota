@@ -59,7 +59,7 @@ CardTest >> setUpCard [
 	effectRouletteBuilder := EffectRouletteBuilder
 		buildingDeterministicRoulette.
 	effectRouletteBuilder add: NoEffect new.
-	effectRoulette := effectRouletteBuilder buildDeterministic
+	effectRoulette := effectRouletteBuilder buildDeterministic.
 ]
 
 { #category : #running }
@@ -78,7 +78,7 @@ CardTest >> testPlayerCanNotThrowAnyCardAfterTheGameHasFinished [
 					add: Redo ;
 					add: Repeat ;
 					add: Speed .
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 9 laps: 2 effects: effectRoulette and: deck.
 	self finish: game. 
@@ -127,7 +127,7 @@ CardTest >> testPlayerCanNotThrowAnyCardIfHeDoesntHaveIt [
 					add: Acceleration; 		"Nico has two acceleration cards"
 					add: Acceleration.
 
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	
 	game:= UCABoardGame rolling: die with: players lockers: 9 laps: 2 effects: effectRoulette and: deck.
 	cardToCancell:= Acceleration initializeCard. 

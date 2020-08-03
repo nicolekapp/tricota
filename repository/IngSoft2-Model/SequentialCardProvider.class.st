@@ -13,6 +13,11 @@ SequentialCardProvider class >> providing: aSequenceOfCards [
 ]
 
 { #category : #initialization }
+SequentialCardProvider class >> providing: aCollection withSize: anInteger [ 
+	self shouldBeImplemented.
+]
+
+{ #category : #initialization }
 SequentialCardProvider >> initializeProviding: aSequenceOfCards [ 
 	
  sequenceOfCards := (CircularIterator cyclingOver: aSequenceOfCards ).

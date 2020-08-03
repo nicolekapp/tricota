@@ -59,7 +59,7 @@ CombineCardsAndEffectsTest >> testSpeedUpPlusAccelerationAndSpeedCardIncreasesTw
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder add: Acceleration; 	"Everyon has Acceleration and speed card"
 					add: Speed.
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 5 laps: 5 effects: effectRoulette and: deck.
 	
 	accelerationThrownByJuan := Acceleration initializeCard .
@@ -87,7 +87,7 @@ CombineCardsAndEffectsTest >> testWithOverloadCardPlayerDoesntReachNextLapAndEff
 	effectRoulette := effectRouletteBuilder buildDeterministic.
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder add: Overload. 	"Everyon has two Overload cards"
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 8 laps: 5 effects: effectRoulette and: deck.
 	
 	overloadThrownByJuan := Overload initializeCardWithTarget: nico .
@@ -121,7 +121,7 @@ CombineCardsAndEffectsTest >> testWithTwoAccelerationCardsPlayerReachNextLapAndE
 	effectRoulette := effectRouletteBuilder buildDeterministic.
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder add: Acceleration. 	"Everyon has two Acceleration cards"
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 6 laps: 5 effects: effectRoulette and: deck.
 	
 	firstAccelerationThrownByJuan := Acceleration initializeCard .
@@ -149,7 +149,7 @@ CombineCardsAndEffectsTest >> testWormHolePlusOverloadCardAvoidPlayerToWin [
 	effectRoulette := effectRouletteBuilder buildDeterministic.
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder add: Overload . 	"Everyon has two Overload cards"
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 4 laps: 1 effects: effectRoulette and: deck.
 	
 	overloadThrownByJuan:= Overload initializeCardWithTarget: nico.
@@ -187,7 +187,7 @@ CombineCardsAndEffectsTest >> testWormHolePlusThreeOverloadCardsDecreasesTwoLaps
 	effectRoulette := effectRouletteBuilder buildDeterministic.
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder add: Overload . 	"Everyon has two Overload cards"
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 3 laps: 5 effects: effectRoulette and: deck.
 	
 	game nextTurn."Juan rolled 7 and increases 2 laps"

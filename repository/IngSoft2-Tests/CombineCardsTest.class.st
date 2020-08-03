@@ -60,7 +60,7 @@ CombineCardsTest >> testCombineAccelerationOverloadAndSpeedCards [
 	deckBuilder add: Acceleration ; 	"Juan has Acceleration & Overload"
 					add: Overload ;			"Nico has Speed & Acceleration"
 					add: Speed.				"Sofi has Overload & Speed"
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 
 	accelerationThrownByJuan := Acceleration initializeCard.
