@@ -2,25 +2,30 @@ Class {
 	#name : #SequentialCardProvider,
 	#superclass : #Object,
 	#instVars : [
-		'sequenceOfCards'
+		'sequenceOfCards',
+		'amountOfCards'
 	],
 	#category : #'IngSoft2-Model-Card'
 }
 
-{ #category : #'intance creation' }
-SequentialCardProvider class >> providing: aSequenceOfCards [ 
-	^self new initializeProviding: aSequenceOfCards.
+{ #category : #initialization }
+SequentialCardProvider class >> providing: aSequenceOfCards [
+	aSequenceOfCards size < 1
+		ifTrue: [ InstanceCreationFailed
+				signal: 'Not enough cards' ].
+	^ self new initializeProviding: aSequenceOfCards 
 ]
 
-{ #category : #initialization }
-SequentialCardProvider class >> providing: aCollection withSize: anInteger [ 
-	self shouldBeImplemented.
+{ #category : #'as yet unclassified' }
+SequentialCardProvider >> amountOfCards [
+	^amountOfCards.
 ]
 
 { #category : #initialization }
 SequentialCardProvider >> initializeProviding: aSequenceOfCards [ 
 	
  sequenceOfCards := (CircularIterator cyclingOver: aSequenceOfCards ).
+ amountOfCards := aSequenceOfCards size.
 ]
 
 { #category : #providing }

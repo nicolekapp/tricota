@@ -9,7 +9,8 @@ Class {
 		'effectRoulette',
 		'effects',
 		'noEffect',
-		'deck'
+		'deck',
+		'discardDeck'
 	],
 	#category : #'IngSoft2-Tests-Game-Tests'
 }
@@ -45,7 +46,7 @@ UcaBoardGameNoEffectsTest >> setUp [
 	|effectRouletteBuilder deckBuilder|
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder add: Acceleration .
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100 .
 	
 	effectRouletteBuilder := EffectRouletteBuilder buildingDeterministicRoulette.
 	effectRouletteBuilder add: NoEffect new.

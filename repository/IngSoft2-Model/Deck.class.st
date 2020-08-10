@@ -10,7 +10,6 @@ Class {
 
 { #category : #'instance creation' }
 Deck class >> source: aCardProvider [
-
 	^ self new initializeSource: aCardProvider.
 ]
 
@@ -31,9 +30,9 @@ Deck >> dealTwoCardsToEachPlayerFrom: aGruopOfPLayers [
 { #category : #deal }
 Deck >> handCard [
 	cardsLeft > 0
-	ifTrue: [ cardsLeft - 1.
+	ifTrue: [ cardsLeft:= cardsLeft - 1.
 				^ cardProvider nextCard ]
-	ifFalse:  [  ]
+	ifFalse:  [ ]
 ]
 
 { #category : #initialization }
@@ -47,4 +46,11 @@ Deck >> initializeSource: aCardProvider withSize: anAmountOfCards [
 
 	cardProvider:= aCardProvider.
 	cardsLeft := anAmountOfCards.
+]
+
+{ #category : #'as yet unclassified' }
+Deck >> numberOfCards [
+	cardsLeft 
+	ifNil: [ cardsLeft:=  cardProvider amountOfCards].
+	 ^cardsLeft.
 ]

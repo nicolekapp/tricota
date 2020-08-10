@@ -48,7 +48,7 @@ UcaBoardGameWithEffectRouletteTest >> setUp [
 					add: Speed ;
 					add: Repeat ;
 					add: Overload .
-	deck:= deckBuilder buildDeterministic .
+	deck:= deckBuilder buildDeterministicWithSize: 100 .
 	
 	die := Die of: 10 rolling: #(7 9 3).
 	juan := self juan.

@@ -24,6 +24,7 @@ EffectRouletteTest >> effectsWithProbabilities [
 	effectRouletteBuilder add: noEffect withPercentage:38.
 	
 	^effectRouletteBuilder buildProbabilistic .
+
 ]
 
 { #category : #tests }

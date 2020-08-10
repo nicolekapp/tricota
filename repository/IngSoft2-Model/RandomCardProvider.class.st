@@ -2,7 +2,8 @@ Class {
 	#name : #RandomCardProvider,
 	#superclass : #Object,
 	#instVars : [
-		'cards'
+		'cards',
+		'deckProvider'
 	],
 	#category : #'IngSoft2-Model-Card'
 }

@@ -9,6 +9,8 @@ Class {
 
 { #category : #playing }
 PickUpCard >> applyEffectTo: aPosition of: currentPlayer knowing: players the: deck and: finishline [
-	currentPlayer addCard: deck handCard.
+	( deck numberOfCards > 0 )
+	ifTrue: [ currentPlayer addCard: deck handCard.  ].
 	^aPosition.
+	
 ]

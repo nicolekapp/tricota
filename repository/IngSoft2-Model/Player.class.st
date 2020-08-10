@@ -35,7 +35,10 @@ Player >> = anObject [
 
 { #category : #playing }
 Player >> addCard: aCard [ 
-	cards add: aCard
+ 	 cards add: aCard
+	
+
+	
 ]
 
 { #category : #assertions }

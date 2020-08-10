@@ -18,7 +18,9 @@ Class {
 		'activeCards',
 		'typeLastCardPlayed',
 		'deck',
-		'timesToRoll'
+		'timesToRoll',
+		'discardDeck',
+		'deckBuilder'
 	],
 	#category : #'IngSoft2-Model-Game'
 }
@@ -38,10 +40,10 @@ UCABoardGame class >> assertLockersGreaterThanZero: aNumberOfLockers [
 ]
 
 { #category : #'instance creation' }
-UCABoardGame class >> rolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: cards [
+UCABoardGame class >> rolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: deck [
 	self assertLockersGreaterThanZero: aNumberOfLockers .
 	self assertLapsGreaterThanZero: aNumberOfLaps .
-	^self new initializeRolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: cards.
+	^self new initializeRolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: deck.
 ]
 
 { #category : #playing }
@@ -136,6 +138,11 @@ UCABoardGame >> currentPositionOf: aPlayer [
 
 ]
 
+{ #category : #'as yet unclassified' }
+UCABoardGame >> discardDeckSize [
+	^ discardDeck size.
+]
+
 { #category : #assertions }
 UCABoardGame >> hasFinished [
 	
@@ -169,7 +176,9 @@ UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberO
 	lastEffect := 'No effect yet'.
 	typeLastCardPlayed:= 'No card has been played yet'.
 	deck := aDeck.
-	deck dealTwoCardsToEachPlayerFrom: aGroupOfPlayers  
+	deck dealTwoCardsToEachPlayerFrom: aGroupOfPlayers.
+	discardDeck := OrderedCollection new.
+
 ]
 
 { #category : #position }
@@ -199,7 +208,8 @@ UCABoardGame >> player: aPlayer throw: card [
 	aPlayer assertHasCard: card.
 	card thrownBy: aPlayer inTheTurnOf: self currentPlayerTurn.
 	card applyIn: self.
-	aPlayer cardPlayed: card
+	aPlayer cardPlayed: card.
+	discardDeck add: card.
 ]
 
 { #category : #position }
@@ -221,6 +231,15 @@ UCABoardGame >> rollDiceApplyEffectsAndCardsTo: currentPlayer thatsIn: currentPl
 UCABoardGame >> savePermanentCard: aCard [
 
 	activeCards add: aCard
+]
+
+{ #category : #'as yet unclassified' }
+UCABoardGame >> shuffleDiscardDeck [
+| auxDeck |
+auxDeck := discardDeck shuffle.
+discardDeck:= OrderedCollection new.
+^ auxDeck.
+ 
 ]
 
 { #category : #cards }
