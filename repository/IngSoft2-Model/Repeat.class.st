@@ -1,8 +1,18 @@
 Class {
 	#name : #Repeat,
-	#superclass : #IstantTypeCard,
-	#category : #'IngSoft2-Model-Card'
+	#superclass : #InstantCard,
+	#category : #'IngSoft2-Model-Cards'
 }
+
+{ #category : #initialization }
+Repeat class >> initializeCard [
+	^self new.
+]
+
+{ #category : #initialization }
+Repeat class >> initializeCardWithTarget: aTarget [
+	^ self onTarget: aTarget
+]
 
 { #category : #playing }
 Repeat >> applyIn: game to: aPlayer [ 

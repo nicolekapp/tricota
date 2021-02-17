@@ -68,7 +68,7 @@ CombineCardsTest >> testCombineAccelerationOverloadAndSpeedCards [
 	overloadThrownByJuan := Overload initializeCardWithTarget: nico.
 	game player: juan throw: overloadThrownByJuan .
 	
-	game nextTurn."Juan rolled 7 plus 1 of acrive acceleration card"
+	game nextTurn."Juan rolled 7 plus 1 of active acceleration card"
 		self
 			assert: (game lapNumberOf: juan) equals: 0;
 			assert: (game lockerNumberOf: juan) equals: 8;
@@ -80,7 +80,7 @@ CombineCardsTest >> testCombineAccelerationOverloadAndSpeedCards [
 	accelerationThrownByNico := Acceleration initializeCard.
 	game player: nico throw: accelerationThrownByNico .
 	speedThrownByNico := Speed initializeCardWithTarget: nico.
-	game player: nico throw: speedThrownByNico .
+	game player: nico throw: speedThrownByNico.
 	
 	game nextTurn."Nico rolled 9 minus 2 for being target of one active overload card, plus 3 for 2 active acceleration cards and being target of one speed card"
 		self

@@ -6,7 +6,7 @@ Class {
 		'dictionary',
 		'randomValue'
 	],
-	#category : #'IngSoft2-Model-Card'
+	#category : #'IngSoft2-Model-Cards'
 }
 
 { #category : #'instance creation' }
@@ -15,8 +15,8 @@ ProbabilitiesCardProvider class >> with: aDictionaryOfCards [
 ]
 
 { #category : #initialization }
-ProbabilitiesCardProvider >> initializeWith: aDictionaryOfEffects [ 
-	dictionary:= aDictionaryOfEffects.
+ProbabilitiesCardProvider >> initializeWith: aDictionaryOfCards [
+	dictionary:= aDictionaryOfCards.
 	randomValue := Random new.
 ]
 

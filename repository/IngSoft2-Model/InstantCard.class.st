@@ -1,19 +1,21 @@
 Class {
 	#name : #InstantCard,
 	#superclass : #Card,
-	#category : #'IngSoft2-Model-Card'
+	#category : #'IngSoft2-Model-Cards'
 }
 
 { #category : #playing }
 InstantCard >> applyIn: game [
 	
 	|typeLastCard|
-	typeLastCard := type applyIn: game to: target.
+	typeLastCard := self applyIn: game to: target.
 	game typeLastCardPlayed: typeLastCard .
 
 ]
 
 { #category : #playing }
-InstantCard >> thrownBy: aPlayer inTheTurnOf: playerTurn [
-	type thrownBy: aPlayer inTheTurnOf: playerTurn 
+InstantCard >> applyIn: game to: aTarget [
+
+	self subclassResponsibility
+
 ]

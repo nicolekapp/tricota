@@ -39,6 +39,13 @@ UCABoardGame class >> assertLockersGreaterThanZero: aNumberOfLockers [
 		ifFalse: [ InstanceCreationFailed signal: 'Need at least one locker' ]
 ]
 
+{ #category : #playing }
+UCABoardGame class >> rolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette a: deck and: discardDeck [
+	self assertLockersGreaterThanZero: aNumberOfLockers .
+	self assertLapsGreaterThanZero: aNumberOfLaps .
+	^self new initializeRolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette a: deck and: discardDeck.
+]
+
 { #category : #'instance creation' }
 UCABoardGame class >> rolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: deck [
 	self assertLockersGreaterThanZero: aNumberOfLockers .
@@ -163,6 +170,26 @@ UCABoardGame >> initializeDictionaryOfPositions: aGroupOfPlayers [
 ]
 
 { #category : #initialization }
+UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: anEffectRoulette a: mainDeck and: backupDeck [
+	dice:= aDice.
+	timesToRoll := 1.
+	playersWithPositions:= self initializeDictionaryOfPositions: aGroupOfPlayers.
+	sequenceOfPlayers:= (SequentialPlayersProvider providing: aGroupOfPlayers).
+	finishLine:= aNumberOfLockers.
+	laps:= aNumberOfLaps.
+	effectRoulette:= anEffectRoulette.
+	activeCards := OrderedCollection new.
+	winner := 'No Winner'.
+	lastEffect := 'No effect yet'.
+	typeLastCardPlayed:= 'No card has been played yet'.
+	deck := mainDeck.
+	deck dealTwoCardsToEachPlayerFrom: aGroupOfPlayers.
+	discardDeck := backupDeck.
+
+
+]
+
+{ #category : #initialization }
 UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: anEffectRoulette and: aDeck [
 	dice:= aDice.
 	timesToRoll := 1.
@@ -178,6 +205,7 @@ UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberO
 	deck := aDeck.
 	deck dealTwoCardsToEachPlayerFrom: aGroupOfPlayers.
 	discardDeck := OrderedCollection new.
+
 
 ]
 
@@ -200,6 +228,11 @@ UCABoardGame >> nextTurn [
 	positionAfterEffectAndCards := self rollDiceApplyEffectsAndCardsTo: currentPlayer thatsIn: currentPlayerPosition.
 	currentPlayerPosition moveTo: positionAfterEffectAndCards knowing: finishLine.
 	self assertTheWinnerIs: currentPlayer
+]
+
+{ #category : #playing }
+UCABoardGame >> numberOfCardsInDeck [
+	^deck numberOfCards.
 ]
 
 { #category : #playing }
@@ -235,10 +268,14 @@ UCABoardGame >> savePermanentCard: aCard [
 
 { #category : #'as yet unclassified' }
 UCABoardGame >> shuffleDiscardDeck [
-| auxDeck |
-auxDeck := discardDeck shuffle.
+
+ discardDeck isEmpty
+ifTrue: [ InvalidRequest
+				signal: 'Cannot shuffle empty deck'  ].
+deckBuilder:= DeckBuilder startBuildingWith: discardDeck shuffle.
+deck:= deckBuilder buildDeterministicWithSize: discardDeck size.
 discardDeck:= OrderedCollection new.
-^ auxDeck.
+
  
 ]
 

@@ -2,20 +2,20 @@ Class {
 	#name : #Card,
 	#superclass : #Object,
 	#instVars : [
-		'type',
 		'target'
 	],
-	#category : #'IngSoft2-Model-Card'
+	#category : #'IngSoft2-Model-Cards'
 }
 
 { #category : #'instance creation' }
-Card class >> type: aType [  
-	^ self type: aType target: NoTarget new.
+Card class >> onTarget: aTarget [
+	^ self new initializeOnTarget: aTarget
 ]
 
-{ #category : #'instance creation' }
-Card class >> type: aType target: aTarget [ 
-	^ self new initializeType: aType target: aTarget
+{ #category : #playing }
+Card >> = anObject [ 
+
+	^ self class = anObject class .	
 ]
 
 { #category : #playing }
@@ -23,24 +23,23 @@ Card >> applyIn: game [
 	Error signal: 'This message should be override'.
 ]
 
+{ #category : #playing }
+Card >> hash [
+	
+	^self class hash
+]
+
 { #category : #inicialization }
-Card >> initializeType: aType target: aTarget [ 
-	type := aType .
+Card >> initializeOnTarget: aTarget [ 
 	target := aTarget.
 ]
 
 { #category : #playing }
 Card >> isSameType: aCard [ 
-	^ type = aCard type .
-	"HOLAAAAA"
+	^ self class = aCard class.
 ]
 
 { #category : #playing }
 Card >> thrownBy: aPlayer inTheTurnOf: playerTurn [
-	Error signal: 'This message should be override'.
-]
-
-{ #category : #playing }
-Card >> type [
-	^ type
+	self subclassResponsibility
 ]

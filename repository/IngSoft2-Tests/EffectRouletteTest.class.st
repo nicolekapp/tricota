@@ -21,7 +21,7 @@ EffectRouletteTest >> effectsWithProbabilities [
 	effectRouletteBuilder add: wormHole withPercentage:20.
 	effectRouletteBuilder add: moonWalk withPercentage:10.
 	effectRouletteBuilder add: pickUpCard  withPercentage:10.
-	effectRouletteBuilder add: noEffect withPercentage:38.
+	effectRouletteBuilder add: noEffect withPercentage:30.
 	
 	^effectRouletteBuilder buildProbabilistic .
 

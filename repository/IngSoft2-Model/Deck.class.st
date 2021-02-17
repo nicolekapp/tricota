@@ -5,7 +5,7 @@ Class {
 		'cardProvider',
 		'cardsLeft'
 	],
-	#category : #'IngSoft2-Model-Card'
+	#category : #'IngSoft2-Model-Cards'
 }
 
 { #category : #'instance creation' }
@@ -31,8 +31,7 @@ Deck >> dealTwoCardsToEachPlayerFrom: aGruopOfPLayers [
 Deck >> handCard [
 	cardsLeft > 0
 	ifTrue: [ cardsLeft:= cardsLeft - 1.
-				^ cardProvider nextCard ]
-	ifFalse:  [ ]
+				^ cardProvider nextCard ].
 ]
 
 { #category : #initialization }
@@ -50,7 +49,7 @@ Deck >> initializeSource: aCardProvider withSize: anAmountOfCards [
 
 { #category : #'as yet unclassified' }
 Deck >> numberOfCards [
-	cardsLeft 
+	cardsLeft
 	ifNil: [ cardsLeft:=  cardProvider amountOfCards].
 	 ^cardsLeft.
 ]

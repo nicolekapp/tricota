@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'sequenceOfCards'
 	],
-	#category : #'IngSoft2-Model-Card'
+	#category : #'IngSoft2-Model-Cards'
 }
 
 { #category : #'instance creation' }
@@ -28,8 +28,8 @@ DeckBuilder class >> startBuildingWith: discardedCards [
 ]
 
 { #category : #building }
-DeckBuilder >> add: aTypeCard [  
-	sequenceOfCards add: (aTypeCard initializeCard) .
+DeckBuilder >> add: aCard [ 
+	sequenceOfCards add: (aCard initializeCard) .
 ]
 
 { #category : #building }
@@ -50,7 +50,7 @@ DeckBuilder >> buildDeterministicWithSize: anAmountOfCards [
 
 { #category : #building }
 DeckBuilder >> buildRandomWithSize: anAmountOfCards [ 
-	^ Deck source:(RandomCardProvider providing: sequenceOfCards) withSize: anAmountOfCards.
+	^ Deck source:(ProbabilitiesCardProvider with: (self createDictionaryTypeOfCardsAndProbabilities: sequenceOfCards )) withSize: anAmountOfCards.
 ]
 
 { #category : #initialization }

@@ -12,6 +12,29 @@ Class {
 }
 
 { #category : #accessing }
+DeckTest >> cardsWithProbabilities [
+
+	| acceleration speed cancellation overload redo repeat deckBuilder |
+	acceleration:= Acceleration initializeCard.
+	speed:= Speed initializeCard.
+	cancellation:= Cancellation initializeCard.
+	overload:= Overload initializeCard.
+	redo:= Redo initializeCard.
+	repeat:= Repeat initializeCard.
+	deckBuilder:= DeckBuilder buildingProbabilisticShuffler.
+	
+	deckBuilder add: acceleration withPercentage:10.
+	deckBuilder add: speed withPercentage:20.
+	deckBuilder add: cancellation withPercentage:20.
+	deckBuilder add: overload withPercentage:10.
+	deckBuilder add: redo  withPercentage:10.
+	deckBuilder add: repeat withPercentage:30.
+	
+	^deckBuilder buildRandomWithSize: 100.
+
+]
+
+{ #category : #accessing }
 DeckTest >> juan [
 	^ self playerNamed: 'Juan'.
 ]
@@ -57,11 +80,11 @@ DeckTest >> testInitializeGameDeterministicDealingCards [
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 
 	self assert: juan numberOfCards equals: 2.
-	self assert:( juan assertHasCard: (PermanentCard type: Overload new)).
-	self assert:( juan assertHasCard: (PermanentCard type: Overload new)).
+	self assert:( juan assertHasCard: (Overload initializeCardWithTarget: Everyone new)).
+	self assert:( juan assertHasCard: (Overload initializeCardWithTarget: Everyone new)).
 	self assert: nico numberOfCards equals:2.
-	self assert:( nico assertHasCard: (PermanentCard type: Acceleration new)).
-	self assert:( nico assertHasCard: (PermanentCard type: Speed new)).
+	self assert:( nico assertHasCard: (Acceleration  initializeCard)).
+	self assert:( nico assertHasCard: (Acceleration  initializeCard)).
 	
 	
 ]
@@ -143,16 +166,17 @@ DeckTest >> testInitializeGameDeterministicDeckWithSizeSixZeroCardsLeftAfterFirs
 
 { #category : #tests }
 DeckTest >> testInitializeGameRandomDealingCards [
-
-	|deck deckBuilder game |
-	deckBuilder:= DeckBuilder startBuilding.
-	deckBuilder 	add: Overload ;
-					add: Speed .
-	deck:= deckBuilder buildRandomWithSize: 100.
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
-
-	self assert: juan numberOfCards equals: 2.
-	self assert: nico numberOfCards equals:2.
 	
-	
+	|cardTypesToBeUsed deckBuilder |
+	deckBuilder:= self cardsWithProbabilities.
+	cardTypesToBeUsed:= OrderedCollection new.
+	cardTypesToBeUsed 
+		add: Acceleration;
+		add: Speed;
+		add: Cancellation;
+		add: Overload ; 
+		add: Redo ;
+		add: Repeat .
+	1 to: 100 do: [ :iteration | self assert: (cardTypesToBeUsed includes: deckBuilder handCard class) ].
+
 ]

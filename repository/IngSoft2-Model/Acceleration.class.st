@@ -1,15 +1,32 @@
 Class {
 	#name : #Acceleration,
-	#superclass : #PermanentTypeCard,
-	#category : #'IngSoft2-Model-Card'
+	#superclass : #PermanentCard,
+	#category : #'IngSoft2-Model-Cards'
 }
 
 { #category : #initialization }
 Acceleration class >> initializeCard [
-	^PermanentCard type: self new target: Everyone new.
+	^ self onTarget: Everyone new
+]
+
+{ #category : #initialization }
+Acceleration class >> initializeCardWithTarget: aTarget [
+	^ self onTarget: aTarget
 ]
 
 { #category : #playing }
-Acceleration >> effect: aPlayer [ 
+Acceleration >> = anObject [ 
+
+	^ self class = anObject class .	
+]
+
+{ #category : #playing }
+Acceleration >> hash [
+	
+	^self class hash
+]
+
+{ #category : #playing }
+Acceleration >> numberOfLockerToMovePlayer [
 	^1.
 ]

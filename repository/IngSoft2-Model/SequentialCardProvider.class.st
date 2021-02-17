@@ -5,7 +5,7 @@ Class {
 		'sequenceOfCards',
 		'amountOfCards'
 	],
-	#category : #'IngSoft2-Model-Card'
+	#category : #'IngSoft2-Model-Cards'
 }
 
 { #category : #initialization }

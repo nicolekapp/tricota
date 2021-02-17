@@ -1,12 +1,22 @@
 Class {
 	#name : #Redo,
-	#superclass : #IstantTypeCard,
+	#superclass : #InstantCard,
 	#instVars : [
 		'throwedBy',
 		'playersTurn'
 	],
-	#category : #'IngSoft2-Model-Card'
+	#category : #'IngSoft2-Model-Cards'
 }
+
+{ #category : #initialization }
+Redo class >> initializeCard [
+	^self new.
+]
+
+{ #category : #initialization }
+Redo class >> initializeCardWithTarget: aTarget [
+	^ self onTarget: aTarget
+]
 
 { #category : #playing }
 Redo >> applyIn: game to: aTarget [ 

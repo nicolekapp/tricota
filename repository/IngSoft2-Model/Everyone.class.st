@@ -1,7 +1,7 @@
 Class {
 	#name : #Everyone,
 	#superclass : #Object,
-	#category : #'IngSoft2-Model-Card'
+	#category : #'IngSoft2-Model-Cards'
 }
 
 { #category : #comparing }

@@ -1,15 +1,32 @@
 Class {
 	#name : #Overload,
-	#superclass : #PermanentTypeCard,
-	#category : #'IngSoft2-Model-Card'
+	#superclass : #PermanentCard,
+	#category : #'IngSoft2-Model-Cards'
 }
 
 { #category : #initialization }
 Overload class >> initializeCard [
-	^PermanentCard type: self new.
+	^self new.
+]
+
+{ #category : #initialization }
+Overload class >> initializeCardWithTarget: aTarget [
+	^ self onTarget: aTarget
 ]
 
 { #category : #playing }
-Overload >> effect: aPlayer [ 
-	^ -2.
+Overload >> = anObject [ 
+
+	^ self class = anObject class .	
+]
+
+{ #category : #playing }
+Overload >> hash [
+	
+	^self class hash
+]
+
+{ #category : #playing }
+Overload >> numberOfLockerToMovePlayer [
+	^ -2
 ]

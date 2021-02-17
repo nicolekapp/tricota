@@ -24,7 +24,8 @@ AccelerationTest >> testAccelerationCardApplysToEveryone [
 
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 	
-	accelerationThrownByJuan := Acceleration initializeCard .
+	"accelerationThrownByJuan := Acceleration initializeCard."
+	accelerationThrownByJuan:= Acceleration initializeCard. 
 	game player: juan throw: accelerationThrownByJuan .
 	
 	game nextTurn. "Juan rolled 7 plus one for Acceleration card"
@@ -105,7 +106,7 @@ AccelerationTest >> testThrowMoreThanOneAccelerationCard [
 			assert: (game lapNumberOf: nico) equals: 0;
 			assert: (game lockerNumberOf: nico) equals: 11.
 			
-	secondAccelerationThrownByJuan := PermanentCard type: Acceleration new target: Everyone new.
+	secondAccelerationThrownByJuan := Acceleration initializeCard.
 	game player: juan throw: secondAccelerationThrownByJuan .
 	game nextTurn."Juan rolled 3 plus 3 for three active acceleration cards"
 		self

@@ -7,7 +7,8 @@ Class {
 		'nico',
 		'players',
 		'effectRoulette',
-		'deck'
+		'deck',
+		'discardDeck'
 	],
 	#category : #'IngSoft2-Tests-Deck-Tests'
 }
@@ -56,11 +57,11 @@ DeckPickUpCardTest >> testDeterministicDeckWithSizeAndPlayerPickUpCardEffectDeck
 	| game deckBuilder |
 
 	deckBuilder:= DeckBuilder startBuilding.
-	deckBuilder add: Acceleration ;
-					add: Speed ;
-					add: Acceleration ;
-					add: Speed ;
-					add: Repeat ;
+	deckBuilder add: Acceleration;
+					add: Speed;
+					add: Acceleration;
+					add: Speed;
+					add: Repeat;
 					add: Overload.
 					
 	deck:= deckBuilder buildDeterministicWithSize: 6.
@@ -84,31 +85,33 @@ DeckPickUpCardTest >> testDeterministicDeckWithSizeAndPlayerPickUpCardEffectDeck
 	self assert: nico numberOfCards equals: 3.
 	self assert: (nico assertHasCard: Overload initializeCard ).
 	
+	self assert: deck numberOfCards equals: 0.	
+	self
+		should: [ game shuffleDiscardDeck ]
+		raise: InvalidRequest 
+		withMessageText: 'Cannot shuffle empty deck'.
+		
 	game nextTurn. "The effect of this turn was PickUpCard. Deck and DiscardDeck are empty. Juan is not able to pick up another card" 
 	self assert: juan numberOfCards equals: 3.
 	self assert: deck numberOfCards equals: 0.
 
-
-	
-	
-	
 ]
 
 { #category : #tests }
-DeckPickUpCardTest >> testDeterministicDeckWithSizeAndPlayerPickUpCardEffectDiscardDeckNotEmpty [
+DeckPickUpCardTest >> testDeterministicDeckWithSizeAndPlayerPickUpCardEffectDeckTurnsEmptyAndNoCardWasThrownUntilPlayerThrowsCardCanPickUpAgain [
 
-	| game  deckBuilder |
+	| game deckBuilder accelerationThrownByNico |
 
 	deckBuilder:= DeckBuilder startBuilding.
 	deckBuilder add: Acceleration;
 					add: Speed;
 					add: Acceleration;
 					add: Speed;
-					add: Repeat;
-					add: Overload.
+					add: Overload;
+					add: Repeat.
 					
 	deck:= deckBuilder buildDeterministicWithSize: 6.
-	
+
 	effectRoulette:= self aEffectRouletteWith100ProbabilityOf: (PickUpCard new).
 	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
 
@@ -119,71 +122,34 @@ DeckPickUpCardTest >> testDeterministicDeckWithSizeAndPlayerPickUpCardEffectDisc
 		assert: (juan assertHasCard: Acceleration initializeCard );
 		assert: (juan assertHasCard: Speed initializeCard ).
 	
-	game player: juan throw: Acceleration initializeCard.
 	
 	game nextTurn. "The effect of this turn was PickUpCard. The card juan picked up was Repeat"
-	self assert: juan numberOfCards equals: 2.
-	self assert: (juan assertHasCard: Repeat initializeCard ).
-	game player: nico throw: Acceleration initializeCard.
-	
+	self assert: juan numberOfCards equals: 3.
+	self assert: (juan assertHasCard: Overload initializeCard ).
+
 	game nextTurn. "The effect of this turn was PickUpCard. The card nico picked up was Overload"
+	self assert: nico numberOfCards equals: 3.
+	self assert: (nico assertHasCard: Repeat initializeCard ).
+	
+	game nextTurn. "The effect of this turn was PickUpCard. Deck and DiscardDeck are empty. Juan is not able to pick up another card" 
+	self assert: juan numberOfCards equals: 3.
+	self assert: deck numberOfCards equals: 0.	"Deck and discard deck are both empty"
+		
+	self
+		should: [ game shuffleDiscardDeck ]
+		raise: InvalidRequest 
+		withMessageText: 'Cannot shuffle empty deck'.
+		
+	accelerationThrownByNico := Acceleration   initializeCard. 
+	game player: nico throw: accelerationThrownByNico.
 	self assert: nico numberOfCards equals: 2.
-	self assert: (nico assertHasCard: Overload initializeCard ).
 	
-	self assert: deck numberOfCards equals: 0.
-	deckBuilder:= DeckBuilder startBuildingWith: (game shuffleDiscardDeck).
-	deck:= deckBuilder buildDeterministic.
-	self assert: deck numberOfCards equals: 2.
+	game shuffleDiscardDeck.
+	self assert: game numberOfCardsInDeck equals: 1.
+	
+	game nextTurn. "The effect of this turn was PickUpCard . Can pick up card, deck is not empty." 
+	self assert: nico numberOfCards equals: 3.
+	self assert: game numberOfCardsInDeck equals: 0.	
 
-	game nextTurn. "The effect of this turn was PickUpCard. The card nico picked up was Overload"
-	self assert: juan numberOfCards equals: 2.
-	self assert: (juan assertHasCard: Speed initializeCard ).
-	
-]
 
-{ #category : #tests }
-DeckPickUpCardTest >> testDeterministicDeckWithSizeAndPlayerPickUpCardEffectDiscardDeckNotEmpty____ [
-
-	| game  deckBuilder |
-
-	deckBuilder:= DeckBuilder startBuilding.
-	deckBuilder add: Acceleration;
-					add: Speed;
-					add: Acceleration;
-					add: Speed;
-					add: Repeat;
-					add: Overload.
-					
-	deck:= deckBuilder buildDeterministicWithSize: 6.
-	
-	effectRoulette:= self aEffectRouletteWith100ProbabilityOf: (PickUpCard new).
-	game:= UCABoardGame rolling: die with: players lockers: 60 laps: 2 effects: effectRoulette and: deck.
-
-	self assert: juan numberOfCards equals: 2;
-		assert: (juan assertHasCard: Acceleration initializeCard );
-		assert: (juan assertHasCard: Speed initializeCard );
-	 	assert: nico numberOfCards equals: 2;
-		assert: (juan assertHasCard: Acceleration initializeCard );
-		assert: (juan assertHasCard: Speed initializeCard ).
-	
-	game player: juan throw: Acceleration initializeCard.
-	
-	game nextTurn. "The effect of this turn was PickUpCard. The card juan picked up was Repeat"
-	self assert: juan numberOfCards equals: 2.
-	self assert: (juan assertHasCard: Repeat initializeCard ).
-	game player: nico throw: Acceleration initializeCard.
-	
-	game nextTurn. "The effect of this turn was PickUpCard. The card nico picked up was Overload"
-	self assert: nico numberOfCards equals: 2.
-	self assert: (nico assertHasCard: Overload initializeCard ).
-	
-	self assert: deck numberOfCards equals: 0.
-	deckBuilder:= DeckBuilder startBuildingWith: (game shuffleDiscardDeck).
-	deck:= deckBuilder buildDeterministic.
-	self assert: deck numberOfCards equals: 2.
-
-	game nextTurn. "The effect of this turn was PickUpCard. The card nico picked up was Overload"
-	self assert: juan numberOfCards equals: 2.
-	self assert: (juan assertHasCard: Speed initializeCard ).
-	
 ]
