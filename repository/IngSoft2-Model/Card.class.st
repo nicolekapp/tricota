@@ -32,6 +32,7 @@ Card >> initializeType: aType target: aTarget [
 { #category : #playing }
 Card >> isSameType: aCard [ 
 	^ type = aCard type .
+	"HOLAAAAA"
 ]
 
 { #category : #playing }
