@@ -8,11 +8,6 @@ Class {
 }
 
 { #category : #'instance creation' }
-DeckBuilder class >> buildingDeterministicShuffler [
-	^self new initializeBuildingDeterministicShuffler.
-]
-
-{ #category : #'instance creation' }
 DeckBuilder class >> buildingProbabilisticShuffler [
 	^self new initializeBuildingProbabilisticShuffler.
 ]
@@ -62,11 +57,6 @@ DeckBuilder >> createDictionaryTypeOfCardsAndProbabilities: cards [
 			cards at: key put: (Interval from: minimum to: minimum + value - 1).
 			minimum := minimum + value ].
 	^cards.
-]
-
-{ #category : #initialization }
-DeckBuilder >> initializeBuildingDeterministicShuffler [
-	sequenceOfCards := OrderedCollection new.
 ]
 
 { #category : #initialization }
