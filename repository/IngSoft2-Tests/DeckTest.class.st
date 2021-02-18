@@ -141,17 +141,26 @@ DeckTest >> testInitializeGameDeterministicDeckWithSizeSixZeroCardsLeftAfterFirs
 
 { #category : #tests }
 DeckTest >> testInitializeGameRandomDealingCards [
-	
-	|cardTypesToBeUsed deckBuilder |
-	deckBuilder:= self cardsWithProbabilities.
-	cardTypesToBeUsed:= OrderedCollection new.
-	cardTypesToBeUsed 
-		add: Acceleration;
-		add: Speed;
-		add: Cancellation;
-		add: Overload ; 
-		add: Redo ;
-		add: Repeat .
-	1 to: 100 do: [ :iteration | self assert: (cardTypesToBeUsed includes: deckBuilder handCard class) ].
-
+	| cardTypesToBeUsed deckBuilder accelerationAmount speedAmount cancellationAmount overloadAmount redoAmount repeatAmount |
+	deckBuilder := self cardsWithProbabilities.
+	cardTypesToBeUsed := OrderedCollection new.
+	100 timesRepeat: [ cardTypesToBeUsed add: deckBuilder handCard ].
+	accelerationAmount := cardTypesToBeUsed
+		count: [ :card | card isMemberOf: Acceleration ].
+	speedAmount := cardTypesToBeUsed
+		count: [ :card | card isMemberOf: Speed ].
+	cancellationAmount := cardTypesToBeUsed
+		count: [ :card | card isMemberOf: Cancellation ].
+	overloadAmount := cardTypesToBeUsed
+		count: [ :card | card isMemberOf: Overload ].
+	redoAmount := cardTypesToBeUsed
+		count: [ :card | card isMemberOf: Redo ].
+	repeatAmount := cardTypesToBeUsed
+		count: [ :card | card isMemberOf: Repeat ].
+	self assert: (accelerationAmount between: 1 and: 30).
+	self assert: (speedAmount  between: 1 and: 40).
+	self assert: (cancellationAmount  between: 1 and: 30).
+	self assert: (overloadAmount  between: 1 and: 30).
+	self assert: (redoAmount  between: 1 and: 30).
+	self assert: (repeatAmount  between: 1 and: 50).
 ]
