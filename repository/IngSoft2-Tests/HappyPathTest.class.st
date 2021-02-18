@@ -34,33 +34,40 @@ HappyPathTest >> playerNamed: aName [
 
 { #category : #running }
 HappyPathTest >> setUp [
-
-|effectRouletteBuilder  pickUpCards |
-	pickUpCards := OrderedCollection new.
-	pickUpCards add: Redo new.
-	deck:= OrderedCollection new.
-	deck
-	add: Acceleration  new;
-	add: Cancellation new;
-	add: Speed new;
-	add: Overload new;
-	add: Repeat new.
+	|effectRouletteBuilder deckBuilder|
+	deckBuilder:= DeckBuilder startBuilding.
+	deckBuilder add: Acceleration  ;
+					add: Cancellation ;
+					add: Speed ;
+					add: Overload ;
+					add: Repeat ;
+					add: Acceleration.
+	deck:= deckBuilder buildDeterministicWithSize: 100.
 	effectRouletteBuilder := EffectRouletteBuilder buildingDeterministicRoulette.
 	effectRouletteBuilder add: SpeedUp new;
-	add: (MoonWalk maxBackwards: 5 aNumberOfLockersSequence: #(3));
-	add: NoEffect new;
-	add: NoEffect new;
-	add: (PickUpCard withSequence: pickUpCards);
-	add: AtomicBomb new;
-	add: WormHole new;
-	add: NoEffect new;
-	add: NoEffect new;
-	add: NoEffect new;
-	add: NoEffect new;
-	add: SpeedUp new.
+								add: (MoonWalk maxBackwards: 5 aNumberOfLockersSequence: #(3));
+								add: NoEffect new;
+								add: PickUpCard new;
+								add: PickUpCard new;
+								add: AtomicBomb new;
+								add: WormHole new;
+								add: NoEffect new;
+								add: PickUpCard new;
+								add: PickUpCard new;
+								add: PickUpCard new;
+								add: SpeedUp new;
+								add: AtomicBomb new;
+								add: NoEffect new;
+								add: NoEffect new;
+								add: SpeedUp new;
+								add: SpeedUp new;
+								add: NoEffect new;
+								add: NoEffect new;
+								add: NoEffect new;
+								add: NoEffect new.
 	effectRoulette:= effectRouletteBuilder buildDeterministic.
-
-	die := Die of: 10 rolling: #(7 9 10 4 5 7 8 3 9 10 10 2).
+	
+	die := Die of: 10 rolling: #(7 9 10 4 5 7 8 3 9 10 10 2 8 4 5 10 7 9 8 5 10 9 7).
 	juan := self juan.
 	nico := self nico.
 	sofi:= self sofi.
@@ -69,9 +76,116 @@ HappyPathTest >> setUp [
 		add: juan;
 		add: nico;
 		add: sofi.
+
 ]
 
 { #category : #accessing }
 HappyPathTest >> sofi [
 	^ self playerNamed: 'Sofi'.
+]
+
+{ #category : #running }
+HappyPathTest >> testHappyPath [
+	| game tableOfFinalPositions accelerationCardThrownByJuan speedCardThrownByNico|
+	
+	game:= UCABoardGame rolling: die with: players lockers: 15 laps: 3 effects: effectRoulette and: deck.
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:0;
+		assert: (game lapNumberOf: sofi) equals:0;
+		assert: (game lockerNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: sofi) equals: 0.
+		
+	game nextTurn.	"In this Turn Juan rolled 7 and the effect was speed up"
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:0;
+		assert: (game lapNumberOf: sofi) equals:0;
+		assert: (game lockerNumberOf: juan) equals: 11;
+		assert: (game lockerNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: sofi) equals: 0.
+		
+	game player: sofi throw: (Repeat initializeCardWithTarget: sofi). "Sofi threw Repeat Card and the last effect was SpeedUp"
+		
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:0;
+		assert: (game lapNumberOf: sofi) equals:0;
+		assert: (game lockerNumberOf: juan) equals: 11;
+		assert: (game lockerNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: sofi) equals: 4.
+		
+	game nextTurn. "In this Turn Nico rolled 9 and the effect was MoonWalk. Everyone except Nico went three lockers backwards"
+
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:0;
+		assert: (game lapNumberOf: sofi) equals:0;
+		assert: (game lockerNumberOf: juan) equals: 8;
+		assert: (game lockerNumberOf: nico) equals: 9;
+		assert: (game lockerNumberOf: sofi) equals: 1.
+		
+	game nextTurn."In this Turn Sofi rolled 10 and the effect was No effect"
+		
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:0;
+		assert: (game lapNumberOf: sofi) equals:0;
+		assert: (game lockerNumberOf: juan) equals: 8;
+		assert: (game lockerNumberOf: nico) equals: 9;
+		assert: (game lockerNumberOf: sofi) equals: 11.
+	
+	accelerationCardThrownByJuan := Acceleration initializeCard .
+	game player: juan throw: (accelerationCardThrownByJuan).
+	game nextTurn. "In this Turn Juan rolled 4 and the effect was Pick Up card. He picked up a Double Card. As the Acceleration Card was active, he moves 5 lockers forward"
+		
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:0;
+		assert: (game lapNumberOf: sofi) equals:0;
+		assert: (game lockerNumberOf: juan) equals: 13;
+		assert: (game lockerNumberOf: nico) equals: 9;
+		assert: (game lockerNumberOf: sofi) equals: 11.
+	
+	speedCardThrownByNico := Speed initializeCardWithTarget: nico.
+	game player: nico throw: speedCardThrownByNico.
+	game player: nico throw:(Overload initializeCardWithTarget: juan).
+	game nextTurn. "In this Turn Nico rolled 5 and the effect was Pick Up card. He picked up a Redo Card. Nico moves 7 lockers forward because of the speed card and the acceleration card"
+		
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:1;
+		assert: (game lapNumberOf: sofi) equals:0;
+		assert: (game lockerNumberOf: juan) equals: 13;
+		assert: (game lockerNumberOf: nico) equals: 1;
+		assert: (game lockerNumberOf: sofi) equals: 11.
+		
+	game nextTurn. "In this Turn Sofi rolled 7 and the effect was Atomic Bomb. Sofi moves 8 lockers forward because of the acce;eration card and changes lap to 1. But then she moves to locker zero at lap 1 because of the atomic bomb effect"
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:1;
+		assert: (game lapNumberOf: sofi) equals:1;
+		assert: (game lockerNumberOf: juan) equals: 0;
+		assert: (game lockerNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: sofi) equals: 0.
+		
+	game player: juan throw:(Cancellation initializeCardWithTarget: speedCardThrownByNico) .
+	game nextTurn. "In this Turn Juan rolled 8 and the effect was WormHole.As he had an Acceleration card and an Overload Card he only ended up moving 3 lockers forward "
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:1;
+		assert: (game lapNumberOf: sofi) equals:1;
+		assert: (game lockerNumberOf: juan) equals: 3;
+		assert: (game lockerNumberOf: nico) equals: 0;
+		assert: (game lockerNumberOf: sofi) equals: 0.
+	game nextTurn. "In this Turn Nico rolled 3 and the effect was No effect. As he had the acceleration card, he moves 4 lockers forward"
+	self 
+		assert: (game lapNumberOf: juan) equals:0;
+		assert: (game lapNumberOf: nico) equals:1;
+		assert: (game lapNumberOf: sofi) equals:1;
+		assert: (game lockerNumberOf: juan) equals: 3;
+		assert: (game lockerNumberOf: nico) equals: 4;
+		assert: (game lockerNumberOf: sofi) equals: 0.
+	
 ]

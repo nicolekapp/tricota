@@ -140,7 +140,7 @@ DeckTest >> testInitializeGameDeterministicDeckWithSizeSixZeroCardsLeftAfterFirs
 ]
 
 { #category : #tests }
-DeckTest >> testInitializeGameRandomDealingCards [
+DeckTest >> testInitializeGameRandomDealingCards [ 	
 	| cardTypesToBeUsed deckBuilder accelerationAmount speedAmount cancellationAmount overloadAmount redoAmount repeatAmount |
 	deckBuilder := self cardsWithProbabilities.
 	cardTypesToBeUsed := OrderedCollection new.

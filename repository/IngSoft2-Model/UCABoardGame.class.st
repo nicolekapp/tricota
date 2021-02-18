@@ -39,13 +39,6 @@ UCABoardGame class >> assertLockersGreaterThanZero: aNumberOfLockers [
 		ifFalse: [ InstanceCreationFailed signal: 'Need at least one locker' ]
 ]
 
-{ #category : #playing }
-UCABoardGame class >> rolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette a: deck and: discardDeck [
-	self assertLockersGreaterThanZero: aNumberOfLockers .
-	self assertLapsGreaterThanZero: aNumberOfLaps .
-	^self new initializeRolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette a: deck and: discardDeck.
-]
-
 { #category : #'instance creation' }
 UCABoardGame class >> rolling: aDie with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: effectRoulette and: deck [
 	self assertLockersGreaterThanZero: aNumberOfLockers .
@@ -167,26 +160,6 @@ UCABoardGame >> initializeDictionaryOfPositions: aGroupOfPlayers [
 	players := Dictionary new.
 	aGroupOfPlayers do: [ :player | players at: player put: (CurrentPosition startingAtZero)].
 	^ players
-]
-
-{ #category : #initialization }
-UCABoardGame >> initializeRolling: aDice with: aGroupOfPlayers lockers: aNumberOfLockers laps: aNumberOfLaps effects: anEffectRoulette a: mainDeck and: backupDeck [
-	dice:= aDice.
-	timesToRoll := 1.
-	playersWithPositions:= self initializeDictionaryOfPositions: aGroupOfPlayers.
-	sequenceOfPlayers:= (SequentialPlayersProvider providing: aGroupOfPlayers).
-	finishLine:= aNumberOfLockers.
-	laps:= aNumberOfLaps.
-	effectRoulette:= anEffectRoulette.
-	activeCards := OrderedCollection new.
-	winner := 'No Winner'.
-	lastEffect := 'No effect yet'.
-	typeLastCardPlayed:= 'No card has been played yet'.
-	deck := mainDeck.
-	deck dealTwoCardsToEachPlayerFrom: aGroupOfPlayers.
-	discardDeck := backupDeck.
-
-
 ]
 
 { #category : #initialization }
